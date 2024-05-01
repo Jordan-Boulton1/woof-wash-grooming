@@ -3,17 +3,20 @@ from django.db import models
 from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 import re
+from .validators import Validators
 
 
 from .custom_user_manager import CustomUserManager
 
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, validators=[Validators.validate_string_input])
+    last_name = models.CharField(max_length=50, validators=[Validators.validate_string_input])
     email = models.EmailField(max_length=255, unique=True, error_messages={"unique": "This email is already in use."})
     password = models.CharField()
-    phone_number = models.CharField(max_length=30, unique=True, error_messages={"unique": "This phone number is already in use."})
+    phone_number = models.CharField(max_length=30, unique=True, 
+                                    error_messages={"unique": "This phone number is already in use."}, 
+                                    validators=[Validators.validate_phone_number])
     address = models.CharField(max_length=100)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -25,12 +28,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
-    def clean(self):
-        super().clean()
-        # Validate phone number (simple example: ensuring it contains only digits)
-        if not re.match(r"^\d+$", self.phone):
-            raise ValidationError("Phone number can contain only digits.")
 
     class Meta:
         db_table = 'woof_wash_grooming"."User'
