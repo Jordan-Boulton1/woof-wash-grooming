@@ -27,15 +27,15 @@ class Pet(models.Model):
     breed = models.CharField(max_length=255)
     age = models.IntegerField()
     medical_notes = models.TextField()
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'woof_wash_grooming"."Pet'
 
 class Appointment(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    service_id = models.ForeignKey(Service, on_delete=models.CASCADE)
-    pet_id = models.ForeignKey(Pet, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     status = models.IntegerField()
     start_date_time = models.DateTimeField()
     end_date_time = models.DateTimeField()
