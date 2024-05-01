@@ -1,14 +1,36 @@
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-from django.contrib.auth.models import User
+from django.forms import ValidationError
+from django.utils.translation import gettext_lazy as _
+import re
+
+
+from .custom_user_manager import CustomUserManager
 
 # Create your models here.
-class User(models.Model):
+class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True, error_messages={"unique": "This email is already in use."})
     password = models.CharField()
-    phone_number = models.CharField(max_length=30)
+    phone_number = models.CharField(max_length=30, unique=True, error_messages={"unique": "This phone number is already in use."})
     address = models.CharField(max_length=100)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
+    
+    def clean(self):
+        super().clean()
+        # Validate phone number (simple example: ensuring it contains only digits)
+        if not re.match(r"^\d+$", self.phone):
+            raise ValidationError("Phone number can contain only digits.")
 
     class Meta:
         db_table = 'woof_wash_grooming"."User'
