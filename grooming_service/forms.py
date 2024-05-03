@@ -23,3 +23,8 @@ class RegistrationForm(forms.ModelForm):
         if User.objects.filter(phone=phone).exists():
             raise ValidationError("This phone number is already in use.")
         return phone
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
