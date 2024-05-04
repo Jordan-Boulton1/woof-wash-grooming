@@ -16,10 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from grooming_service.views import register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', register, name="register"),
-    path('', include('grooming_service.urls')),
+    path('', include('grooming_service.urls'), name="grooming_service-urls"),
 ]
