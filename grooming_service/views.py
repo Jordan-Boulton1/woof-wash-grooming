@@ -17,8 +17,7 @@ def register(request):
             return redirect("home")
     else:
         form = RegistrationForm()
-
-    return render(request, "register.html", {"form": form})
+    return render(request, "grooming_service/register.html", {"form": form})
 
 def user_login(request):
     if request.method == 'POST':
@@ -35,7 +34,16 @@ def user_login(request):
     else:
         form = LoginForm()
 
-    return render(request, "login.html", {"form": form})
+    return render(request, "grooming_service/login.html", {"form": form})
 
 def home(request):
-    return HttpResponse("Welcome to the home page")
+    return render(request, "grooming_service/home.html")
+
+def about(request):
+    return render(request, "grooming_service/about.html")
+
+def contact(request):
+    return render(request, "grooming_service/contact.html")
+
+def services(request):
+    return render(request, "grooming_service/services.html")
