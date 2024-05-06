@@ -4,6 +4,13 @@
 
 <div class="container">
     <p>This is the services page</p>
+    <ul>
+    {% for service in services %}
+        <li>
+            <strong> {{ service.name }}</strong> {{ service.description|safe }}
+        </li>
+    {% endfor %}
+    </ul>
 </div>
 
 {% endblock %}

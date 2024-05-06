@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from .forms import LoginForm, RegistrationForm
+from .models import Service
 
 # Create your views here.
 
@@ -48,5 +49,6 @@ def about(request):
 def contact(request):
     return render(request, "grooming_service/contact.html")
 
-def services(request):
-    return render(request, "grooming_service/services.html")
+def get_services(request):
+    services = Service.objects.all()
+    return render(request, "grooming_service/services.html", {'services': services})
