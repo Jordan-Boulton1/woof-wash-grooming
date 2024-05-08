@@ -2,9 +2,9 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .validators import Validators
-
-
 from .custom_user_manager import CustomUserManager
+
+
 
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
@@ -47,14 +47,19 @@ class Pet(models.Model):
     medical_notes = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.pet_name
+
     class Meta:
         db_table = 'woof_wash_grooming"."Pet'
 
+STATUS = ((0, "available"), (1, "booked"), (2, "cancelled"))
+
 class Appointment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
-    status = models.IntegerField()
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, null=True)
+    status = models.IntegerField(choices=STATUS, default=0)
     start_date_time = models.DateTimeField()
     end_date_time = models.DateTimeField()
 

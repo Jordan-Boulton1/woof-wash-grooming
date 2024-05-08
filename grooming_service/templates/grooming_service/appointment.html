@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+
+{% if user.is_authenticated %}
+{% block content %}
+    <h1>Create an Appointment</h1>
+     <!-- Display messages -->
+     {% for message in messages %}
+     <div class="{{ message.tags }}">{{ message }}</div>
+ {% endfor %}
+ 
+ <form method="POST">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+{% endif %}
