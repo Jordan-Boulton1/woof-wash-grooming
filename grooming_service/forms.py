@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.forms import SelectDateWidget, TimeInput
 from django_flatpickr.widgets import DateTimePickerInput, DatePickerInput
 from django_flatpickr.schemas import FlatpickrOptions
+from datetime import datetime
 from .models import *
 import re
 
@@ -48,7 +49,7 @@ class AppointmentForm(forms.Form):
 
         available_dates = [
           dt.date().isoformat()
-            for dt in Appointment.objects.filter(status=0).values_list("start_date_time", flat=True)
+            for dt in Appointment.objects.filter(status=0, start_date_time__gte = datetime.now()).values_list("start_date_time", flat=True)
         ]
 
         available_times = [

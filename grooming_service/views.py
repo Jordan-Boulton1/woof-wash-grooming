@@ -6,6 +6,7 @@ from datetime import datetime
 from .forms import *
 from .models import Service
 
+
 # Create your views here.
 
 def register(request):
@@ -20,6 +21,7 @@ def register(request):
     else:
         form = RegistrationForm()
     return render(request, "grooming_service/register.html", {"form": form})
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -38,35 +40,68 @@ def user_login(request):
 
     return render(request, "grooming_service/login.html", {"form": form})
 
+
 def user_logout(request):
     logout(request)
     return redirect('home')
 
+
 def home(request):
     return render(request, "grooming_service/home.html")
+
 
 def about(request):
     return render(request, "grooming_service/about.html")
 
+
 def contact(request):
     return render(request, "grooming_service/contact.html")
+
 
 def get_services(request):
     services = Service.objects.all()
     return render(request, "grooming_service/services.html", {'services': services})
 
+
 def book_appointment(request):
     if request.method == "POST":
         form = AppointmentForm(request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data["start_date"]
+            start_time = form.cleaned_data["start_time"]
+            pet = form.cleaned_data["pet"]
+            service = form.cleaned_data["service"]
+            start_time_obj = datetime.strptime(start_time, "%H:%M:%S").time()
+            start_date_time = datetime.combine(start_date, start_time_obj)
+
+            try:
+                appointment = Appointment.objects.get(start_date_time=start_date_time)
+                appointment.pet = pet
+                appointment.user = request.user
+                appointment.service = service
+                appointment.status = 1
+                appointment.save()
+
+                messages.success(request, "Your appointment has been booked.")
+
+                return redirect("home")
+            except Appointment.DoesNotExist:
+                messages.error(request, "The selected appointment is no longer available")
+        else:
+            messages.error(request, "There was an error booking this appointment.")
     else:
         form = AppointmentForm()
-    
+
     return render(request, "grooming_service/appointment.html", {"form": form})
 
+
 def get_available_times(request, selected_date):
+
     date = datetime.strptime(selected_date, "%Y-%m-%d").date()
 
     available_times = []
-    for dt in Appointment.objects.filter(status=0, start_date_time__date=date).values_list("start_date_time", flat=True):
+    for dt in Appointment.objects.filter(status=0, start_date_time__date=date).values_list("start_date_time",
+                                                                                           flat=True):
         available_times.append(dt.time().isoformat())
     return JsonResponse(available_times, safe=False)
+

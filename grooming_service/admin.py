@@ -10,7 +10,7 @@ class PostAdmin(SummernoteModelAdmin):
     summernote_fields = ('description',)
 
 class AppointmentAdmin(admin.ModelAdmin):
-    exclude = ['user', 'pet']
+    exclude = ['user', 'pet', 'service']
 
 admin.site.register(User)
 admin.site.register(Appointment, AppointmentAdmin)
