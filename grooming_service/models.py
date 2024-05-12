@@ -61,7 +61,7 @@ class Appointment(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE, null=True)
     status = models.IntegerField(choices=STATUS, default=0)
     start_date_time = models.DateTimeField()
-    end_date_time = models.DateTimeField()
+    description = models.TextField(null=True)
 
     class Meta:
         db_table = 'woof_wash_grooming"."Appointment'

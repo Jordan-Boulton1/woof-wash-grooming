@@ -1,9 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import SelectDateWidget, TimeInput
-from django_flatpickr.widgets import DateTimePickerInput, DatePickerInput
+from django_flatpickr.widgets import DatePickerInput
 from django_flatpickr.schemas import FlatpickrOptions
-from datetime import datetime
+from django.utils import timezone
 from .models import *
 import re
 
@@ -36,20 +35,19 @@ class LoginForm(forms.Form):
 
 
 class AppointmentForm(forms.Form):
-    start_date = forms.DateField(
-        widget=SelectDateWidget(),
-        label="Appointment Date"
-    )
-    start_time = forms.ChoiceField(choices=[], label="Start Time", required=True)
-    pet = forms.ModelChoiceField(queryset=Pet.objects.all(), required=True)
-    service = forms.ModelChoiceField(queryset=Service.objects.all(), required=True)
+    start_date = forms.DateField(required=True, widget=DatePickerInput())
+    start_time = forms.ChoiceField(required=True, widget=forms.Select())
+    pet = forms.ModelChoiceField(queryset=Pet.objects.all(), required=True, widget=forms.Select(), initial="")
+    service = forms.ModelChoiceField(queryset=Service.objects.all(), required=True, widget=forms.Select(), initial="")
+    description = forms.CharField(required=False, widget=forms.Textarea(attrs={'placeholder': 'Additional information...'}))
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
         available_dates = [
           dt.date().isoformat()
-            for dt in Appointment.objects.filter(status=0, start_date_time__gte = datetime.now()).values_list("start_date_time", flat=True)
+            for dt in Appointment.objects.filter(status=0, start_date_time__gte = timezone.now()).values_list("start_date_time", flat=True)
         ]
 
         available_times = [
@@ -64,8 +62,5 @@ class AppointmentForm(forms.Form):
             )
         )
 
-        self.fields["start_time"].choices = [(t, t) for t in available_times]
-
         if user:
-            # Filter `pet` based on the user
             self.fields["pet"].queryset = Pet.objects.filter(user=user)

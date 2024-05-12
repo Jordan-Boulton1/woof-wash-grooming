@@ -69,6 +69,7 @@ def book_appointment(request):
         if form.is_valid():
             start_date = form.cleaned_data["start_date"]
             start_time = form.cleaned_data["start_time"]
+            description = form.cleaned_data["description"]
             pet = form.cleaned_data["pet"]
             service = form.cleaned_data["service"]
             start_time_obj = datetime.strptime(start_time, "%H:%M:%S").time()
@@ -80,6 +81,7 @@ def book_appointment(request):
                 appointment.user = request.user
                 appointment.service = service
                 appointment.status = 1
+                appointment.description = description
                 appointment.save()
 
                 messages.success(request, "Your appointment has been booked.")
