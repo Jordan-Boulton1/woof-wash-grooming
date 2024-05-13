@@ -2,8 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from .forms import *
+from grooming_service.forms import *
 from .models import Service
 
 
@@ -61,6 +62,13 @@ def contact(request):
 def get_services(request):
     services = Service.objects.all()
     return render(request, "grooming_service/services.html", {'services': services})
+
+
+@login_required(login_url='login')
+def get_user_appointments(request):
+    if request.user:
+        appointments = Appointment.objects.filter(user=request.user)
+        return render(request, "grooming_service/profile.html", {'appointments': appointments})
 
 
 def book_appointment(request):

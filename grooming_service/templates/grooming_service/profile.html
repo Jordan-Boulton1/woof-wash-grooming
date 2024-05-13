@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.first_name }} to the profile page</p>
+        <ul>
+            {% for appointment in appointments %}
+                <li>
+                    <strong>{{ appointment.start_date_time }}</strong> {{ appointment.service|safe }}
+                    <button id="{{ appointment.id }}">Cancel</button>
+                    <button id="{{ appointment.id }}">Edit</button>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You must be logged in</p>
+
+</div>
+<script src="../../../static/js/profile.js"></script>
+{% endif %}
+{% endblock %}

@@ -58,7 +58,7 @@
                             <img src="{% static 'images/nobody.jpg' %}" width="40" height="40" class="rounded-circle">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </div>
@@ -79,10 +79,16 @@
     </main>
     <!-- Footer -->
     <footer class="text-black py-3 border-top">
-        <div class="container text-center">
-            &copy; 2024 Woof & Wash Grooming. All rights reserved.
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+            <div>&copy; 2024 Woof & Wash Grooming. All rights reserved.</div>
         </div>
-    </footer>
+    </footer>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
