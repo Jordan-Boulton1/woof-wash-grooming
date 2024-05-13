@@ -1,9 +1,105 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+<section class="hero-section p-5 d-flex justify-content-center align-items-center text-center bg-image" id="hero-image">
+    <div class="container text-center">
+        <div class="text-white">
+            <h1 class="mb-4">Award Winning Professional Dog Grooming</h1>
+            <p class="lead mb-4">Your furry friend deserves the best grooming care.</p>
+            <a href="#services-section" class="btn btn-outline-light btn-lg">Explore Services</a>
+        </div>
+    </div>
+</section>
 
-<div class="container">
-    <p>Welcome to the home page</p>
-</div>
+<section id="services-section" class="custom-bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Our Services</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{% static 'images/bathing.jpg' %}" class="card-img-top" alt="Bathing">
+                    <div class="card-body">
+                        <h5 class="card-title">Bathing</h5>
+                        <p class="card-text">Our gentle bathing services leave your pet feeling fresh and clean.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{% static 'images/grooming.jpg' %}" class="card-img-top" alt="Grooming">
+                    <div class="card-body">
+                        <h5 class="card-title">Grooming</h5>
+                        <p class="card-text">Professional grooming to keep your pet looking their best.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{% static 'images/nail-trimming.jpg' %}" class="card-img-top" alt="Nail Trimming">
+                    <div class="card-body">
+                        <h5 class="card-title">Nail Trimming</h5>
+                        <p class="card-text">Expert nail trimming services to keep your pet's paws healthy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about-section" class="custom-bg-primary py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">About Us</h2>
+        <p class="lead text-center">At Woof & Wash Grooming, we are passionate about providing top-quality grooming services for your beloved pets.</p>
+        <p class="text-center">Our team of experienced groomers is dedicated to ensuring that your pet receives the care and attention they deserve.</p>
+    </div>
+</section>
+
+<section id="testimonials-section" class="custom-bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Testimonials</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p class="card-text">"Amazing grooming salon! My dog always looks and smells fantastic after a visit here."</p>
+                        <p class="card-text text-end">- Sarah M.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p class="card-text">"Friendly staff and excellent service. Highly recommend!"</p>
+                        <p class="card-text text-end">- John D.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p class="card-text">"I'm so impressed with the grooming services at Woof & Wash Grooming. 
+                            They always go above and beyond to make sure my dog looks and feels his best. 
+                            The staff is friendly, knowledgeable, and truly cares about the well-being of the animals. 
+                            I wouldn't trust anyone else with my pet's grooming needs!"</p>
+                        <p class="card-text text-end">- Mike K.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact-section" class="custom-bg-primary py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <p class="lead text-center">Ready to schedule an appointment? Get in touch with us today!</p>
+        <div class="text-center">
+            <p>Phone: 123-456-7890</p>
+            <p>Email: info@woofwashgrooming.com</p>
+            <a href="#appointment-section" class="btn btn-light btn-lg">Schedule Appointment</a>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
