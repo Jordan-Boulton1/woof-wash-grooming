@@ -1,0 +1,40 @@
+.sidebar {
+    background-color: #87CEEB
+}
+
+.btn-primary-color {
+    background-color: #0B3D91;
+}
+
+.btn-secondary-color {
+    background-color: #c0c0c0;
+    border: none;
+    color: #000;
+}
+
+.container {
+    overflow: visible;  /* Ensure content isn't clipped or overflowing unexpectedly */
+}
+
+/* Make sure the fixed navbar and footer have a higher z-index */
+.navbar {
+    z-index: 1000;  /* High enough to stay above other content */
+}
+
+.footer {
+    z-index: 1000;
+}
+
+#hero-image {
+    height: 500px;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../images/home-background.png) center;
+    background-size: cover;
+}
+
+.custom-bg-primary {
+    background-color: #87CEEB;
+}
+
+.custom-bg-light {
+    background-color: #f6f6f6;
+}
