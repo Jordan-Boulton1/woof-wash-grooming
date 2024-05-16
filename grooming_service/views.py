@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+
 from grooming_service.forms import *
 from .models import Service
 
@@ -63,14 +64,6 @@ def get_services(request):
     services = Service.objects.all()
     return render(request, "grooming_service/services.html", {'services': services})
 
-
-@login_required(login_url='login')
-def get_user_appointments(request):
-    if request.user:
-        appointments = Appointment.objects.filter(user=request.user)
-        return render(request, "grooming_service/profile.html", {'appointments': appointments})
-
-
 def book_appointment(request):
     if request.method == "POST":
         form = AppointmentForm(request.POST)
@@ -105,8 +98,23 @@ def book_appointment(request):
     return render(request, "grooming_service/appointment.html", {"form": form})
 
 
-def get_available_times(request, selected_date):
+@login_required(login_url='login')
+def manage_appointments(request):
+    form = AppointmentForm(request.POST or None)
 
+    if request.method == "POST":
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            appointment.user = request.user
+            appointment.save()
+            return redirect('get_user_appointments')
+
+    appointments = Appointment.objects.filter(user=request.user)
+
+    return render(request, "grooming_service/profile.html", {'form': form, 'appointments': appointments})
+
+
+def get_available_times(request, selected_date):
     date = datetime.strptime(selected_date, "%Y-%m-%d").date()
 
     available_times = []
@@ -114,4 +122,3 @@ def get_available_times(request, selected_date):
                                                                                            flat=True):
         available_times.append(dt.time().isoformat())
     return JsonResponse(available_times, safe=False)
-
