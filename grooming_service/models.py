@@ -65,3 +65,6 @@ class Appointment(models.Model):
 
     class Meta:
         db_table = 'woof_wash_grooming"."Appointment'
+    
+    def __str__(self):
+        return f"{self.description}"

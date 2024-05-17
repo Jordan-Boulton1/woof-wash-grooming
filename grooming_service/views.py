@@ -69,28 +69,27 @@ def book_appointment(request):
     if request.method == "POST":
         form = AppointmentForm(request.POST)
         if form.is_valid():
-            start_date = form.cleaned_data["start_date"]
-            start_time = form.cleaned_data["start_time"]
+            start_date_time = form.cleaned_data["start_date_time"]
             description = form.cleaned_data["description"]
             pet = form.cleaned_data["pet"]
             service = form.cleaned_data["service"]
-            start_time_obj = datetime.strptime(start_time, "%H:%M:%S").time()
-            start_date_time = datetime.combine(start_date, start_time_obj)
 
             try:
-                appointment = Appointment.objects.get(start_date_time=start_date_time)
-                appointment.pet = pet
-                appointment.user = request.user
-                appointment.service = service
-                appointment.status = 1
-                appointment.description = description
-                appointment.save()
-
-                messages.success(request, "Your appointment has been booked.")
-
-                return redirect("home")
+                check_appointment = Appointment.objects.get(start_date_time=start_date_time, status=1)
+                if check_appointment:
+                    messages.error(request, "The selected appointment is no longer available")
+                    return redirect("appointment")
             except Appointment.DoesNotExist:
-                messages.error(request, "The selected appointment is no longer available")
+                appointment = Appointment(user=request.user,
+                                          pet=pet,
+                                          status=1,
+                                          service=service,
+                                          start_date_time=start_date_time,
+                                          description=description)
+                appointment.save()
+                messages.success(request, "Your appointment has been booked.")
+                return redirect("profile")
+
         else:
             messages.error(request, "There was an error booking this appointment.")
     else:
@@ -106,13 +105,10 @@ def manage_appointments(request):
     if request.method == "POST":
         appointment_id = request.POST.get("appointment_id")
         start_date = request.POST.get("start_date")
-        start_time = form.data["start_time"]
         description = form.data["description"]
         pet = form.data["pet"]
         service = form.data["service"]
 
-        if not (appointment_id and start_date and start_time and pet and service and description):
-            messages.error(request, "Please fill out all fields")
 
         try:
             start_time_obj = datetime.strptime(start_time, "%H:%M:%S").time()
@@ -124,9 +120,10 @@ def manage_appointments(request):
                 selected_appointment.status = 1
                 selected_appointment.save()
                 try:
-                    previous_appointment = Appointment.objects.get(status=1,
-                                                                   start_date_time=appointment.start_date_time,
-                                                                   pet_id=None, service_id=None)
+                    previous_appointment = Appointment.objects.get(
+                        status=1,
+                        start_date_time=appointment.start_date_time,
+                        pet_id=None, service_id=None)
                     previous_appointment.status = 0
                     previous_appointment.save()
                 except Appointment.DoesNotExist:
