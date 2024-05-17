@@ -17,14 +17,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     dateField.addEventListener("change", function() {
-        const selectedDate = dateField.value;
-
+        let selectedDate = dateField.value;
+        selectedDate = selectedDate.split("-").reverse().join("-");
         if (selectedDate) {
             fetch(`/api/available-times/${selectedDate}/`)
                 .then((response) => response.json())
                 .then((times) => {
                     timeField.innerHTML = "";
-
                     setDefaultOption(timeField, "Select a time");
                     times.forEach((time) => {
                         const option = document.createElement("option");

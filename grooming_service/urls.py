@@ -11,5 +11,7 @@ urlpatterns = [
     path("logout/", views.user_logout, name='logout'),
     path('appointment/', views.book_appointment, name='appointment'),
     path("api/available-times/<str:selected_date>/", views.get_available_times),
+     path("api/available-appointment-dates/", views.get_available_dates),
     path("profile/", views.manage_appointments, name="profile"),
+    path("api/appointment/<int:appointment_id>/", views.get_appointment_by_id)
 ]
