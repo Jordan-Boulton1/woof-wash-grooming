@@ -104,19 +104,20 @@ def manage_appointments(request):
     if request.method == "POST":
         appointment_id = request.POST.get("appointment_id")
         start_date_time = request.POST.get("start_date_time")
-        start_date_time = datetime.strptime(start_date_time, "%d-%m-%Y %H:%M").strftime('%Y-%m-%d %H:%M')
         description = form.data["description"]
         pet = form.data["pet"]
         service = form.data["service"]
 
         try:
             appointment = Appointment.objects.get(id=appointment_id)
-            try:
-                if appointment.start_date_time != start_date_time:
-                    check_appointment = Appointment.objects.get(start_date_time=start_date_time, status=1)
-                    messages.error(request, "The selected appointment is no longer available")
-            except Appointment.DoesNotExist:
-                appointment.start_date_time = start_date_time
+            request_date_time_obj = datetime.strptime(start_date_time, "%d-%m-%Y %H:%M")
+            formatted_date_time = request_date_time_obj.strftime('%Y-%m-%d %H:%M')
+            if appointment.start_date_time.strftime('%Y-%m-%d %H:%M') != formatted_date_time:
+                if Appointment.objects.filter(start_date_time=formatted_date_time, status=1).exists():
+                    messages.error(request, "The selected appointment slot is no longer available")
+                    return redirect("profile")
+                else:
+                    appointment.start_date_time = request_date_time_obj
             appointment.pet_id = pet
             appointment.service_id = service
             appointment.description = description
@@ -137,7 +138,7 @@ def get_appointment_by_id(request, appointment_id):
             appointment = Appointment.objects.get(id=appointment_id)
             appointment_data = {
                 "id": appointment.id,
-                "start_date_time": appointment.start_date_time,
+                "start_date_time": appointment.start_date_time.strftime('%d-%m-%Y %H:%M'),
                 "description": appointment.description,
                 "pet": {
                     "name": appointment.pet.pet_name,

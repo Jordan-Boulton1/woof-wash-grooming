@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
       .then((response) => response.json())
       .then((data) => {
             const appointment = data.appointment
-            setDefaultOption(dateField, appointment.start_date)
+
+            setDefaultOption(dateField, appointment.start_date_time)
             setDefaultOption(description, appointment.description);
             setDefaultSelectOption(petField, appointment.pet.id);
             setDefaultSelectOption(serviceField, appointment.service.id);
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function renderFlatPickr() {
    flatpickr('#start_date', {
-      "dateFormat": "d-m-Y H:i",
+       "dateFormat": "d-m-Y H:i",
        "enableTime": true
     });
 }
