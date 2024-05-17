@@ -1,11 +1,23 @@
 document.addEventListener("DOMContentLoaded", function() {
   const editButtons = document.querySelectorAll('.editBtn');
+  const cancelButtons = document.querySelectorAll('.cancelBtn');
   const dateField = document.getElementById("start_date");
   const petField = document.getElementById("id_pet");
   const serviceField = document.getElementById("id_service");
   const description = document.getElementById("id_description");
   const dateFieldIcon = document.getElementById("start-date-icon");
   const appointmentIdField = document.getElementById("appointment_id");
+
+   cancelButtons.forEach(function(btn) {
+    const appointmentModal = document.getElementById("confirmCancelAppointmentModal");
+    btn.addEventListener('click', function() {
+      const appointmentId = btn.getAttribute('id');
+        console.log(appointmentId);
+      })
+
+      const modal = new bootstrap.Modal(appointmentModal);
+      modal.show();
+    });
 
   editButtons.forEach(function(btn) {
     const appointmentModal = document.getElementById("editAppointmentModal");

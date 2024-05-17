@@ -1,17 +1,36 @@
 document.addEventListener("DOMContentLoaded", function() {
   const editButtons = document.querySelectorAll('.editBtn');
+  const cancelButtons = document.querySelectorAll('.cancelBtn');
   const dateField = document.getElementById("start_date");
   const petField = document.getElementById("id_pet");
   const serviceField = document.getElementById("id_service");
   const description = document.getElementById("id_description");
   const dateFieldIcon = document.getElementById("start-date-icon");
   const appointmentIdField = document.getElementById("appointment_id");
+  const cancelAppointmentIdField = document.getElementById("cancel_appointment_id");
+  const confirmCancelButton = document.getElementById("confirmCancelButton")
+
+   cancelButtons.forEach(function(btn) {
+    const appointmentModal = document.getElementById("confirmCancelAppointmentModal");
+    btn.addEventListener('click', function() {
+            const appointmentId = btn.getAttribute('id');
+
+            const modal = new bootstrap.Modal(appointmentModal);
+            modal.show();
+            confirmCancelButton.addEventListener("click", function() {
+                 cancelAppointmentIdField.value = appointmentId;
+            let form = document.getElementById("cancelAppointmentForm");
+            form.action = form.action.replace('/0/', '/' + appointmentId + '/');
+            form.submit();
+            });
+      });
+    });
 
   editButtons.forEach(function(btn) {
     const appointmentModal = document.getElementById("editAppointmentModal");
     btn.addEventListener('click', function() {
       const appointmentId = btn.getAttribute('id');
-   
+
       renderFlatPickr();
       renderCalendarIcon(dateFieldIcon, dateField);
       appointmentIdField.innerHTML = "";
@@ -26,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setDefaultSelectOption(serviceField, appointment.service.id);
             appointmentIdField.value = appointmentId;
       })
-   
+
       const modal = new bootstrap.Modal(appointmentModal);
       modal.show();
 

@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -64,7 +64,7 @@ def get_services(request):
     services = Service.objects.all()
     return render(request, "grooming_service/services.html", {'services': services})
 
-
+@login_required(login_url='login')
 def book_appointment(request):
     if request.method == "POST":
         form = AppointmentForm(request.POST)
@@ -95,7 +95,6 @@ def book_appointment(request):
         form = AppointmentForm()
 
     return render(request, "grooming_service/appointment.html", {"form": form})
-
 
 @login_required(login_url='login')
 def manage_appointments(request):
@@ -129,6 +128,19 @@ def manage_appointments(request):
 
     appointments = Appointment.objects.filter(user=request.user).order_by('start_date_time')
     return render(request, "grooming_service/profile.html", {'form': form, 'appointments': appointments})
+
+@login_required(login_url='login')
+def cancel_appointment(request, cancel_appointment_id):
+    try:
+        appointment = get_object_or_404(Appointment, id=cancel_appointment_id)
+        if appointment.user == request.user:
+            appointment.delete()
+            messages.success(request, "Your appointment has been successfully cancelled.")
+        else:
+            messages.error(request, "You do not have permission to cancel this appointment.")
+    except Appointment.DoesNotExist:
+        messages.error(request, "The requested appointment does not exist.")
+    return redirect("profile")
 
 
 @login_required(login_url='login')

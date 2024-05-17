@@ -15,15 +15,41 @@
             </div>
             <div>
                 {% if appointment.start_date_time >= now|add_hours:48 %}
-                <button class="btn btn-danger" id="{{ appointment.id }}">Cancel</button>
+                <button class="btn btn-danger cancelBtn" id="{{ appointment.id }}">Cancel</button>
 
-                <button class="btn btn-primary editBtn" id="{{ appointment.id }}">
-                    Edit</button>
+                <button class="btn btn-primary editBtn" id="{{ appointment.id }}">Edit</button>
+                 {% else %}
+                    <p> Past appointments or appointments that are within 48 hours cannot be edited</p>
                 {% endif %}
             </div>
         </li>
         {% endfor %}
     </ul>
+
+   <!-- Confirmation Modal For Cancelling Appointment -->
+<div class="modal fade" id="confirmCancelAppointmentModal" tabindex="-1"
+    aria-labelledby="cancelAppointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cancel Appointment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body container">
+                <p>Are you sure you want to cancel this appointment?</p>
+                <p><i>This action cannot be reversed</i></p>
+            </div>
+            <div class="modal-footer">
+                <form id="cancelAppointmentForm" method="post" action="{% url 'cancel_appointment' cancel_appointment_id=0 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="cancel_appointment_id" id="cancel_appointment_id" value="">
+                    <button type="button" class="btn btn-danger" id="confirmCancelButton">Yes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <!-- Edit Appointment Modal -->
@@ -86,7 +112,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
 {% else %}
 <p>You must be logged in</p>
