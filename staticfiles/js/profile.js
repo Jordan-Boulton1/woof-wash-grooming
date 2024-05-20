@@ -7,16 +7,34 @@ document.addEventListener("DOMContentLoaded", function() {
   const description = document.getElementById("id_description");
   const dateFieldIcon = document.getElementById("start-date-icon");
   const appointmentIdField = document.getElementById("appointment_id");
+  const cancelAppointmentIdField = document.getElementById("cancel_appointment_id");
+  const confirmCancelButton = document.getElementById("confirmCancelButton")
+
+
+  const triggerTabList = document.querySelectorAll('#v-tabs-tab button')
+  triggerTabList.forEach(triggerEl => {
+    const tabTrigger = new bootstrap.Tab(triggerEl)
+
+    triggerEl.addEventListener('click', event => {
+      event.preventDefault()
+      tabTrigger.show()
+    })
+  })
 
    cancelButtons.forEach(function(btn) {
     const appointmentModal = document.getElementById("confirmCancelAppointmentModal");
     btn.addEventListener('click', function() {
-      const appointmentId = btn.getAttribute('id');
-        console.log(appointmentId);
-      })
+            const appointmentId = btn.getAttribute('id');
 
-      const modal = new bootstrap.Modal(appointmentModal);
-      modal.show();
+            const modal = new bootstrap.Modal(appointmentModal);
+            modal.show();
+            confirmCancelButton.addEventListener("click", function() {
+                 cancelAppointmentIdField.value = appointmentId;
+            let form = document.getElementById("cancelAppointmentForm");
+            form.action = form.action.replace('/0/', '/' + appointmentId + '/');
+            form.submit();
+            });
+      });
     });
 
   editButtons.forEach(function(btn) {

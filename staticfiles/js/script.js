@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const petField = document.getElementById("id_pet");
-    const serviceField = document.getElementById("id_service");
     const dateFieldIcon = document.getElementById("start-date-icon")
 
 
@@ -13,4 +11,3 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
-

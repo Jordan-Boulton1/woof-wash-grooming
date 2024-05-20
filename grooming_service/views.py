@@ -97,7 +97,7 @@ def book_appointment(request):
     return render(request, "grooming_service/appointment.html", {"form": form})
 
 @login_required(login_url='login')
-def manage_appointments(request):
+def edit_appointments(request):
     form = AppointmentForm(request.POST or None)
 
     if request.method == "POST":
@@ -122,12 +122,12 @@ def manage_appointments(request):
             appointment.description = description
             appointment.save()
             messages.success(request, "Your appointment has been successfully updated")
-            return redirect("profile")
         except Appointment.DoesNotExist:
             messages.error(request, "The requested appointment does not exist")
 
     appointments = Appointment.objects.filter(user=request.user).order_by('start_date_time')
-    return render(request, "grooming_service/profile.html", {'form': form, 'appointments': appointments})
+    pets = Pet.objects.filter(user=request.user).order_by('pet_name')
+    return render(request, "grooming_service/profile.html", {'form': form, 'appointments': appointments, 'pets': pets})
 
 @login_required(login_url='login')
 def cancel_appointment(request, cancel_appointment_id):

@@ -4,122 +4,220 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.first_name }} to the profile page</p>
-    <ul class="list-group">
-        {% for appointment in appointments %}
-        <li class="list-group-item">
-            <div>
-                <p>{{appointment.service|safe }} on {{ appointment.start_date_time }} for {{ appointment.pet}}</p>
-            </div>
-            <div>
-                {% if appointment.start_date_time >= now|add_hours:48 %}
-                <button class="btn btn-danger cancelBtn" id="{{ appointment.id }}">Cancel</button>
+{% if user.is_authenticated %}
 
-                <button class="btn btn-primary editBtn" id="{{ appointment.id }}">Edit</button>
-                 {% else %}
-                    <p> Past appointments or appointments that are within 48 hours cannot be edited</p>
-                {% endif %}
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-
-   <!-- Confirmation Modal For Cancelling Appointment -->
-<div class="modal fade" id="confirmCancelAppointmentModal" tabindex="-1"
-    aria-labelledby="cancelAppointmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Cancel Appointment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body container">
-                <p>Are you sure you want to cancel this appointment?</p>
-                <p><i>This action cannot be reversed</i></p>
-            </div>
-            <div class="modal-footer">
-                <form id="cancelAppointmentForm" method="post" action="{% url 'cancel_appointment' cancel_appointment_id=0 %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="cancel_appointment_id" id="cancel_appointment_id" value="">
-                    <button type="button" class="btn btn-danger" id="confirmCancelButton">Yes</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    <!-- Edit Appointment Modal -->
-    <div class="modal fade" id="editAppointmentModal" tabindex="-1"
-        aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
-        {% for message in messages %}
-        <div class="{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"
-                        id="editAppointmentModalLabel">Edit Appointment</h5>
-                    <button type="button" class="btn-close"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Section for displaying user information and navigation tabs -->
+<section class="h-100 gradient-custom-2">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center">
+            <!-- Sidebar for navigation tabs -->
+            <div class="col-lg-2 col-xl-2 d-flex justify-content-end align-items-center p-0">
+                <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab" role="tablist" aria-orientation="vertical">
+                    <!-- Tabs for Pets and Appointments -->
+                    <button class="nav-link active" id="v-tabs-home-tab" data-bs-toggle="tab" href="#v-tabs-home" role="tab" aria-controls="v-tabs-home" aria-selected="true">Pets</button>
+                    <button class="nav-link" id="v-tabs-profile-tab" data-bs-toggle="tab" href="#v-tabs-profile" role="tab" aria-controls="v-tabs-profile" aria-selected="false">Appointments</button>
                 </div>
-                <div class="modal-body container">
-                    <form method="POST" action="#" class="model-form" id="editAppointmentForm">
-                            {{ form.media }}
-                            {% csrf_token %}
-                            <div class="row mb-3">
-                            <label for="id_start_date" class="col-sm-2 col-form-label">Start date:</label>
-                            <div class="col-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <a href="#" id="start-date-icon">
-                                            <i class="fas fa-calendar"></i>
-                                        </a>
-                                    </span>
-                                    <input type="text" id="start_date" class="form-control" name="start_date_time"></input>
+            </div>
+            <!-- Main content area -->
+            <div class="col-lg-10 col-xl-10 p-0">
+                <div class="card">
+                    <!-- User profile header -->
+                    <div class="rounded-top text-white d-flex flex-row custom-bg-primary" style="height:200px;">
+                        <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                            <!-- User profile image and edit button -->
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+                            <button type="button" class="btn btn-outline-dark text-body" style="z-index: 1;">
+                                Edit profile
+                            </button>
+                        </div>
+                        <!-- User profile details -->
+                        <div class="ms-3" style="margin-top: 110px;">
+                            <h5>{{ user.first_name }} {{ user.last_name }}</h5>
+                            <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ user.address }}</p>
+                            <p class="mb-1"><i class="fa-solid fa-phone"></i> {{ user.phone_number }}</p>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 text-black">
+                        <!-- Tab content -->
+                        <div class="tab-content" id="v-tabs-tabContent">
+                            <!-- Pets tab content -->
+                            <div class="tab-pane fade show active" id="v-tabs-home" role="tabpanel" aria-labelledby="v-tabs-home-tab">
+                                <div class="content-container">
+                                    <div class="d-flex justify-content-end mb-2">
+                                        <button type="button" class="btn btn-success">Add pet</button>
+                                    </div>
+                                    <!-- Loop through pets and display them -->
+                                    {% for pet in pets %}
+                                    <div class="content-box d-md-flex align-items-center justify-content-between mb-30">
+                                        <div class="content-left my-4 d-md-flex align-items-center flex-wrap">
+                                            <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-lg-flex">
+                                                FD
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="text-center text-md-left">{{ pet.pet_name }}</h5>
+                                                <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                                    <li class="mr-md-4">
+                                                        <i class="fa-solid fa-paw mr-2"></i> {{ pet.breed }}
+                                                    </li>
+                                                    <li class="mr-md-4">
+                                                        <i class="fa-solid fa-cake-candles mr-2"></i> {{ pet.age }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="content-right my-4 flex-shrink-0">
+                                            <a href="#" class="btn d-block w-100 d-sm-inline-block btn-light">Edit</a>
+                                            <a href="#" class="btn btn-danger d-block w-100 d-sm-inline-block">Delete</a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- Appointments tab content -->
+                            <div class="tab-pane fade" id="v-tabs-profile" role="tabpanel" aria-labelledby="v-tabs-profile-tab">
+                                <div class="content-container">
+                                    <!-- Check if appointments exist -->
+                                    {% if appointments %}
+                                        <!-- Loop through appointments and display them -->
+                                        {% for appointment in appointments %}
+                                        <div class="content-box d-md-flex align-items-center justify-content-between mb-30">
+                                            <div class="content-left my-4 d-md-flex align-items-center flex-wrap">
+                                                <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-lg-flex">
+                                                    FD
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="text-center text-md-left">{{ appointment.pet }}</h5>
+                                                    <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                                        <li class="mr-md-4">
+                                                            <i class="fa-solid fa-paw mr-2"></i> {{ appointment.service }}
+                                                        </li>
+                                                        <li class="mr-md-4">
+                                                            <i class="fa-solid fa-cake-candles mr-2"></i> {{ appointment.start_date_time }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="content-right my-4 flex-shrink-0">
+                                                <!-- Check if appointment can be edited -->
+                                                {% if appointment.start_date_time >= now|add_hours:48 %}
+                                                <button class="btn btn-danger cancelBtn" id="{{ appointment.id }}">Cancel</button>
+                                                <button class="btn btn-primary editBtn" id="{{ appointment.id }}">Edit</button>
+                                                {% else %}
+                                                <p>Past appointments or appointments that are within 48 hours cannot be edited</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    {% else %}
+                                    <!-- Display message if no appointments exist -->
+                                    <div>
+                                        <p>You have no scheduled appointments</p>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label for="id_pet" class="col-sm-2 col-form-label">Pet:</label>
-                            <div class="col-sm-10">
-                                {{ form.pet }}
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="id_service" class="col-sm-2 col-form-label">Service:</label>
-                            <div class="col-sm-10">
-                                {{ form.service }}
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="id_service" class="col-sm-2 col-form-label">Description:</label>
-                            <div class="col-sm-10">
-                                {{ form.description }}
-                            </div>
-                        </div>
-                        <input type="hidden" id="appointment_id" name="appointment_id">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+                        <!-- Tab content -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+
+<!-- Confirmation Modal For Cancelling Appointment -->
+<div class="modal fade" id="confirmCancelAppointmentModal" tabindex="-1"
+aria-labelledby="cancelAppointmentModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Cancel Appointment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body container">
+            <p>Are you sure you want to cancel this appointment?</p>
+            <p><i>This action cannot be reversed</i></p>
+        </div>
+        <div class="modal-footer">
+            <form id="cancelAppointmentForm" method="post" action="{% url 'cancel_appointment' cancel_appointment_id=0 %}">
+                {% csrf_token %}
+                <input type="hidden" name="cancel_appointment_id" id="cancel_appointment_id" value="">
+                <button type="button" class="btn btn-danger" id="confirmCancelButton">Yes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+            </form>
+        </div>
     </div>
+</div>
+</div>
+
+<!-- Edit Appointment Modal -->
+<div class="modal fade" id="editAppointmentModal" tabindex="-1"
+aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
+<!-- Display messages -->
+{% for message in messages %}
+<div class="{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"
+                id="editAppointmentModalLabel">Edit Appointment</h5>
+            <button type="button" class="btn-close"
+                data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body container">
+            <form method="POST" action="#" class="model-form" id="editAppointmentForm">
+                    {{ form.media }}
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                    <label for="id_start_date" class="col-sm-2 col-form-label">Start date:</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <a href="#" id="start-date-icon">
+                                    <i class="fas fa-calendar"></i>
+                                </a>
+                            </span>
+                            <input type="text" id="start_date" class="form-control" name="start_date_time"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="id_pet" class="col-sm-2 col-form-label">Pet:</label>
+                    <div class="col-sm-10">
+                        {{ form.pet }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="id_service" class="col-sm-2 col-form-label">Service:</label>
+                    <div class="col-sm-10">
+                        {{ form.service }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="id_service" class="col-sm-2 col-form-label">Description:</label>
+                    <div class="col-sm-10">
+                        {{ form.description }}
+                    </div>
+                </div>
+                <input type="hidden" id="appointment_id" name="appointment_id">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+        </div>
+    </div>
+</div>
+</div>
 
 {% else %}
+<!-- Display message if user is not logged in -->
 <p>You must be logged in</p>
-
 {% endif %}
-
 {% endblock %}
+
 {% block js %}
 <script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}
