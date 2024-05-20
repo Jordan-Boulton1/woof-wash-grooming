@@ -44,7 +44,7 @@ class Pet(models.Model):
     pet_name = models.CharField(max_length=255)
     breed = models.CharField(max_length=255)
     age = models.IntegerField()
-    medical_notes = models.TextField()
+    medical_notes = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -56,9 +56,9 @@ class Pet(models.Model):
 STATUS = ((0, "available"), (1, "booked"), (2, "cancelled"))
 
 class Appointment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     status = models.IntegerField(choices=STATUS, default=0)
     start_date_time = models.DateTimeField()
     description = models.TextField(null=True)

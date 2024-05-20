@@ -54,15 +54,7 @@ class AppointmentForm(forms.ModelForm):
             self.fields["pet"].queryset = Pet.objects.filter(user=user)
             self.fields["service"].queryset = Service.objects.all()
 
-class PartialAppointmentForm(forms.Form):
-    pet = forms.ModelChoiceField(queryset=Pet.objects.all(), required=True, widget=forms.Select(), initial="")
-    service = forms.ModelChoiceField(queryset=Service.objects.all(), required=True, widget=forms.Select(), initial="")
-    description = forms.CharField(required=False,
-                                  widget=forms.Textarea(attrs={'placeholder': 'Additional information...'}))
-
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        super().__init__(*args, **kwargs)
-
-        if user:
-            self.fields["pet"].queryset = Pet.objects.filter(user=user)
+class PetForm(forms.ModelForm):
+    class Meta:
+        model = Pet
+        fields = ["pet_name", "breed", "age", "medical_notes"]
