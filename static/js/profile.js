@@ -15,12 +15,13 @@ document.addEventListener("DOMContentLoaded", function() {
   const description = document.getElementById("id_description");
   const dateFieldIcon = document.getElementById("start-date-icon");
   const appointmentIdField = document.getElementById("appointment_id");
+  const petIdField = document.getElementById("pet_id");
   const cancelAppointmentIdField = document.getElementById("cancel_appointment_id");
   const deletePetIdField = document.getElementById("pet_id");
   const confirmCancelButton = document.getElementById("confirmCancelButton");
   const confirmDeletePetButton = document.getElementById("confirmDeletePetButton");
-  const appointmentModal = document.getElementById("addPetModal");
-  const addPetSubmitButton = document.getElementById("addPetSubmitButton");
+  const addPetModal = document.getElementById("addPetModal");
+  const editPetButtons = document.querySelectorAll('.editPetBtn');
 
   // Handling tab triggers
   const triggerTabList = document.querySelectorAll('#v-tabs-tab button')
@@ -75,23 +76,149 @@ document.addEventListener("DOMContentLoaded", function() {
       const modal = new bootstrap.Modal(appointmentModal);
       modal.show();
 
-      document.getElementById('saveChangesButton').addEventListener('click', function () {
-        console.log(appointmentIdField.value);
-        document.getElementById('editAppointmentForm').submit();
-      });
+
     });
   });
 
   // Show add pet modal
   addPetButton.addEventListener('click', function() {
-    const modal = new bootstrap.Modal(appointmentModal);
+    const modal = new bootstrap.Modal(addPetModal);
     modal.show();
   });
 
+  document.getElementById('saveChangesButton').addEventListener('click', function (event) {
+        const editAppointmentForm = document.getElementById('editAppointmentForm');
+        const editAppointmentFormData = new FormData(editAppointmentForm);
+        const startDateTime = editAppointmentFormData.get('start_date_time');
+        const convertedDateTime = convertDateTimeFormat(startDateTime);
+        editAppointmentFormData.set('start_date_time', convertedDateTime);
+
+        document.getElementById('editAppointmentFormErrors').innerHTML = '';
+
+        fetch(editAppointmentForm.action, {
+            method: 'POST',
+            body: editAppointmentFormData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const errorMessages = doc.querySelectorAll('#editAppointmentFormErrors .alert');
+
+            const errorDiv = document.getElementById('editAppointmentFormErrors');
+            errorMessages.forEach(error => {
+                errorDiv.appendChild(error);
+            });
+
+            if (errorMessages.length === 0) {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+   });
+
   // Handle add pet submit
-  addPetSubmitButton.addEventListener("click", function() {
-    document.getElementById('addPetForm').submit();
+document.getElementById('addPetSubmitButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    const form = document.getElementById('addPetForm');
+    const formData = new FormData(form);
+
+    document.getElementById('petFormErrors').innerHTML = '';
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    })
+    .then(response => response.text())
+    .then(data => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const errorMessages = doc.querySelectorAll('#petFormErrors .alert');
+
+        const errorDiv = document.getElementById('petFormErrors');
+        errorMessages.forEach(error => {
+            errorDiv.appendChild(error);
+        });
+
+        if (errorMessages.length === 0) {
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+ editPetButtons.forEach(function(btn) {
+    const editPetModal = document.getElementById("editPetModal");
+    btn.addEventListener('click', function() {
+      const petId = btn.getAttribute('id');
+
+      petIdField.innerHTML = "";
+      fetch(`/api/pet/${petId}/`)
+      .then((response) => response.json())
+      .then((data) => {
+        const pet = data.pet
+        petIdField.value = petId;
+          const petNameField = document.getElementById("edit_pet_name");
+          const petBreedField = document.getElementById("edit_pet_breed");
+          const petAgeField = document.getElementById("edit_pet_age");
+          const petMedicalNotesField = document.getElementById("edit_medical_notes");
+          setDefaultOption(petNameField, pet.name)
+          setDefaultOption(petBreedField, pet.breed);
+          setDefaultOption(petAgeField, pet.age);
+          setDefaultOption(petMedicalNotesField, pet.medical_notes);
+      })
+
+      const modal = new bootstrap.Modal(editPetModal);
+      modal.show();
+
+
+    });
   });
+
+ document.getElementById('editPetButton').addEventListener('click', function (event) {
+        const editPetForm = document.getElementById('editPetForm');
+        const editPetFormData = new FormData(editPetForm);
+
+        document.getElementById('editPetFormErrors').innerHTML = '';
+
+        fetch(editPetForm.action, {
+            method: 'POST',
+            body: editPetFormData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const errorMessages = doc.querySelectorAll('#editPetFormErrors .alert');
+
+            const errorDiv = document.getElementById('editPetFormErrors');
+            errorMessages.forEach(error => {
+                errorDiv.appendChild(error);
+            });
+
+            if (errorMessages.length === 0) {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+   });
 
   // Handle delete buttons
   deletePetButtons.forEach(function(btn) {
@@ -141,4 +268,12 @@ function setDefaultSelectOption(field, id) {
       break;
     }
   }
+}
+
+function convertDateTimeFormat(dateTimeStr) {
+    // Assuming the incoming date format is "d-m-Y H:i"
+    // Convert it to "Y-m-d H:i"
+    const [datePart, timePart] = dateTimeStr.split(' ');
+    const [day, month, year] = datePart.split('-');
+    return `${year}-${month}-${day} ${timePart}`;
 }

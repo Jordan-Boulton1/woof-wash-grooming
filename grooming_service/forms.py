@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django_flatpickr.widgets import DateTimePickerInput
 from django_flatpickr.schemas import FlatpickrOptions
 from .models import *
+from datetime import datetime
 import re
 
 
@@ -72,11 +73,134 @@ class AppointmentForm(forms.ModelForm):
         if user:
             self.fields["pet"].queryset = Pet.objects.filter(user=user)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = []
 
+        service = cleaned_data.get("service")
+        pet = cleaned_data.get("pet")
 
+        if service is None:
+            errors.append("You must select a valid service.")
+        if pet is None:
+            errors.append("You must select a valid pet.")
+        if errors:
+            raise ValidationError(errors)
+
+        return cleaned_data
 
 
 class PetForm(forms.ModelForm):
     class Meta:
         model = Pet
         fields = ["pet_name", "breed", "age", "medical_notes"]
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+
+        self.fields["pet_name"] = forms.CharField(
+            required=True,
+            widget=forms.TextInput(attrs={'class': 'form-control'})
+        )
+
+        self.fields["breed"] = forms.CharField(
+            required=True,
+            widget=forms.TextInput(attrs={'class': 'form-control'}),
+        )
+
+        self.fields["age"] = forms.IntegerField(
+            required=True,
+            widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+
+        self.fields["medical_notes"] = forms.CharField(
+            required=False,
+            widget=forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter additional information here...'
+            })
+        )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = []
+
+        pet_name = cleaned_data.get("pet_name")
+        breed = cleaned_data.get("breed")
+        age = cleaned_data.get("age")
+
+        if not pet_name:
+            errors.append("Pet name cannot be empty.")
+        if not breed:
+            errors.append("Breed cannot be empty.")
+        if age is None:
+            errors.append("Age cannot be empty.")
+        if pet_name and not re.match(r'^[A-Za-z\s]+$', pet_name):
+            errors.append("Pet name can only contain letters and white spaces.")
+        if breed and not re.match(r'^[A-Za-z\s]+$', breed):
+            errors.append("Breed can only contain letters and white spaces.")
+        if age and age <= 0:
+            errors.append("Age must be a positive number.")
+        if errors:
+            raise ValidationError(errors)
+
+        return cleaned_data
+
+
+class EditPetForm(forms.ModelForm):
+    class Meta:
+        model = Pet
+        fields = ["pet_name", "breed", "age", "medical_notes"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["pet_name"] = forms.CharField(
+            required=True,
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'edit_pet_name'})
+        )
+
+        self.fields["breed"] = forms.CharField(
+            required=True,
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'edit_pet_breed'}),
+        )
+
+        self.fields["age"] = forms.IntegerField(
+            required=True,
+            widget=forms.NumberInput(attrs={'class': 'form-control', 'id': 'edit_pet_age'})
+        )
+
+        self.fields["medical_notes"] = forms.CharField(
+            required=False,
+            widget=forms.Textarea(attrs={
+                'class': 'form-control',
+                'id': 'edit_medical_notes',
+                'placeholder': 'Enter additional information here...'
+            })
+        )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = []
+
+        pet_name = cleaned_data.get("pet_name")
+        breed = cleaned_data.get("breed")
+        age = cleaned_data.get("age")
+
+        if not pet_name:
+            errors.append("Pet name cannot be empty.")
+        if not breed:
+            errors.append("Breed cannot be empty.")
+        if age is None:
+            errors.append("Age cannot be empty.")
+        if pet_name and not re.match(r'^[A-Za-z\s]+$', pet_name):
+            errors.append("Pet name can only contain letters and white spaces.")
+        if breed and not re.match(r'^[A-Za-z\s]+$', breed):
+            errors.append("Breed can only contain letters and white spaces.")
+        if age and age <= 0:
+            errors.append("Age must be a positive number.")
+        if errors:
+            raise ValidationError(errors)
+
+        return cleaned_data

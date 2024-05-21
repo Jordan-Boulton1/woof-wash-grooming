@@ -101,29 +101,52 @@ def book_appointment(request):
 def manage_profile(request):
     appointmentForm = AppointmentForm(request.POST or None, user=request.user)
     petForm = PetForm(request.POST or None)
+    editPetForm = EditPetForm(request.POST or None)
+
     if request.method == "POST":
-        if len(appointmentForm.changed_data) != 0:
-            __handle_edit_appointment_form(request, appointmentForm)
-        if len(petForm.changed_data) != 0:
-            __handle_pet_add_form(request, petForm)
+        form_type = request.POST.get('form_type')
+        if form_type == 'edit_appointment_form':
+            if appointmentForm.is_valid():
+                __handle_edit_appointment_form(request, appointmentForm)
+            else:
+                if '__all__' in appointmentForm.errors:
+                    for error in appointmentForm.errors['__all__']:
+                        messages.error(request, error)
+        if form_type == 'pet_form':
+            if petForm.is_valid():
+                __handle_pet_add_form(request, petForm)
+            else:
+                if '__all__' in petForm.errors:
+                    for error in petForm.errors['__all__']:
+                        messages.error(request, error)
+        if form_type == 'edit_pet_form':
+            if editPetForm.is_valid():
+                __handle_pet_edit_form(request, editPetForm)
+            else:
+                if '__all__' in editPetForm.errors:
+                    for error in editPetForm.errors['__all__']:
+                        messages.error(request, error)
+
     appointments = Appointment.objects.filter(user=request.user).order_by('start_date_time')
     pets = Pet.objects.filter(user=request.user).order_by('pet_name')
-    return render(request, "grooming_service/profile.html", {'appointmentForm': appointmentForm,
-                                                             'appointments': appointments,
-                                                             'pets': pets,
-                                                             'petForm': petForm})
+    return render(request, "grooming_service/profile.html", {
+        'appointmentForm': appointmentForm,
+        'appointments': appointments,
+        'pets': pets,
+        'petForm': petForm,
+        'editPetForm': editPetForm
+    })
 
 
-# Handle edit appointment form
 def __handle_edit_appointment_form(request, appointmentForm):
     appointment_id = request.POST.get("appointment_id")
     start_date_time = request.POST.get("start_date_time")
-    description = appointmentForm.data["description"]
-    pet = appointmentForm.data["pet"]
-    service = appointmentForm.data["service"]
+    description = appointmentForm.cleaned_data["description"]
+    pet = appointmentForm.cleaned_data["pet"]
+    service = appointmentForm.cleaned_data["service"]
     try:
         appointment = Appointment.objects.get(id=appointment_id)
-        request_date_time_obj = datetime.strptime(start_date_time, "%d-%m-%Y %H:%M")
+        request_date_time_obj = datetime.strptime(start_date_time, '%Y-%m-%d %H:%M')
         formatted_date_time = request_date_time_obj.strftime('%Y-%m-%d %H:%M')
         if appointment.start_date_time.strftime('%Y-%m-%d %H:%M') != formatted_date_time:
             if Appointment.objects.filter(start_date_time=formatted_date_time, status=1).exists():
@@ -131,33 +154,46 @@ def __handle_edit_appointment_form(request, appointmentForm):
                 return redirect("profile")
             else:
                 appointment.start_date_time = request_date_time_obj
-        appointment.pet_id = pet
-        appointment.service_id = service
+        appointment.pet = pet
+        appointment.service = service
         appointment.description = description
         appointment.save()
-        messages.success(request, "Your appointment has been successfully updated")
         return redirect("profile")
     except Appointment.DoesNotExist:
         messages.error(request, "The requested appointment does not exist")
 
 
-# Handle adding pet form
-def __handle_pet_add_form(request, petForm):
-    if petForm.is_valid():
-        pet_name = petForm.cleaned_data["pet_name"]
-        breed = petForm.cleaned_data["breed"]
-        age = petForm.cleaned_data["age"]
-        medical_notes = petForm.cleaned_data["medical_notes"]
-        pet = Pet()
+def __handle_pet_edit_form(request, editPetForm):
+    pet_id = request.POST.get("pet_id")
+    pet_name = editPetForm.cleaned_data["pet_name"]
+    breed = editPetForm.cleaned_data["breed"]
+    age = editPetForm.cleaned_data["age"]
+    medical_notes = editPetForm.cleaned_data["medical_notes"]
+    try:
+        pet = Pet.objects.get(id=pet_id)
         pet.pet_name = pet_name
         pet.breed = breed
         pet.age = age
         pet.medical_notes = medical_notes
-        pet.user = request.user
         pet.save()
         return redirect("profile")
-    else:
-        messages.error(request, "Invalid pet data")
+    except Pet.DoesNotExist:
+        messages.error(request, "The requested pet does not exist")
+
+
+def __handle_pet_add_form(request, petForm):
+    pet_name = petForm.cleaned_data["pet_name"]
+    breed = petForm.cleaned_data["breed"]
+    age = petForm.cleaned_data["age"]
+    medical_notes = petForm.cleaned_data["medical_notes"]
+    pet = Pet()
+    pet.pet_name = pet_name
+    pet.breed = breed
+    pet.age = age
+    pet.medical_notes = medical_notes
+    pet.user = request.user
+    pet.save()
+    return redirect("profile")
 
 
 # Cancel appointment view
@@ -167,7 +203,6 @@ def cancel_appointment(request, cancel_appointment_id):
         appointment = get_object_or_404(Appointment, id=cancel_appointment_id)
         if appointment.user == request.user:
             appointment.delete()
-            messages.success(request, "Your appointment has been successfully cancelled.")
             return redirect("profile")
         else:
             messages.error(request, "You do not have permission to cancel this appointment.")
@@ -182,7 +217,6 @@ def delete_pet(request, delete_pet_id):
         pet = get_object_or_404(Pet, id=delete_pet_id)
         if pet.user == request.user:
             pet.delete()
-            messages.success(request, "Your pet has been successfully deleted.")
             return redirect("profile")
         else:
             messages.error(request, "You do not have permission to delete this pet.")
@@ -213,4 +247,21 @@ def get_appointment_by_id(request, appointment_id):
             return JsonResponse({"appointment": appointment_data})
         except Appointment.DoesNotExist:
             return JsonResponse({"message": "Appointment not found"}, status=404)
+    return JsonResponse({"message": "Invalid request"}, status=400)
+
+@login_required(login_url='login')
+def get_pet_by_id(request,pet_id):
+    if pet_id:
+        try:
+            pet = Pet.objects.get(id=pet_id)
+            pet_data = {
+                "id": pet.id,
+                "name": pet.pet_name,
+                "breed": pet.breed,
+                "age": pet.age,
+                "medical_notes": pet.medical_notes
+            }
+            return JsonResponse({"pet": pet_data})
+        except Pet.DoesNotExist:
+            return JsonResponse({"message": "Pet not found"}, status=404)
     return JsonResponse({"message": "Invalid request"}, status=400)
