@@ -1,9 +1,14 @@
-// Execute when the DOM content is fully loaded
+// Prevents the POST from running again on refresh or back button.
+if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   // Selecting elements
   const editButtons = document.querySelectorAll('.editBtn');
   const addPetButton = document.getElementById('addPetButton');
   const cancelButtons = document.querySelectorAll('.cancelBtn');
+  const deletePetButtons = document.querySelectorAll('.deletePetBtn');
   const dateField = document.getElementById("start_date");
   const petField = document.getElementById("id_pet");
   const serviceField = document.getElementById("id_service");
@@ -11,7 +16,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const dateFieldIcon = document.getElementById("start-date-icon");
   const appointmentIdField = document.getElementById("appointment_id");
   const cancelAppointmentIdField = document.getElementById("cancel_appointment_id");
+  const deletePetIdField = document.getElementById("pet_id");
   const confirmCancelButton = document.getElementById("confirmCancelButton");
+  const confirmDeletePetButton = document.getElementById("confirmDeletePetButton");
   const appointmentModal = document.getElementById("addPetModal");
   const addPetSubmitButton = document.getElementById("addPetSubmitButton");
 
@@ -23,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     triggerEl.addEventListener('click', event => {
       event.preventDefault()
       tabTrigger.show()
+
     })
   })
 
@@ -83,7 +91,24 @@ document.addEventListener("DOMContentLoaded", function() {
   // Handle add pet submit
   addPetSubmitButton.addEventListener("click", function() {
     document.getElementById('addPetForm').submit();
-  })
+  });
+
+  // Handle delete buttons
+  deletePetButtons.forEach(function(btn) {
+    const deletePetModal = document.getElementById("confirmDeletePetModal");
+    btn.addEventListener('click', function() {
+      const petid = btn.getAttribute('id');
+      const modal = new bootstrap.Modal(deletePetModal);
+      modal.show();
+      confirmDeletePetButton.addEventListener("click", function() {
+        deletePetIdField.value = petid;
+        let form = document.getElementById("deletePetForm");
+        form.action = form.action.replace('/0/', '/' + petid + '/');
+        form.submit();
+      });
+
+    });
+  });
 });
 
 // Render Flatpickr date-time picker

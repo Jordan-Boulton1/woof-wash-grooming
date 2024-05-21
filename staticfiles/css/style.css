@@ -37,6 +37,10 @@
     background-size: cover;
 }
 
+.django-flatpickr {
+    width: 100%;
+}
+
 /* Primary background color */
 .custom-bg-primary {
     background-color: #87CEEB;
@@ -48,8 +52,8 @@
 }
 
 /* Card body margin top */
-.card-body {
-    margin-top: 65px;
+.profile-content .card-body {
+    margin-top: 20px;
 }
 
 /* Body background and margin top */
@@ -58,6 +62,10 @@ body {
     margin-top: 20px;
 }
 
+.content-container {
+    overflow-y: auto;
+    max-height: 500px;
+}
 /* Content box styles */
 .content-container .content-box {
     background: #fff;

@@ -14,12 +14,12 @@
             <div class="col-lg-2 col-xl-2 d-flex justify-content-end align-items-center p-0">
                 <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab" role="tablist" aria-orientation="vertical">
                     <!-- Tabs for Pets and Appointments -->
-                    <button class="nav-link active" id="v-tabs-home-tab" data-bs-toggle="tab" href="#v-tabs-home" role="tab" aria-controls="v-tabs-home" aria-selected="true">Pets</button>
-                    <button class="nav-link" id="v-tabs-profile-tab" data-bs-toggle="tab" href="#v-tabs-profile" role="tab" aria-controls="v-tabs-profile" aria-selected="false">Appointments</button>
+                    <button class="nav-link active" id="v-tabs-pet-tab" data-bs-toggle="tab" href="#v-tabs-home" role="tab" aria-controls="v-tabs-home" aria-selected="true">Pets</button>
+                    <button class="nav-link" id="v-tabs-appointment-tab" data-bs-toggle="tab" href="#v-tabs-appointment" role="tab" aria-controls="v-tabs-appointment" aria-selected="false">Appointments</button>
                 </div>
             </div>
             <!-- Main content area -->
-            <div class="col-lg-10 col-xl-10 p-0">
+            <div class="col-lg-10 col-xl-10 p-0 profile-content">
                 <div class="card">
                     <!-- User profile header -->
                     <div class="rounded-top text-white d-flex flex-row custom-bg-primary" style="height:200px;">
@@ -41,17 +41,17 @@
                         <!-- Tab content -->
                         <div class="tab-content" id="v-tabs-tabContent">
                             <!-- Pets tab content -->
-                            <div class="tab-pane fade show active" id="v-tabs-home" role="tabpanel" aria-labelledby="v-tabs-home-tab">
-                                <div class="content-container">
-                                    <div class="d-flex justify-content-end mb-2">
+                            <div class="tab-pane fade show active" id="v-tabs-home" role="tabpanel" aria-labelledby="v-tabs-pet-tab">
+                              <div class="d-flex justify-content-end mb-5">
                                         <button type="button" class="btn btn-success" id="addPetButton">Add pet</button>
                                     </div>
+                                <div class="content-container">
                                     <!-- Loop through pets and display them -->
                                     {% for pet in pets %}
                                     <div class="content-box d-md-flex align-items-center justify-content-between mb-30">
                                         <div class="content-left my-4 d-md-flex align-items-center flex-wrap">
                                             <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-lg-flex">
-                                                FD
+                                               {{ pet.pet_name }}
                                             </div>
                                             <div class="content">
                                                 <h5 class="text-center text-md-left">{{ pet.pet_name }}</h5>
@@ -66,15 +66,15 @@
                                             </div>
                                         </div>
                                         <div class="content-right my-4 flex-shrink-0">
-                                            <a href="#" class="btn d-block w-100 d-sm-inline-block btn-light">Edit</a>
-                                            <a href="#" class="btn btn-danger d-block w-100 d-sm-inline-block">Delete</a>
+                                            <button class="btn d-block w-100 d-sm-inline-block btn-light editPetBtn" id="{{ pet.id }}">Edit</button>
+                                            <button class="btn btn-danger d-block w-100 d-sm-inline-block deletePetBtn" id="{{ pet.id }}">Delete</button>
                                         </div>
                                     </div>
                                     {% endfor %}
                                 </div>
                             </div>
                             <!-- Appointments tab content -->
-                            <div class="tab-pane fade" id="v-tabs-profile" role="tabpanel" aria-labelledby="v-tabs-profile-tab">
+                            <div class="tab-pane fade" id="v-tabs-appointment" role="tabpanel" aria-labelledby="v-tabs-appointment-tab">
                                 <div class="content-container">
                                     <!-- Check if appointments exist -->
                                     {% if appointments %}
@@ -100,8 +100,8 @@
                                             <div class="content-right my-4 flex-shrink-0">
                                                 <!-- Check if appointment can be edited -->
                                                 {% if appointment.start_date_time >= now|add_hours:48 %}
-                                                <button class="btn btn-danger cancelBtn" id="{{ appointment.id }}">Cancel</button>
-                                                <button class="btn btn-primary editBtn" id="{{ appointment.id }}">Edit</button>
+                                                    <button class="btn d-block w-100 d-sm-inline-block btn-light editBtn" id="{{ appointment.id }}">Edit</button>
+                                                    <button class="btn btn-danger d-block w-100 d-sm-inline-block cancelBtn" id="{{ appointment.id }}">Cancel</button>
                                                 {% else %}
                                                 <p>Past appointments or appointments that are within 48 hours cannot be edited</p>
                                                 {% endif %}
@@ -142,8 +142,8 @@ aria-labelledby="cancelAppointmentModalLabel" aria-hidden="true">
             <form id="cancelAppointmentForm" method="post" action="{% url 'cancel_appointment' cancel_appointment_id=0 %}">
                 {% csrf_token %}
                 <input type="hidden" name="cancel_appointment_id" id="cancel_appointment_id" value="">
-                <button type="button" class="btn btn-danger" id="confirmCancelButton">Yes</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger d-block w-200 d-sm-inline-block" id="confirmCancelButton">Yes</button>
+                <button type="button" class="btn d-block w-200 d-sm-inline-block btn-light" data-bs-dismiss="modal">No</button>
             </form>
         </div>
     </div>
@@ -166,7 +166,7 @@ aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
                 data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body container">
-            <form method="POST" action="" class="model-form" id="editAppointmentForm">
+            <form method="POST" class="model-form" id="editAppointmentForm">
                     {{ form.media }}
                     {% csrf_token %}
                     <div class="row mb-3">
@@ -228,7 +228,7 @@ aria-labelledby="addPetModalLabel" aria-hidden="true">
                 data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body container">
-            <form method="POST" action="" class="model-form" id="addPetForm">
+            <form method="POST" class="model-form" id="addPetForm">
                     {{ form.media }}
                     {% csrf_token %}
                  <div class="row mb-3">
@@ -265,6 +265,31 @@ aria-labelledby="addPetModalLabel" aria-hidden="true">
             <button type="button" class="btn btn-secondary"
                 data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" id="addPetSubmitButton">Create</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Confirmation Modal For Deleting Pet -->
+<div class="modal fade" id="confirmDeletePetModal" tabindex="-1"
+aria-labelledby="confirmDeletePetLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Delete pet</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body container">
+            <p>Are you sure you want to delete the pet?</p>
+            <p><i>This action cannot be reversed</i></p>
+        </div>
+        <div class="modal-footer">
+            <form id="deletePetForm" method="post" action="{% url 'delete_pet' delete_pet_id=0 %}">
+                {% csrf_token %}
+                <input type="hidden" name="pet_id" id="pet_id" value="">
+                <button type="button" class="btn btn-danger d-block w-200 d-sm-inline-block" id="confirmDeletePetButton">Yes</button>
+                <button type="button" class="btn d-block w-200 d-sm-inline-block btn-light" data-bs-dismiss="modal">No</button>
+            </form>
         </div>
     </div>
 </div>

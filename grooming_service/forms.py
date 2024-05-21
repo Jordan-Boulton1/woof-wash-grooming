@@ -2,7 +2,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django_flatpickr.widgets import DateTimePickerInput
 from django_flatpickr.schemas import FlatpickrOptions
-from django.utils import timezone
 from .models import *
 import re
 
@@ -39,7 +38,6 @@ class AppointmentForm(forms.ModelForm):
         model = Appointment
         fields = ["service", "pet", "start_date_time", "description"]
 
-
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
@@ -49,10 +47,34 @@ class AppointmentForm(forms.ModelForm):
                 altFormat="d-m-Y H:i",
             )
         )
+        self.fields["start_date_time"].widget.attrs.update({'class': 'form-control', 'required': 'true'})
 
+        self.fields["service"] = forms.ModelChoiceField(
+            queryset=Service.objects.all(),
+            required=True,
+            empty_label="Select a service"
+        )
+        self.fields["service"].widget.attrs.update({'class': 'form-control'})
+
+        self.fields["pet"] = forms.ModelChoiceField(
+            queryset=Pet.objects.none(),
+            required=True,
+            empty_label="Select a pet"
+        )
+        self.fields["description"] = forms.CharField(
+            required=False,
+            widget=forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter additional information here...'
+            })
+        )
+        self.fields["pet"].widget.attrs.update({'class': 'form-control'})
         if user:
             self.fields["pet"].queryset = Pet.objects.filter(user=user)
-            self.fields["service"].queryset = Service.objects.all()
+
+
+
+
 
 class PetForm(forms.ModelForm):
     class Meta:
