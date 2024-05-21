@@ -99,7 +99,7 @@ def book_appointment(request):
 # Manage profile view
 @login_required(login_url='login')
 def manage_profile(request):
-    appointmentForm = AppointmentForm(request.POST or None)
+    appointmentForm = AppointmentForm(request.POST or None, user=request.user)
     petForm = PetForm(request.POST or None)
     if request.method == "POST":
         if len(appointmentForm.changed_data) != 0:
