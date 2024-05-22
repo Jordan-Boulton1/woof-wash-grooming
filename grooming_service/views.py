@@ -87,7 +87,6 @@ def book_appointment(request):
                                           start_date_time=start_date_time,
                                           description=description)
                 appointment.save()
-                messages.success(request, "Your appointment has been booked.")
                 return redirect("profile")
         else:
             messages.error(request, "There was an error booking this appointment.")
