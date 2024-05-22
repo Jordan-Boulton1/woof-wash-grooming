@@ -2,13 +2,13 @@
 {% load static %}
 {% block content %}
   <h2>Edit Profile</h2>
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Save changes</button>
     <button type="button" class="btn btn-danger" id="deleteUserBtn">Delete profile</button>
   </form>
-    
+
     <!-- Confirmation Modal For Deleting Pet -->
 <div class="modal fade" id="confirmDeleteProfileModal" tabindex="-1"
 aria-labelledby="confirmDeleteProfileModal" aria-hidden="true">

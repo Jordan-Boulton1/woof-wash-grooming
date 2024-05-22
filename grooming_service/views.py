@@ -101,8 +101,10 @@ def edit_profile(request):
     if request.method == "POST":
         form = EditUserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, request.user)
+            user = form.save()
+            user.set_password(form.cleaned_data["password"])
+            user.save()
+            update_session_auth_hash(request, user)
             return redirect("/profile")
         else:
             messages.error(request, "Please correct the errors.")
