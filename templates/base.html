@@ -56,7 +56,7 @@
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border-0" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{% static 'images/nobody.jpg' %}" width="40" height="40" class="rounded-circle">
+                            <img src="{{ user.image.url }}" width="60" height="60" class="rounded-circle">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>

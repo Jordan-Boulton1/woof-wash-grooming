@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from .validators import Validators
 from .custom_user_manager import CustomUserManager
@@ -16,6 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                                     error_messages={"unique": "This phone number is already in use."}, 
                                     validators=[Validators.validate_phone_number])
     address = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/', default='media/images/go9xwcxemxj7sajmn1zf')
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
@@ -41,14 +43,15 @@ class Service(models.Model):
         db_table = 'woof_wash_grooming"."Service'
 
 class Pet(models.Model):
-    pet_name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     breed = models.CharField(max_length=255)
     age = models.IntegerField()
     medical_notes = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/', default='media/images/tey9seavfcldmybatmmt')
 
     def __str__(self):
-        return self.pet_name
+        return self.name
 
     class Meta:
         db_table = 'woof_wash_grooming"."Pet'

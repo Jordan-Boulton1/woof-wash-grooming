@@ -25,10 +25,10 @@
                     <div class="rounded-top text-white d-flex flex-row custom-bg-primary" style="height:200px;">
                         <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
                             <!-- User profile image and edit button -->
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
-                            <button type="button" class="btn btn-outline-dark text-body" style="z-index: 1;">
+                            <img src="{{ user.image.url }}" alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; height: 200px; z-index: 1">
+                            <a  class="btn btn-outline-dark text-body" style="z-index: 1;" href="{% url 'edit_profile' %}">
                                 Edit profile
-                            </button>
+                            </a>
                         </div>
                         <!-- User profile details -->
                         <div class="ms-3" style="margin-top: 110px;">
@@ -37,24 +37,24 @@
                             <p class="mb-1"><i class="fa-solid fa-phone"></i> {{ user.phone_number }}</p>
                         </div>
                     </div>
-                    <div class="card-body p-4 text-black">
+                    <div class="card-body p-5 text-black mt-5">
                         <!-- Tab content -->
                         <div class="tab-content" id="v-tabs-tabContent">
                             <!-- Pets tab content -->
                             <div class="tab-pane fade show active" id="v-tabs-home" role="tabpanel" aria-labelledby="v-tabs-pet-tab">
-                              <div class="d-flex justify-content-end mb-5">
-                                        <button type="button" class="btn btn-success" id="addPetButton">Add pet</button>
+                              <div class="d-flex justify-content-center mb-0">
+                                        <button type="button" class="btn custom-bg-primary" id="addPetButton">Add pet</button>
                                     </div>
                                 <div class="content-container">
                                     <!-- Loop through pets and display them -->
                                     {% for pet in pets %}
                                     <div class="content-box d-md-flex align-items-center justify-content-between mb-30">
                                         <div class="content-left my-4 d-md-flex align-items-center flex-wrap">
-                                            <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-lg-flex">
-                                               {{ pet.pet_name }}
+                                            <div class="mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-lg-flex">
+                                              <img src="{{ pet.image.url }}" alt="" style="width: 65px; height: 65px;">
                                             </div>
                                             <div class="content">
-                                                <h5 class="text-center text-md-left">{{ pet.pet_name }}</h5>
+                                                <h5 class="text-center text-md-left">{{ pet.name }}</h5>
                                                 <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
                                                     <li class="mr-md-4">
                                                         <i class="fa-solid fa-paw mr-2"></i> {{ pet.breed }}
@@ -110,7 +110,7 @@
                                         {% endfor %}
                                     {% else %}
                                     <!-- Display message if no appointments exist -->
-                                    <div class="mt-5">
+                                    <div class="d-flex justify-content-center">
                                         <p>You have no scheduled appointments</p>
                                     </div>
                                     {% endif %}
@@ -163,7 +163,7 @@ aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
         </div>
         <div class="modal-body container">
             <form method="POST" class="model-form" id="editAppointmentForm">
-                    {% csrf_token %} 
+                    {% csrf_token %}
                     {{ appointmentForm.media }}
                     <input type="hidden" name="form_type" value="edit_appointment_form">
                     <div class="row mb-3">
@@ -203,7 +203,7 @@ aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
                     {% for message in messages %}
                         <div class="alert alert-danger">{{ message }}</div>
                     {% endfor %}
-            </div>  
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary"
@@ -227,10 +227,16 @@ aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
                     {% csrf_token %}
                     {{ petForm.media }}
                     <input type="hidden" name="form_type" value="pet_form">
-                    <div class="row mb-3">
-                        <label for="id_pet_name" class="col-sm-2 col-form-label">Name:</label>
+                     <div class="row mb-3">
+                        <label for="id_breed" class="col-sm-2 col-form-label">Breed:</label>
                         <div class="col-sm-10">
-                            {{ petForm.pet_name }}
+                            {{ petForm.image }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="id_name" class="col-sm-2 col-form-label">Name:</label>
+                        <div class="col-sm-10">
+                            {{ petForm.name }}
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -251,13 +257,13 @@ aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
                             {{ petForm.medical_notes }}
                         </div>
                     </div>
-                
+
                 </form>
                 <div id="petFormErrors">
                     {% for message in messages %}
                         <div class="alert alert-danger">{{ message }}</div>
                     {% endfor %}
-                </div>  
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -280,13 +286,19 @@ aria-labelledby="editPetModalLabel" aria-hidden="true">
         </div>
         <div class="modal-body container">
             <form method="POST" class="model-form" id="editPetForm">
-                    {% csrf_token %} 
+                    {% csrf_token %}
                     {{ petForm.media }}
-                    <input type="hidden" name="form_type" value="edit_pet_form">
-                         <div class="row mb-3">
-                        <label for="id_pet_name" class="col-sm-2 col-form-label">Name:</label>
+                    <div class="row mb-3">
+                        <label for="id_breed" class="col-sm-2 col-form-label">Breed:</label>
                         <div class="col-sm-10">
-                            {{ editPetForm.pet_name }}
+                            {{ editPetForm.image }}
+                        </div>
+                    </div>
+                    <input type="hidden" name="form_type" value="edit_pet_form">
+                    <div class="row mb-3">
+                        <label for="id_name" class="col-sm-2 col-form-label">Name:</label>
+                        <div class="col-sm-10">
+                            {{ editPetForm.name }}
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -307,16 +319,16 @@ aria-labelledby="editPetModalLabel" aria-hidden="true">
                             {{ editPetForm.medical_notes }}
                         </div>
                     </div>
-               
+
                     <input type="hidden" id="pet_id" name="pet_id">
             </form>
             <div id="editPetFormErrors">
                     {% for message in messages %}
                         <div class="alert alert-danger">{{ message }}</div>
                     {% endfor %}
-            </div>  
+            </div>
         </div>
-    
+
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" id="editPetButton"> Save changes </button>
@@ -324,7 +336,7 @@ aria-labelledby="editPetModalLabel" aria-hidden="true">
     </div>
 </div>
 </div>
-    
+
 <!-- Confirmation Modal For Deleting Pet -->
 <div class="modal fade" id="confirmDeletePetModal" tabindex="-1"
 aria-labelledby="confirmDeletePetLabel" aria-hidden="true">

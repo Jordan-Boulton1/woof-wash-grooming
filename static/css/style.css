@@ -83,15 +83,6 @@ ul {
 .content-box .img-holder {
     height: 65px;
     width: 65px;
-    background-color: #4e63d7;
-    /* Add gradient background */
-    background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
-    background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
-    /* Font styles */
-    font-family: "Open Sans", sans-serif;
-    color: #fff;
-    font-size: 22px;
-    font-weight: 700;
     /* Flex styles */
     display: flex;
     justify-content: center;

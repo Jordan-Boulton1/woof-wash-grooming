@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <h2>Edit Profile</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-danger" id="deleteUserBtn">Delete profile</button>
+  </form>
+    
+    <!-- Confirmation Modal For Deleting Pet -->
+<div class="modal fade" id="confirmDeleteProfileModal" tabindex="-1"
+aria-labelledby="confirmDeleteProfileModal" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Delete pet</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body container">
+            <p>Are you sure you want to delete your profile?</p>
+            <p><i>This action cannot be reversed and all content will be lost</i></p>
+        </div>
+        <div class="modal-footer">
+            <form id="deleteUserForm" method="post" action="{% url 'delete_user' delete_user_id=0 %}">
+                {% csrf_token %}
+                <input type="hidden" class="hidden_input" name="user_id" id="{{ user.id }}" value="">
+                <button type="button" class="btn btn-danger d-block w-200 d-sm-inline-block" id="confirmDeleteUserButton">Yes</button>
+                <button type="button" class="btn d-block w-200 d-sm-inline-block btn-light" data-bs-dismiss="modal">No</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'js/edit_profile.js' %}"></script>
+{% endblock %}

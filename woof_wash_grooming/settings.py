@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'django_summernote',
     'django_flatpickr',
     'grooming_service',
@@ -95,6 +97,15 @@ WSGI_APPLICATION = 'woof_wash_grooming.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
+
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get("CLOUD_NAME"),
+    'API_KEY': os.environ.get("API_KEY"),
+    'API_SECRET': os.environ.get("API_SECRET")
 }
 
 
