@@ -36,6 +36,18 @@ ul {
     list-style: none;
 }
 
+h1, h2, h3, h5, p, label {
+    font-family: 'Lora', serif;
+}
+
+nav ul li a {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
+}
+
 /* Service Image Styles */
 .service-img {
     width: 150px;
@@ -55,7 +67,7 @@ ul {
 /* Hero Image Styles */
 #hero-image {
     height: 600px;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../images/home-background.png) center;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../images/home-background.webp) center;
     background-size: cover;
 }
 
