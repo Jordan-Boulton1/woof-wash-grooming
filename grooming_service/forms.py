@@ -88,6 +88,7 @@ class AppointmentForm(forms.ModelForm):
         )
         self.fields["service"].widget.attrs.update({'class': 'form-control'})
 
+
         self.fields["pet"] = forms.ModelChoiceField(
             queryset=Pet.objects.none(),
             required=True,

@@ -35,6 +35,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Service(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
+    vary_price1 = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    vary_price2 = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
     def __str__(self):
         return self.name

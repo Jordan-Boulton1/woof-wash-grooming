@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete_pet/<int:delete_pet_id>/', views.delete_pet, name='delete_pet'),
     path("api/pet/<int:pet_id>/", views.get_pet_by_id),
     path("api/user/<int:delete_user_id>/", views.delete_user, name='delete_user'),
+    path("api/service/price/<int:service_id>/", views.get_service_price, name='service_price'),
 ]

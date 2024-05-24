@@ -40,14 +40,17 @@
               <div class="col-12">
                 <label for="service" class="form-label">Service: <span class="text-danger">*</span></label>
                    <div class="input-group">
-                            {{ form.service }}
-                        </div>
+                       {{ form.service }}
+                        
+                   </div>
+                  <div id="servicePrice" class="mt-2" hidden>
               </div>
+            </div>
               <div class="col-12">
-                <label for="pet" class="form-label">Pet: <span class="text-danger">*</span></label>
-                <div class="input-group">
-                            {{ form.pet }}
-                        </div>
+                  <label for="pet" class="form-label">Pet: <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                      {{ form.pet }}
+                  </div>
               </div>
               <div class="col-12">
                 <label for="description" class="form-label">Additional Information:</label>

@@ -36,6 +36,18 @@ ul {
     list-style: none;
 }
 
+h1, h2, h3, h5, p, label {
+    font-family: 'Lora', serif;
+}
+
+nav ul li a {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
+}
+
 /* Service Image Styles */
 .service-img {
     width: 150px;
@@ -55,7 +67,7 @@ ul {
 /* Hero Image Styles */
 #hero-image {
     height: 600px;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../images/home-background.png) center;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../images/home-background.webp) center;
     background-size: cover;
 }
 
@@ -180,6 +192,54 @@ ul {
 
 .nav-link:hover {
     transform: scale(1.2);
+}
+
+.services-section {
+    background-color: #87CEEB;
+}
+
+.services-card {
+    margin-bottom: 20px;
+}
+
+.services-card .card {
+    border: 1px solid #000;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.services-card .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.services-card .card-title {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.services-card .card-pricing {
+    font-size: 1rem;
+    color: #007bff;
+}
+
+.pricing-section {
+    background-color: #f8f8f8;
+    padding: 50px 0;
+}
+
+.pricing-section p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.pricing-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.pricing-section a:hover {
+    text-decoration: underline;
 }
 
 /* Media Query Styles for Larger Screens */

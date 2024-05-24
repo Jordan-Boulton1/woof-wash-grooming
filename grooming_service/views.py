@@ -306,3 +306,18 @@ def get_pet_by_id(request, pet_id):
         except Pet.DoesNotExist:
             return JsonResponse({"message": "Pet not found"}, status=404)
     return JsonResponse({"message": "Invalid request"}, status=400)
+
+
+@login_required(login_url='login')
+def get_service_price(request, service_id):
+    if service_id:
+        try:
+            service = Service.objects.get(id=service_id)
+            price_range = {
+                "vary_price1": service.vary_price1,
+                "vary_price2": service.vary_price2
+            }
+            return JsonResponse({"price_range": price_range})
+        except Service.DoesNotExist:
+            return JsonResponse({"message": "Service not found"}, status=404)
+    return JsonResponse({"message": "Invalid request"}, status=400)
