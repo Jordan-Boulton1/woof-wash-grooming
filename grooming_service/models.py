@@ -37,6 +37,8 @@ class Service(models.Model):
     description = models.TextField()
     vary_price1 = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     vary_price2 = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    image = models.ImageField(upload_to='images/', default='media/images/rlbpt7uaqhxanu59ro9r')
+    short_description = models.TextField(default="")
 
     def __str__(self):
         return self.name

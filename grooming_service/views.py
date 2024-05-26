@@ -52,7 +52,8 @@ def user_logout(request):
 
 # Home view
 def home(request):
-    return render(request, "grooming_service/home.html")
+    home_services = Service.objects.exclude(short_description__exact='').order_by('-id')
+    return render(request, "grooming_service/home.html", {'home_services': home_services})
 
 
 # About view
@@ -250,6 +251,7 @@ def delete_pet(request, delete_pet_id):
     except Pet.DoesNotExist:
         messages.error(request, "The requested pet does not exist.")
     return redirect("profile")
+
 
 @login_required(login_url='login')
 def delete_user(request, delete_user_id):

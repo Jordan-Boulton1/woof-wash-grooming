@@ -7,7 +7,7 @@ from .models import *
 @admin.register(Service)
 class PostAdmin(SummernoteModelAdmin):
 
-    summernote_fields = ('description',)
+    summernote_fields = ('description', 'short_description')
 
 class AppointmentAdmin(admin.ModelAdmin):
     exclude = ['user', 'pet', 'service']
