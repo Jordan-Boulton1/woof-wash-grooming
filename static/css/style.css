@@ -9,6 +9,7 @@ html {
 /* Navbar Styles */
 nav {
     z-index: 1000;
+    background-color: #f8f8f8;
 }
 
 /* Main Content Styles */
@@ -29,6 +30,7 @@ body {
 footer {
     z-index: 1000;
     padding: 1rem 0;
+    background-color: #f8f8f8;
 }
 
 /* List Styles */
@@ -113,7 +115,7 @@ button {
 
 /* Secondary Background Color */
 .custom-bg-secondary {
-    background-color: #0B3D91;
+    background-color: #f8f8f8;
 }
 
 /* Light Background Color */
@@ -194,10 +196,6 @@ button {
     transform: scale(1.2);
 }
 
-.services-section {
-    background-color: #87CEEB;
-}
-
 .services-card {
     margin-bottom: 20px;
 }
@@ -224,13 +222,12 @@ button {
 }
 
 .pricing-section {
-    background-color: #f8f8f8;
     padding: 50px 0;
 }
 
 .pricing-section p {
     font-size: 1.1rem;
-    color: #555;
+    color: #000;
 }
 
 .pricing-section a {
@@ -240,6 +237,61 @@ button {
 
 .pricing-section a:hover {
     text-decoration: underline;
+}
+
+.carousel-img {
+    height: 700px;
+    width: 500px;
+}
+
+.carousel-item {
+    position: relative;
+    height: 100vh;
+}
+
+.carousel-item-container {
+    height: 100vh;
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    background-color: #007bff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-control-prev {
+    left: 10%;
+}
+
+.carousel-control-next {
+    right: 10%;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    filter: invert(100%);
+}
+
+.carousel-caption p {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+    padding: 10px;
+    color: #fff;
+}
+
+.carousel-dark .carousel-indicators [data-bs-target] {
+    background-color: #007bff;
 }
 
 /* Media Query Styles for Larger Screens */

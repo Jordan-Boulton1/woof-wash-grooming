@@ -16,46 +16,18 @@
     <div class="container">
         <h2 class="text-center mb-4">Our Services</h2>
         <div class="row">
-            <!-- Service Card - Bathing -->
-            <div class="col-md-6">
+            <!-- Service Card -->
+            {% for home_service in home_services %}
+                 <div class="col-md-6">
                 <div class="card mb-4">
-                    <img src="{% static 'images/shine.webp' %}" alt="Bathing" class="service-img img-fluid mx-auto mt-3">
+                    <img src="{{ home_service.image.url }}" alt="Bathing" class="service-img img-fluid mx-auto mt-3">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Bathing</h5>
-                        <p class="card-text">Our gentle bathing services leave your pet feeling fresh and clean.</p>
+                        <h5 class="card-title">{{ home_service.name }}</h5>
+                        <p class="card-text">{{ home_service.short_description|safe }}</p>
                     </div>
                 </div>
             </div>
-            <!-- Service Card - Grooming -->
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <img src="{% static 'images/dog-grooming.webp' %}" class="service-img img-fluid mx-auto mt-3" alt="Grooming">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Grooming</h5>
-                        <p class="card-text">Professional grooming to keep your pet looking their best.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Service Card - Nail Trimming -->
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <img src="{% static 'images/nail-trimming.webp' %}" class="service-img img-fluid mx-auto mt-3" alt="Nail Trimming">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Nail Trimming</h5>
-                        <p class="card-text">Expert nail trimming services to keep your pet's paws healthy.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Service Card - Ear Cleaning -->
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <img src="{% static 'images/ear-cleaning.webp' %}" class="service-img img-fluid mx-auto mt-3" alt="Ear Cleaning">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Ear Cleaning</h5>
-                        <p class="card-text">Gentle ear cleaning services to keep your pet's ears healthy.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <!-- Find Out More Button -->
         <div class="text-center mt-4">
@@ -130,7 +102,7 @@
         <!-- Section Title -->
         <h2 class="text-center mb-4">Contact Us</h2>
         <!-- Section Description -->
-        <p class="lead text-center">Ready to schedule an appointment, or want a free quote? 
+        <p class="lead text-center">Ready to schedule an appointment, or want a free quote?
             Get in touch with us today!</p>
         <!-- Contact Information -->
         <div class="text-center">
