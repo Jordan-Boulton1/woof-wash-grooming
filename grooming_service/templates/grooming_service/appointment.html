@@ -4,80 +4,79 @@
 
 {% block content %}
 <section class="p-3 p-md-4 p-xl-5">
-{% if user.is_authenticated %}
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
-          <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="{% static 'images/appointment-dog.webp' %}" alt="Dog laying on floor with shades on">
+  {% if user.is_authenticated %}
+    <div class="container">
+      <div class="row align-items-center justify-content-center" style="min-height: 100vh;">
+        <!-- Image Column -->
+        <div class="col-12 col-md-5 d-none d-md-block" style="height: 770px; padding-right: 0">
+          <!-- On larger screens, display the image column -->
+          <div class="d-flex flex-column justify-content-center h-100">
+            <img class="img-fluid rounded-start appointment-img" loading="lazy" src="{% static 'images/appointment-dog.webp' %}" alt="Dog laying on floor with shades on" style="object-fit: cover;">
+          </div>
         </div>
-      </div>
-      <div class="col-12 col-md-6 custom-bg-primary">
-        <div class="p-3 p-md-4 p-xl-5">
-          <div class="row">
-            <div class="col-12">
-              <div class="mb-5">
+
+        <!-- Form Column -->
+        <div class="col-12 col-md-7 d-flex custom-bg-primary rounded-end" style="max-width: 500px;">
+          <!-- Form container -->
+          <div class="d-flex flex-column justify-content-between w-100 p-3 p-md-4" style="height: 100%;">
+            <div class="row">
+              <div class="col-12 mb-4">
+                <!-- Title and description -->
                 <h2 class="h3">Book an Appointment</h2>
                 <h3 class="fs-6 fw-normal text-secondary m-0">Please enter the relevant details to book an appointment</h3>
               </div>
             </div>
-          </div>
-          <form method="POST">
+            <form method="POST">
+              <!-- Form fields -->
               {{ form.media }}
-                    {% csrf_token %}
-            <div class="row gy-3 gy-md-4 overflow-hidden">
-              <div class="col-12">
-                <label for="start-date" class="form-label">Start Date: <span class="text-danger">*</span></label>
-                <div class="input-group flex-nowrap">
-                                <span class="input-group-text">
-                                    <a href="#" id="start-date-icon">
-                                        <i class="fas fa-calendar"></i>
-                                    </a>
-                                </span>
-                                {{ form.start_date_time }}
-                            </div>
-              </div>
-              <div class="col-12">
-                <label for="service" class="form-label">Service: <span class="text-danger">*</span></label>
-                   <div class="input-group">
-                       {{ form.service }}
-                        
-                   </div>
-                  <div id="servicePrice" class="mt-2" hidden>
-              </div>
-            </div>
-              <div class="col-12">
+              {% csrf_token %}
+              <div class="row gy-3 gy-md-4">
+                <div class="col-12">
+                  <!-- Start Date field -->
+                  <label for="start-date" class="form-label">Start Date: <span class="text-danger">*</span></label>
+                  <div class="input-group flex-nowrap">
+                    <span class="input-group-text">
+                      <a href="#" id="start-date-icon"><i class="fas fa-calendar"></i></a>
+                    </span>
+                    {{ form.start_date_time }}
+                  </div>
+                </div>
+                <!-- Other form fields -->
+                <div class="col-12">
+                  <label for="service" class="form-label">Service: <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    {{ form.service }}
+                  </div>
+                </div>
+                <div class="col-12">
                   <label for="pet" class="form-label">Pet: <span class="text-danger">*</span></label>
                   <div class="input-group">
-                      {{ form.pet }}
+                    {{ form.pet }}
                   </div>
-              </div>
-              <div class="col-12">
-                <label for="description" class="form-label">Additional Information:</label>
-                <div class="input-group">
-                            {{ form.description }}
-                        </div>
-              </div>
-                <!-- Display messages -->
-        {% for message in messages %}
-            <div class="{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-              <div class="col-12">
-                <div class="d-grid">
-                  <button class="btn btn-primary" type="submit">Book Appointment</button>
+                </div>
+                <div class="col-12">
+                  <label for="description" class="form-label">Additional Information:</label>
+                  <div class="input-group">
+                    {{ form.description }}
+                  </div>
+                </div>
+                <!-- Display form submission messages -->
+                {% for message in messages %}
+                  <div class="{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+                <div class="col-12">
+                  <!-- Submit button -->
+                  <div class="d-grid">
+                    <button class="btn custom-btn" type="submit">Book Appointment</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-{% else %}
-        <div class="container min-vh-100 mt-5 mb-5 d-flex justify-content-center align-items-center">
-            <p>You must be logged in to make a booking</p>
-        </div>
-    {% endif %}
+  {% endif %}
 </section>
 {% endblock %}
 

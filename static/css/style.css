@@ -196,6 +196,7 @@ button {
     transform: scale(1.2);
 }
 
+/* Services Card Styles */
 .services-card {
     margin-bottom: 20px;
 }
@@ -221,6 +222,7 @@ button {
     color: #007bff;
 }
 
+/* Pricing Section Styles */
 .pricing-section {
     padding: 50px 0;
 }
@@ -239,11 +241,13 @@ button {
     text-decoration: underline;
 }
 
+/* Carousel Image Styles */
 .carousel-img {
     height: 700px;
     width: 500px;
 }
 
+/* Carousel Item Styles */
 .carousel-item {
     position: relative;
     height: 100vh;
@@ -253,6 +257,7 @@ button {
     height: 100vh;
 }
 
+/* Carousel Caption Styles */
 .carousel-caption {
     position: absolute;
     bottom: 20px;
@@ -261,6 +266,7 @@ button {
     text-align: center;
 }
 
+/* Carousel Control Styles */
 .carousel-control-prev, .carousel-control-next {
     background-color: #007bff;
     width: 50px;
@@ -277,21 +283,36 @@ button {
 }
 
 .carousel-control-next {
-    right: 10%;
+    right: 10%
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
     filter: invert(100%);
 }
 
+/* Carousel Caption Paragraph Styles */
 .carousel-caption p {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
     padding: 10px;
     color: #fff;
 }
 
+/* Dark Carousel Indicators Styles */
 .carousel-dark .carousel-indicators [data-bs-target] {
     background-color: #007bff;
+}
+
+/* Appointment Image Styles */
+.appointment-img {
+    object-fit: cover;
+    height: 100%;
+    width: auto;
+    max-height: 100%;
+}
+
+/* Login Content Card Styles */
+.login-content .card {
+    border: none;
 }
 
 /* Media Query Styles for Larger Screens */
