@@ -11,7 +11,6 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ["first_name", "last_name", "email", "password", "phone_number", "address"]
 
-    password = forms.CharField(widget=forms.PasswordInput)
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs.update({'class': 'form-control', 'required': 'true'})
