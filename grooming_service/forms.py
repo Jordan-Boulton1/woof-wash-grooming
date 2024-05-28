@@ -12,20 +12,54 @@ class RegistrationForm(forms.ModelForm):
         fields = ["first_name", "last_name", "email", "password", "phone_number", "address"]
 
     password = forms.CharField(widget=forms.PasswordInput)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control', 'required': 'true'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control', 'required': 'true'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'required': 'true'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'required': 'true'})
+        self.fields['phone_number'].widget.attrs.update({'class': 'form-control', 'required': 'true'})
+        self.fields['address'].widget.attrs.update({'class': 'form-control', 'required': 'true'})
 
-    def clean_email(self):
-        email = self.cleaned_data["email"]
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = []
+
+        first_name = cleaned_data.get("first_name")
+        last_name = cleaned_data.get("last_name")
+        email = cleaned_data.get("email")
+        password = cleaned_data.get("password")
+        phone_number = cleaned_data.get("phone_number")
+        address = cleaned_data.get("address")
+
+        errors = Validators.append_error_messages_when_field_is_empty(first_name, "First name cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(last_name, "Last name cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(email, "Email cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(password, "Password cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(phone_number, "Phone number cannot be empty",
+                                                                      errors)
+        errors = Validators.append_error_messages_when_field_is_empty(address, "Address cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(phone_number, r"^\d+$",
+                                                                                  "Phone number can contain only digits.",
+                                                                                  errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(email,
+                                                                                  r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$',
+                                                                                  "Valid email must be provided",
+                                                                                  errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(first_name, r'^[A-Za-z\s]+$',
+                                                                                  "First name can only contain letters and white spaces.",
+                                                                                  errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(last_name, r'^[A-Za-z\s]+$',
+                                                                                  "Last name can only contain letters and white spaces.",
+                                                                                  errors)
+        if User.objects.filter(phone_number=phone_number).exists():
+            errors.append("This phone number is already in use.")
         if User.objects.filter(email=email).exists():
-            raise ValidationError("This email is already in use.")
-        return email
+            errors.append("This email is already in use.")
+        if errors:
+            raise ValidationError(errors)
 
-    def clean_phone(self):
-        phone = self.cleaned_data["phone"]
-        if not re.match(r"^\d+$", phone):
-            raise ValidationError("Phone number can contain only digits.")
-        if User.objects.filter(phone=phone).exists():
-            raise ValidationError("This phone number is already in use.")
-        return phone
+        return cleaned_data
 
 
 class EditUserForm(forms.ModelForm):
@@ -33,19 +67,45 @@ class EditUserForm(forms.ModelForm):
         model = User
         fields = ["first_name", "last_name", "email", "password", "phone_number", "address", "image"]
 
-    def clean_email(self):
-        email = self.cleaned_data["email"]
-        if email != email and User.objects.filter(email=email).exists():
-            raise ValidationError("This email is already in use.")
-        return email
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = []
 
-    def clean_phone(self):
-        phone = self.cleaned_data["phone"]
-        if not re.match(r"^\d+$", phone):
-            raise ValidationError("Phone number can contain only digits.")
-        if phone != phone and User.objects.filter(phone=phone).exists():
-            raise ValidationError("This phone number is already in use.")
-        return phone
+        first_name = cleaned_data.get("first_name")
+        last_name = cleaned_data.get("last_name")
+        email = cleaned_data.get("email")
+        password = cleaned_data.get("password")
+        phone_number = cleaned_data.get("phone_number")
+        address = cleaned_data.get("address")
+
+        errors = Validators.append_error_messages_when_field_is_empty(first_name, "First name cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(last_name, "Last name cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(email, "Email cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(password, "Password cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(phone_number, "Phone number cannot be empty",
+                                                                      errors)
+        errors = Validators.append_error_messages_when_field_is_empty(address, "Address cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(phone_number, r"^\d+$",
+                                                                                  "Phone number can contain only digits.",
+                                                                                  errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(email,
+                                                                                  r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$',
+                                                                                  "Valid email must be provided",
+                                                                                  errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(first_name, r'^[A-Za-z\s]+$',
+                                                                                  "First name can only contain letters and white spaces.",
+                                                                                  errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(last_name, r'^[A-Za-z\s]+$',
+                                                                                  "Last name can only contain letters and white spaces.",
+                                                                                  errors)
+        if phone_number != phone_number and User.objects.filter(phone_number=phone_number).exists():
+            errors.append("This phone number is already in use.")
+        if email != email and User.objects.filter(email=email).exists():
+            errors.append("This email is already in use.")
+        if errors:
+            raise ValidationError(errors)
+
+        return cleaned_data
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -56,8 +116,6 @@ class EditUserForm(forms.ModelForm):
         self.fields['phone_number'].widget.attrs.update({'class': 'form-control'})
         self.fields['address'].widget.attrs.update({'class': 'form-control'})
         self.fields['image'].widget.attrs.update({'class': 'form-control'})
-
-
 
 
 class LoginForm(forms.Form):
@@ -87,7 +145,6 @@ class AppointmentForm(forms.ModelForm):
             empty_label="Select a service"
         )
         self.fields["service"].widget.attrs.update({'class': 'form-control'})
-
 
         self.fields["pet"] = forms.ModelChoiceField(
             queryset=Pet.objects.none(),
@@ -223,16 +280,15 @@ class EditPetForm(forms.ModelForm):
         breed = cleaned_data.get("breed")
         age = cleaned_data.get("age")
 
-        if not name:
-            errors.append("Pet name cannot be empty.")
-        if not breed:
-            errors.append("Breed cannot be empty.")
-        if age is None:
-            errors.append("Age cannot be empty.")
-        if name and not re.match(r'^[A-Za-z\s]+$', name):
-            errors.append("Pet name can only contain letters and white spaces.")
-        if breed and not re.match(r'^[A-Za-z\s]+$', breed):
-            errors.append("Breed can only contain letters and white spaces.")
+        errors = Validators.append_error_messages_when_field_is_empty(name, "Pet name cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(breed, "Breed cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_is_empty(age, "Age cannot be empty", errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(name, r'^[A-Za-z\s]+$',
+                                                                                  "Pet name can only contain letters and white spaces.",
+                                                                                  errors)
+        errors = Validators.append_error_messages_when_field_does_not_match_regex(breed, r'^[A-Za-z\s]+$',
+                                                                                  "Breed can only contain letters and white spaces.",
+                                                                                  errors)
         if age and age <= 0:
             errors.append("Age must be a positive number.")
         if errors:

@@ -1,3 +1,6 @@
+if (window.history.replaceState) {
+  window.history.replaceState(null, null, window.location.href);
+}
 document.addEventListener("DOMContentLoaded", function() {
     const dateFieldIcon = document.getElementById("start-date-icon");
     const serviceSelect = document.getElementById("id_service");

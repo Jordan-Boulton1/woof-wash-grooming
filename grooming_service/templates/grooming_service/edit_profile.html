@@ -1,15 +1,71 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-  <h2>Edit Profile</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="button" class="btn btn-danger" id="deleteUserBtn">Delete profile</button>
-  </form>
+    <div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header custom-bg-primary">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2 h-50 w-50" src="{{ user.image.url }}" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    {{ form.image }}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header custom-bg-primary">Account Details</div>
+                <div class="card-body">
+                    <form>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">First name</label>
+                                <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{ user.first_name }}">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Last name</label>
+                                <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{ user.last_name }}">
+                            </div>
+                        </div>
+                        <!-- Form Row -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Address</label>
+                                <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="{{ user.address }}">
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Phone Number</label>
+                                <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="{{ user.phone_number }}">
+                            </div>
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="{{ user.email }}">
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn custom-btn-alt" type="submit">Save changes</button>
+                        <!-- Delete Profile Button -->
+                        <button class="btn custom-btn-del" type="button" id="deleteUserBtn">Delete Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Confirmation Modal For Deleting Pet -->
+        <!-- Confirmation Modal For Deleting Pet -->
 <div class="modal fade" id="confirmDeleteProfileModal" tabindex="-1"
 aria-labelledby="confirmDeleteProfileModal" aria-hidden="true">
 <div class="modal-dialog">

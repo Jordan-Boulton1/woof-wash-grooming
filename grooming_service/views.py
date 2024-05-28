@@ -5,7 +5,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from datetime import datetime
-
 from grooming_service.forms import *
 from .models import Service
 
@@ -21,6 +20,8 @@ def register(request):
             user.save()
             login(request, user)
             return redirect("home")
+        else:
+            __handle_form_errors(request, form)
     else:
         form = RegistrationForm()
     return render(request, "grooming_service/register.html", {"form": form})
@@ -80,7 +81,6 @@ def book_appointment(request):
             try:
                 check_appointment = Appointment.objects.get(start_date_time=start_date_time, status=1)
                 messages.error(request, "The selected appointment is no longer available")
-                return redirect("appointment")
             except Appointment.DoesNotExist:
                 appointment = Appointment(user=request.user,
                                           pet=pet,
@@ -159,6 +159,7 @@ def __handle_form_errors(request, form):
     if '__all__' in form.errors:
         for error in form.errors['__all__']:
             messages.error(request, error)
+
 
 
 def __handle_edit_appointment_form(request, appointmentForm):
