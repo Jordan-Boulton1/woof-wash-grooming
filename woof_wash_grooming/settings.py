@@ -92,12 +92,41 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'woof_wash_grooming.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
+
+class DisableMigrations(object):
+    """
+    This class is used to disable migrations when running tests.
+    When Django checks for migrations, it will think all apps have no migrations.
+    """
+    def __contains__(self, item):
+        # This method returns True for any item, indicating that it contains all items.
+        return True
+
+    def __getitem__(self, item):
+        # This method returns None for any item, indicating that there are no migration modules.
+        return None
+
+
+# Check if the script is being run with the 'test' argument (e.g., `python manage.py test`).
+if 'test' in sys.argv:
+    # If testing, use the DisableMigrations class to disable migrations.
+    MIGRATION_MODULES = DisableMigrations()
+    # Set the database configuration to use SQLite for testing.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    # If not testing, configure the database using the DATABASE_URL environment variable.
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
 
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -107,7 +136,6 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get("API_KEY"),
     'API_SECRET': os.environ.get("API_SECRET")
 }
-
 
 AUTH_USER_MODEL = "grooming_service.User"
 
