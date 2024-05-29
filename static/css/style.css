@@ -9,7 +9,7 @@ html {
 /* Navbar Styles */
 nav {
     z-index: 1000;
-    background-color: #f8f8f8;
+    background-color: #F8F9FA;
 }
 
 /* Main Content Styles */
@@ -88,6 +88,7 @@ button {
     border-radius: 50px;
     transition: background-color 0.3s, transform 0.3s;
 }
+
 .nav-pills .nav-link {
     color: #0B3D91;
 }
@@ -240,6 +241,11 @@ button {
     color: #007bff;
 }
 
+.services-card-img {
+    height: 65px;
+    width: 65px;
+}
+
 /* Pricing Section Styles */
 .pricing-section {
     padding: 50px 0;
@@ -332,9 +338,8 @@ button {
 .login-content .card {
     border: none;
 }
-/*Profile Card 3*/
+/* Profile Card */
 .profile-card {
-    font-family: 'Open Sans', Arial, sans-serif;
     position: relative;
     float: left;
     overflow: hidden;
