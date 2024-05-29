@@ -18,7 +18,7 @@
         <!-- Form Column -->
         <div class="col-12 col-md-7 d-flex custom-bg-primary rounded-end" style="max-width: 500px;">
           <!-- Form container -->
-          <div class="d-flex flex-column justify-content-between w-100 p-3 p-md-4" style="height: 100%;">
+          <div class="d-flex flex-column justify-content-between w-100 p-3 p-md-4" style="max-height: 770px;">
             <div class="row">
               <div class="col-12 mb-4">
                 <!-- Title and description -->
@@ -43,7 +43,14 @@
                 </div>
                 <!-- Other form fields -->
                 <div class="col-12">
-                  <label for="service" class="form-label">Service: <span class="text-danger">*</span></label>
+                 <div class="row">
+                     <div class="col-6">
+                          <label for="service" class="form-label">Service: <span class="text-danger">*</span></label>
+                     </div>
+                    <div class="col-6">
+                         <p id="servicePrice" class="fs-6" hidden></p>
+                    </div>
+                 </div>
                   <div class="input-group">
                     {{ form.service }}
                   </div>
@@ -62,7 +69,7 @@
                 </div>
                 <!-- Display form submission messages -->
                 {% for message in messages %}
-                  <div class="{{ message.tags }}">{{ message }}</div>
+                  <div class="{{ message.tags }} alert alert-danger">{{ message }}</div>
                 {% endfor %}
                 <div class="col-12">
                   <!-- Submit button -->

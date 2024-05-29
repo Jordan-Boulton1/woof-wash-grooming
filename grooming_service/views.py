@@ -108,7 +108,8 @@ def edit_profile(request):
             update_session_auth_hash(request, user)
             return redirect("/profile")
         else:
-            messages.error(request, "Please correct the errors.")
+            __handle_form_errors(request, form)
+
     else:
         form = EditUserForm(instance=request.user)
     return render(request, 'grooming_service/edit_profile.html', {'form': form})
