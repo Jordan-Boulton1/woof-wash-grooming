@@ -135,7 +135,17 @@ document.addEventListener("DOMContentLoaded", function () {
 function renderFlatPickr() {
   flatpickr('#start_date', {
     "dateFormat": "d-m-Y H:i",
-    "enableTime": true
+    "enableTime": true,
+    "minDate": "today",
+    "disable": [
+        // Disable weekends
+        function(date) {
+            return (date.getDay() === 0 || date.getDay() === 6);
+
+        }
+    ],
+    "minTime": "08:00",
+    "maxTime": "17:00",
   });
 }
 // Render calendar icon

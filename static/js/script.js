@@ -7,9 +7,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     dateFieldIcon.addEventListener("click", function(event) {
-        event.preventDefault();
+       event.preventDefault();
         const dateTimeFlatpickrContainer = document.getElementsByClassName("django-flatpickr")[0]._flatpickr;
         if (dateTimeFlatpickrContainer){
+             function disableWeekends(date) {
+            // Return true to disable the date
+            return (date.getDay() === 0 || date.getDay() === 6);
+        }
+
+             // Update the Flatpickr options to disable weekends
+             dateTimeFlatpickrContainer.set('disable', [disableWeekends]);
+             dateTimeFlatpickrContainer.set('minTime', '08:00')
+            dateTimeFlatpickrContainer.set('minDate', 'today')
+            dateTimeFlatpickrContainer.set('maxTime', '17:00')
             dateTimeFlatpickrContainer.open();
         }
     });
@@ -24,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
                   .then((response) => response.json())
                   .then((data) => {
                       priceRangeContainer.hidden = false;
-                      priceRangeContainer.innerHTML = `<p> Price: £${data.price_range.vary_price1} - £${data.price_range.vary_price2} </p>`
+                      priceRangeContainer.innerHTML = `Price: £${data.price_range.vary_price1} - £${data.price_range.vary_price2}`
                   });
         }
     });
