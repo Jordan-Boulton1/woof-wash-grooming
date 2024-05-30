@@ -1,18 +1,34 @@
+// Check if the browser supports the replaceState method
+if (window.history.replaceState) {
+  // Replace the current history state with a new one to prevent form resubmission
+  window.history.replaceState(null, null, window.location.href);
+}
+
+// Execute the following code when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
+  // Get references to the delete button, modal, and confirmation button
   const deleteUserBtn = document.getElementById('deleteUserBtn');
-  const deleteUserMdodal = document.getElementById('confirmDeleteProfileModal');
+  const deleteUserModal = document.getElementById('confirmDeleteProfileModal');
   const confirmDeleteUser = document.getElementById('confirmDeleteUserButton');
 
-// Show delete user modal
+  // Add a click event listener to the delete button to show the modal
   deleteUserBtn.addEventListener('click', function () {
-    const modal = new bootstrap.Modal(deleteUserMdodal);
+    // Create and show the Bootstrap modal
+    const modal = new bootstrap.Modal(deleteUserModal);
     modal.show();
-    const hiddenUserIdInput = deleteUserMdodal.getElementsByClassName('hidden_input')
+
+    // Get the hidden user ID input from the modal
+    const hiddenUserIdInput = deleteUserModal.getElementsByClassName('hidden_input');
     const user_id = hiddenUserIdInput[0].getAttribute('id');
+
+    // Add a click event listener to the confirmation button to submit the form
     confirmDeleteUser.addEventListener("click", function () {
-        let form = document.getElementById('deleteUserForm');
-        form.action = form.action.replace('/0/', '/' + user_id + '/');
-        form.submit();
-      });
+      // Get the delete user form
+      let form = document.getElementById('deleteUserForm');
+      // Update the form action URL with the user ID
+      form.action = form.action.replace('/0/', '/' + user_id + '/');
+      // Submit the form
+      form.submit();
+    });
   });
 });
