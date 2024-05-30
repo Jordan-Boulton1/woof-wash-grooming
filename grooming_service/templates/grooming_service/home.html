@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <!-- Hero Section -->
 <section class="hero-section p-5 d-flex justify-content-center align-items-center text-center bg-image" id="hero-image">
@@ -18,15 +17,15 @@
         <div class="row">
             <!-- Service Card -->
             {% for home_service in home_services %}
-                 <div class="col-md-6">
-                     <div class="card mb-4">
-                         <img src="{{ home_service.image.url }}" alt="Bathing" class="service-img img-fluid mx-auto mt-3">
-                         <div class="card-body text-center">
-                             <h5 class="card-title">{{ home_service.name }}</h5>
-                             <p class="card-text">{{ home_service.short_description|safe }}</p>
-                         </div>
-                     </div>
-                 </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <img src="{{ home_service.image.url }}" alt="Bathing" class="service-img img-fluid mx-auto mt-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ home_service.name }}</h5>
+                        <p class="card-text">{{ home_service.short_description|safe }}</p>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         </div>
         <!-- Find Out More Button -->
@@ -103,7 +102,8 @@
         <h2 class="text-center mb-4">Contact Us</h2>
         <!-- Section Description -->
         <p class="lead text-center">Ready to schedule an appointment, or want a free quote?
-            Get in touch with us today!</p>
+            Get in touch with us today!
+        </p>
         <!-- Contact Information -->
         <div class="text-center">
             <p><i class="fa-solid fa-phone"></i> Phone: 123-456-7890</p>
@@ -113,5 +113,4 @@
         </div>
     </div>
 </section>
-
 {% endblock %}
