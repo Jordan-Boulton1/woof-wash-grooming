@@ -3,21 +3,21 @@
   {% block content %}
 <!-- register section -->
 <section class="register-section">
-<!-- Container for the login section with padding and margin -->
+<!-- Container for the register section with padding and margin -->
   <div class="container py-3 my-3 h-75">
     <!-- Row to center the content vertically -->
       <div class="row d-flex justify-content-center align-items-center h-100">
-      <!-- Column for login content with specified widths for different screen sizes -->
-        <div class="login-content col-12 col-md-8 col-lg-6 col-xl-5">
-         <!-- Card for the login form -->
-          <div class="card custom-bg-primary text-black" style="border-radius: 1rem;">
+      <!-- Column for register content with specified widths for different screen sizes -->
+        <div class="register-content col-12 col-md-8 col-lg-6 col-xl-5">
+         <!-- Card for the register form -->
+          <div class="card custom-bg-primary text-black">
           <!-- Card body -->
             <div class="card-body p-4 text-center">
             <div class="mb-md-3 mt-md-3 pb-3">
-              <!-- Title for the login form -->
+              <!-- Title for the register form -->
               <h2 class="fw-bold mb-2 text-uppercase">Register An Account</h2>
 
-              <!-- Form for the login -->
+              <!-- Form for the register -->
               <form method="post">
                 <!-- CSRF token for security -->
                 {% csrf_token %}

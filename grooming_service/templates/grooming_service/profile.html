@@ -13,30 +13,29 @@
             <!-- Main content area -->
             <div class="col-lg-10 col-xl-10 p-0 profile-content">
                 <div class="card">
-                    <!-- User profile header -->
                      <!-- User profile header -->
-                    <div class="rounded-top text-white d-flex flex-row custom-bg-primary" style="height:180px;">
-                         <div class="ms-4 mt-3 d-flex flex-column" style="width: 150px;">
+                    <div class="rounded-top text-white d-flex flex-row custom-bg-primary profile-header">
+                         <div class="ms-4 mt-3 d-flex flex-column">
                             <!-- User profile image and edit button -->
-                            <img src="{{ user.image.url }}" alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; height: 200px; z-index: 1">
-
+                            <img src="{{ user.image.url }}" alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2">
                         </div>
-                          <div class="ms-3 mt-5">
+                        <!-- User profile displayed information -->
+                          <div class="ms-3 mt-5 profile-info">
                             <h5>{{ user.first_name }} {{ user.last_name }}</h5>
                             <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ user.address }}</p>
                             <p class="mb-1"><i class="fa-solid fa-phone"></i> {{ user.phone_number }}</p>
                           </div>
                     </div>
-                    <div class="text-white d-flex flex-row" style="height: 150px">
-                        <div class="ms-4 mt-4 d-flex flex-column" style="width: 150px;">
-                           <a class="btn custom-btn-alt text-white mt-5" style="z-index: 1;" href="{% url 'edit_profile' %}">
+                    <!-- Profile edit button -->
+                    <div class="text-white d-flex flex-row profile-edit-container">
+                        <div class="ms-4 mt-4 d-flex flex-column profile-edit-inner">
+                           <a class="btn custom-btn-alt text-white mt-5 profile-edit-btn" href="{% url 'edit_profile' %}">
                             Edit profile
                            </a>
                         </div>
-
                     </div>
                 </div>
-                 <div class="card-body p-5 text-black mt-5 rounded-top" style="background-color: white">
+                 <div class="card-body p-5 text-black mt-5 rounded-top profile-card-body">
                      <div class="col-lg-12 col-xl-12 d-flex justify-content-center align-items-center p-0">
                         <ul class="nav nav-pills text-center " id="v-tabs-tab" role="tablist">
                             <!-- Tabs for Pets and Appointments -->
@@ -48,7 +47,7 @@
                     <div class="tab-content" id="v-tabs-tabContent">
                           <div class="tab-pane fade show active" id="v-tabs-pet" role="tabpanel" aria-labelledby="v-tabs-pet-tab">
                             <div class="d-flex justify-content-center mt-3">
-                                <button type="button" class="btn custom-btn-alt" id="addPetButton" style="width: 200px;">Add pet</button>
+                                <button type="button" class="btn custom-btn-alt add-pet-btn" id="addPetButton">Add pet</button>
                             </div>
 
                                <div class="container overflow-none">
@@ -62,7 +61,7 @@
                                                             alt="profile-sample1" class="background"/>
                                                     </div>
                                                     <div class="profile-thumb-block">
-                                                        <img src={{ pet.image.url }} alt="profile-image" class="profile" style="width: 100px; height: 100px"/>
+                                                        <img src="{{ pet.image.url }}" alt="Pet Profile Image" class="pet-profile"/>
                                                     </div>
                                                     <div class="card-content">
                                                         <h2>{{ pet.name}}<small>{{ pet.breed }}</small></h2>
@@ -93,7 +92,7 @@
                                                                 alt="profile-sample1" class="background" />
                                                         </div>
                                                         <div class="profile-thumb-block">
-                                                            <img src={{ appointment.service.image.url }} alt="profile-image" class="profile" style="width: 100px; height: 100px; background-color: #fff;"/>
+                                                            <img src="{{ appointment.service.image.url }}" alt="profile-image" class="pet-profile"/>
                                                         </div>
                                                         <div class="card-content">
                                                             <h2>{{ appointment.service}}<small>{{ appointment.pet.name }}</small><small>{{ appointment.start_date_time }}</small></h2>
@@ -177,7 +176,7 @@ aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
                                     <i class="fas fa-calendar"></i>
                                 </a>
                             </span>
-                            <input type="text" id="start_date" class="form-control" name="start_date_time"></input>
+                            <input type="text" id="start_date" class="form-control" name="start_date_time">
                         </div>
                     </div>
                 </div>

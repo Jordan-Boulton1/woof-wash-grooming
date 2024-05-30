@@ -9,7 +9,7 @@ html {
 /* Navbar Styles */
 nav {
     z-index: 1000;
-    background-color: #f8f8f8;
+    background-color: #F8F9FA;
 }
 
 /* Main Content Styles */
@@ -88,6 +88,7 @@ button {
     border-radius: 50px;
     transition: background-color 0.3s, transform 0.3s;
 }
+
 .nav-pills .nav-link {
     color: #0B3D91;
 }
@@ -180,19 +181,9 @@ button {
     background-color: #f6f6f6;
 }
 
-/* Card Body Margin Top */
-.profile-content .card-body {
-    margin-top: 20px;
-}
-
-/* Margin Bottom Styles */
-.mb-30 {
-    margin-bottom: 30px;
-}
-
 /* Social Icons Styles */
 .social-icons {
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .social-icons .social-icon {
@@ -238,6 +229,11 @@ button {
 .services-card .card-pricing {
     font-size: 1rem;
     color: #007bff;
+}
+
+.services-card-img {
+    height: 65px;
+    width: 65px;
 }
 
 /* Pricing Section Styles */
@@ -328,13 +324,67 @@ button {
     max-height: 100%;
 }
 
-/* Login Content Card Styles */
-.login-content .card {
-    border: none;
+.appointment-img-row {
+    min-height: 100vh;
 }
-/*Profile Card 3*/
+
+.appointment-img-col {
+    height: 770px;
+    padding-right: 0;
+}
+
+/* Appointment Form Styles */
+.appointment-form-col {
+    max-width: 500px;
+}
+
+.appointment-form-container {
+    max-height: 770px;
+}
+
+/* Register Content Card Styles */
+.register-content .card {
+    border: none;
+    border-radius: 1rem;
+}
+
+.register-card {
+    border-radius: 1rem;
+}
+
+/* User Profile Styling */
+.profile-header {
+    height: 180px;
+}
+
+.profile-header + div {
+    width: 150px; /* Selects the div that comes right after the profile header */
+}
+
+.profile-header .img-thumbnail {
+    width: 150px;
+    height: 200px;
+    z-index: 1;
+}
+
+.profile-edit-container {
+    height: 150px;
+}
+
+.profile-edit-inner {
+    width: 150px;
+}
+
+.profile-edit-btn {
+    z-index: 1;
+}
+
+/* User Profile Card Styling */
+.profile-card-body {
+    background-color: #fff;
+}
+
 .profile-card {
-    font-family: 'Open Sans', Arial, sans-serif;
     position: relative;
     float: left;
     overflow: hidden;
@@ -382,12 +432,13 @@ button {
     transform: rotate(-13deg);
 }
 
-.profile-card .profile {
+.profile-card .pet-profile {
     border-radius: 50%;
     position: absolute;
     bottom: 65%;
     left: 50%;
-    max-width: 100px;
+    height: 100px;
+    width: 100px;
     opacity: 1;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
     border: 2px solid rgba(255, 255, 255, 1);
@@ -440,6 +491,10 @@ button {
     background-color: #232323;
     color: #fff;
     text-decoration: none;
+}
+
+.add-pet-btn {
+    width: 200px;
 }
 
 @media (max-width: 768px) {
