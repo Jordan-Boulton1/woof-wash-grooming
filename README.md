@@ -51,3 +51,7 @@ By choosing the colours below, I hoped to achieve the calm and cleanliness feeli
 - `#87CEEB` used all throughout the site, its main use being a background-color.
 - `#0B3D91` used all throughout the site, its uses being: buttons and main elements such as cards.
 - `#F8F9FA` used all throughout the site, it is the main background colour for the site.
+
+I used [coolors.co](https://coolors.co/87ceeb-0b3d91-000000-f8f9fa-ffffff) to generate my colour palette.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/colour-palette.png)
