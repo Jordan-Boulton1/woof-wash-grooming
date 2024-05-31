@@ -35,3 +35,19 @@ hands, and your dog will leave our salon clean, refreshed, and ready for cuddles
 
 Don't wait to give your dog the care they deserve. Visit Woof & Wash Grooming and experience the difference that 
 expert grooming can make! We promise you and your furry friend will be glad you did.
+
+![Responsive Mockup](https://ui.dev/amiresponsive?url=https://woof-wash-grooming-b7fa1160192f.herokuapp.com)
+
+## UX
+
+When designing this webpage I wanted to achieve a balance of professionalism with a sense of calm and cleanliness.
+
+### Colour Scheme
+
+By choosing the colours below, I hoped to achieve the calm and cleanliness feeling.
+
+- `#FFFFFF` used all throughout the site primarily on text elements.
+- `#000000` also used all throughout the site mainly on text and border elements.
+- `#87CEEB` used all throughout the site, its main use being a background-color.
+- `#0B3D91` used all throughout the site, its uses being: buttons and main elements such as cards.
+- `#F8F9FA` used all throughout the site, it is the main background colour for the site.
