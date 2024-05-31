@@ -46,6 +46,12 @@ nav ul li a {
     font-family: 'Montserrat', sans-serif;
 }
 
+.user-profile-img {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+}
+
 button {
     font-family: 'Montserrat', sans-serif;
 }
@@ -437,15 +443,16 @@ button {
     position: absolute;
     bottom: 65%;
     left: 50%;
+    opacity: 1;
     height: 100px;
     width: 100px;
-    opacity: 1;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
     border: 2px solid rgba(255, 255, 255, 1);
     -webkit-transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
     z-index: 2;
     background-color: #fff;
+    object-fit: cover;
 }
 
 .profile-card h2 {
