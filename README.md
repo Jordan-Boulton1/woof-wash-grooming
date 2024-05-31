@@ -55,3 +55,11 @@ By choosing the colours below, I hoped to achieve the calm and cleanliness feeli
 I used [coolors.co](https://coolors.co/87ceeb-0b3d91-000000-f8f9fa-ffffff) to generate my colour palette.
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/colour-palette.png)
+
+### Typography
+
+- [Lora](https://fonts.google.com/specimen/Lora) was used as the primary text for the page.
+
+- [Montserrat](https://fonts.google.com/specimen/Montserrat) was used for all nav-links and buttons.
+
+- [Font Awesome](https://fontawesome.com) icons were used throughout the site, such as the social media icons in the footer.
