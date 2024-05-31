@@ -1,6 +1,10 @@
+// Check if the browser supports the replaceState method
 if (window.history.replaceState) {
+    // Replace the current history state with a new one to prevent form resubmission
   window.history.replaceState(null, null, window.location.href);
 }
+
+// Add click event listener to the date field icon
 document.addEventListener("DOMContentLoaded", function() {
     const dateFieldIcon = document.getElementById("start-date-icon");
     const serviceSelect = document.getElementById("id_service");
@@ -10,34 +14,36 @@ document.addEventListener("DOMContentLoaded", function() {
        event.preventDefault();
         const dateTimeFlatpickrContainer = document.getElementsByClassName("django-flatpickr")[0]._flatpickr;
         if (dateTimeFlatpickrContainer){
+            // Function to disable weekends in Flatpickr
              function disableWeekends(date) {
-            // Return true to disable the date
             return (date.getDay() === 0 || date.getDay() === 6);
         }
 
-             // Update the Flatpickr options to disable weekends
-             dateTimeFlatpickrContainer.set('disable', [disableWeekends]);
-             dateTimeFlatpickrContainer.set('minTime', '08:00')
+            // Update the Flatpickr options to disable weekends and set time schedule
+            dateTimeFlatpickrContainer.set('disable', [disableWeekends]);
+            dateTimeFlatpickrContainer.set('minTime', '08:00')
             dateTimeFlatpickrContainer.set('minDate', 'today')
             dateTimeFlatpickrContainer.set('maxTime', '17:00')
             dateTimeFlatpickrContainer.open();
         }
     });
 
+    // Add a change event listener to the service select element
     serviceSelect.addEventListener('change', function (event) {
         const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
         const selectedValue = selectedOption.value;
         const priceRangeContainer = document.getElementById('servicePrice');
         priceRangeContainer.innerHTML = "";
         if (selectedValue) {
+            // Fetch the price range for the selected service
               fetch(`/api/service/price/${selectedValue}/`)
                   .then((response) => response.json())
                   .then((data) => {
                       priceRangeContainer.hidden = false;
+                      // Display the range in the container
                       priceRangeContainer.innerHTML = `Price: £${data.price_range.vary_price1} - £${data.price_range.vary_price2}`
                   });
         }
     });
 
 });
-
