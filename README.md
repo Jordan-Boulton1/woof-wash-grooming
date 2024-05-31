@@ -6,7 +6,18 @@
 
 ---
 
-Looking for a grooming service that treats your dog like family? Welcome to Woof & Wash Grooming, where every grooming session is more than a cut and dry—it's an experience that pampers your furry friend from head to tail!
+Looking for a grooming service that treats your dog like family? Welcome to Woof & Wash Grooming, where every 
+grooming session is more than a cut and dry—it's an experience that pampers your furry friend from head to tail!
 
-**What We Hope to Accomplish** 
-Our goal at Woof & Wash Grooming is to create a sanctuary for your pets, providing top-notch grooming services designed to keep them healthy, happy, and looking their best. We believe that a well-groomed dog is not only a delight to be around, but also a healthier and more comfortable companion. We aim to make grooming a positive experience for every pet, ensuring they leave our care with wagging tails and a confident strut.
+**What We Hope to Accomplish**
+
+Our goal at Woof & Wash Grooming is to create a sanctuary for your pets, providing top-notch grooming services 
+designed to keep them healthy, happy and looking their best. We believe that a well-groomed dog is not only a 
+delight to be around, but also a healthier and more comfortable companion. We aim to make grooming a positive 
+experience for every pet, ensuring they leave our care with wagging tails and a confident strut.
+
+**Who We Target** 
+
+We cater to all dog owners who want only the best for their pets. Whether you have a small, medium, large, or 
+extra-large dog, we have the skills and expertise to provide tailored grooming services that meet their unique needs.
+If you're a busy pet parent seeking a reliable partner to keep your dog clean and well-groomed, we are here for you.
