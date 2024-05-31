@@ -36,7 +36,7 @@ hands, and your dog will leave our salon clean, refreshed, and ready for cuddles
 Don't wait to give your dog the care they deserve. Visit Woof & Wash Grooming and experience the difference that 
 expert grooming can make! We promise you and your furry friend will be glad you did.
 
-![Responsive Mockup](https://ui.dev/amiresponsive?url=https://woof-wash-grooming-b7fa1160192f.herokuapp.com)
+![Responsive Mockup](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/responsive-mockup.png)
 
 ## UX
 
