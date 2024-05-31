@@ -63,3 +63,30 @@ I used [coolors.co](https://coolors.co/87ceeb-0b3d91-000000-f8f9fa-ffffff) to ge
 - [Montserrat](https://fonts.google.com/specimen/Montserrat) was used for all nav-links and buttons.
 
 - [Font Awesome](https://fontawesome.com) icons were used throughout the site, such as the social media icons in the footer.
+
+## User Stories
+
+### New Site Users
+
+- As a new site user, I would like to **register for an account**, so that I can **access the services features**.
+- As a new site user, I would like to **view the list of available grooming services**, so that I can **choose the service my dog needs**.
+
+### Registered Site Users
+
+- As a registered site user, I would like to **log in to my account**, so that I can **access my bookings and personalized information**.
+- As a registered site user, I would like to **create an appointment**, so that I can ** schedule a grooming appointment for my dog**.
+- As a registered site user, I would like to **edit my appointment**, so that I can **change the date, time or services**.
+- As a registered site user, I would like to **cancel my appointment**, so that I can **free up my appointment if my plans change and allow other users to book that time slot**.
+- As a registered site user, I would like to **view my past appointments**, so that I can **keep track of my  dogs grooming history**.
+- As a registered site user, I would like to **edit my profile**, so that I can **update my personal information or change my password**.
+- As a registered site user, I would like to **delete my profile**, so that I can **remove my account and personal data from the system**.
+- As a registered site user, I would like to **log out of the website**, so that I can **ensure my session is securely closed and prevent unauthorized access to my account**.
+- As a registered site user, I would like to **view my appointments via my profile**, so that I can **keep track of my upcoming appointments**.
+- As a registered site user, I would like to **to have access to my profile**, so that I can **keep my personal data up to date**.
+
+### Site Admin
+
+- As a site administrator, I should be able to **view all appointments**, so that I can **manage and monitor the appointment schedule**.
+- As a site administrator, I should be able to **view all pets**, so that I can **keep track of pet information and medical notes**.
+- As a site administrator, I should be able to **view all services**, so that I can **manage the services that the salon offers**.
+- As a site administrator, I should be able to **view all users**, so that I can **manage user accounts and information (with user permission)**.
