@@ -96,11 +96,6 @@ I used [coolors.co](https://coolors.co/87ceeb-0b3d91-000000-f8f9fa-ffffff) to ge
 To follow best practice, wireframes were developed for mobile, tablet, and desktop sizes.
 I've used [Figma](https://www.figma.com/) to design my site wireframes.
 
-## Wireframes
-
-To follow best practice, wireframes were developed for mobile, tablet, and desktop sizes.
-I've used [Figma](https://www.figma.com/) to design my site wireframes.
-
 ### Mobile Wireframes
 
 <details>
