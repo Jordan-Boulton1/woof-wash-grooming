@@ -265,6 +265,7 @@ button {
 .carousel-img {
     height: 700px;
     width: 500px;
+    object-fit: contain;
 }
 
 /* Carousel Item Styles */
