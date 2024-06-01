@@ -239,3 +239,18 @@ It isn't a specialized tool, but with the right tags and project creation/issue 
 Through it, user stories, issues, and milestone tasks were planned, then tracked on a weekly basis using the basic Kanban board.
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/kanban-board.png)
+
+### GitHub Issues
+
+[GitHub Issues](https://github.com/Jordan-Boulton1/woof-wash-grooming/issues) served as an another Agile tool.
+There, I used my own **User Story Template** to manage user stories.
+
+It also helped with milestone iterations on a weekly basis.
+
+- [Open Issues](https://github.com/Jordan-Boulton1/woof-wash-grooming/issues) [![GitHub issues](https://img.shields.io/github/issues/Jordan-Boulton1/woof-wash-grooming)](https://github.com/Jordan-Boulton1/woof-wash-grooming/issues)
+
+    ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/gh-issues-open.png)
+
+- [Closed Issues](https://github.com/Jordan-Boulton1/woof-wash-grooming/issues?q=is%3Aissue+is%3Aclosed) [![GitHub closed issues](https://img.shields.io/github/issues-closed/Jordan-Boulton1/woof-wash-grooming)](https://github.com/Jordan-Boulton1/woof-wash-grooming/issues?q=is%3Aissue+is%3Aclosed)
+
+    ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/gh-issues-closed.png)
