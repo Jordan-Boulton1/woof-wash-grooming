@@ -156,6 +156,43 @@ Navbars
 
 </details>
 
+## Features
+
+There are many features on the website which are easy to follow and navigate, creating a nice user experience.
+
+### Existing Features
+
+#### Home Page
+
+ - **Hero Image**: The website features a captivating hero image of a well-groomed, happy dog, effectively showcasing the quality and professionalism of our services, creating an immediate visual appeal and trust for users.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-hero.png)
+
+- **Welcome Message**: The welcome message emphasizes the award-winning services and commitment to quality pet care, establishing a professional and trustworthy impression.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/welcome-message.png)
+
+- **Service Overview**: The service overview on the home page provides brief descriptions of key services offered, including puppy grooming, a full grooming package, ear cleaning, and nail trimming, emphasizing their comprehensive care for pets.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-services.png)
+
+- **Find Out More**: This button, also featured in the service overview section, directs users to detailed descriptions of the grooming services, enhancing their understanding and helping them make informed decisions about the care options available for their pets.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/find-out-more-services-btn.png)
+
+- **About Us**: The about us section highlights the sites dedication to high-quality grooming, professional team, and continuous learning, fostering trust and connection with site users.
+- **Learn More About Us**: This button directs users to additional details about our grooming salon's mission and team.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-about-us.png)
+
+- **Testimonials**: The testimonials section showcases positive customer reviews, providing social proof that enhances the site's credibility and trustworthiness. For users, this section offers real life experiences and endorsements, aiding in their decision making and building confidence in the quality of the grooming services provided.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-testimonials.png)
+
+- **Contact Us**:  The contact us section provides easy access to direct contact information, enhancing the site's accessibility and encouraging user interaction. For users, it offers multiple ways to reach out for inquiries, support, or appointment scheduling, ensuring a seamless communication experience.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-contact-us.png)
+
 ## Tools & Technologies Used
 
 - [![Markdown Builder](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://tim.2bn.dev/markdown-builder) used to generate README and TESTING templates.
