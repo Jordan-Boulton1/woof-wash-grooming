@@ -238,4 +238,4 @@ It isn't a specialized tool, but with the right tags and project creation/issue 
 
 Through it, user stories, issues, and milestone tasks were planned, then tracked on a weekly basis using the basic Kanban board.
 
-![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/kanban-board.png)
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/kanban-board.png)
