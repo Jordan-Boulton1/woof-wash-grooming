@@ -359,3 +359,40 @@ Or:
 	- `git push heroku main`
 
 The project should now be connected and deployed to Heroku!
+
+### Local Deployment
+
+This project can be cloned or forked in order to make a local copy on your own system.
+
+For either method, you will need to install any applicable packages found within the *requirements.txt* file.
+
+- `pip3 install -r requirements.txt`.
+
+You will need to create a new file called `env.py` at the root-level,
+and include the same environment variables listed above from the Heroku deployment steps.
+
+> [!IMPORTANT]  
+> This is a sample only; you would replace the values with your own if cloning/forking my repository.
+
+Sample `env.py` file:
+
+```python
+import os
+
+os.environ.setdefault("CLOUDINARY_URL", "user's own value")
+os.environ.setdefault("DATABASE_URL", "user's own value")
+os.environ.setdefault("SECRET_KEY", "user's own value")
+
+# local environment only (do not include these in production/deployment!)
+os.environ.setdefault("DEBUG", "True")
+```
+
+Once the project is cloned or forked, in order to run it locally, you'll need to follow these steps:
+
+- Start the Django app: `python3 manage.py runserver`
+- Stop the app once it's loaded: `CTRL+C` or `⌘+C` (Mac)
+- Make any necessary migrations: `python3 manage.py makemigrations`
+- Migrate the data to the database: `python3 manage.py migrate`
+- Create a superuser: `python3 manage.py createsuperuser`
+- Load fixtures (if applicable): `python3 manage.py loaddata file-name.json` (repeat for each file)
+- Everything should be ready now, so run the Django app again: `python3 manage.py runserver`
