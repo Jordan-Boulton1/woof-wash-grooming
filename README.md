@@ -228,3 +228,14 @@ boolean is_booked
 ```
 
 I have used [mermaidchart](https://www.mermaidchart.com/)  to generate an ERD.
+
+## Agile Development Process
+
+### GitHub Projects
+
+[GitHub Projects](https://github.com/Jordan-Boulton1/woof-wash-grooming/projects) served as an Agile tool for this project.
+It isn't a specialized tool, but with the right tags and project creation/issue assignments, it can be made to work.
+
+Through it, user stories, issues, and milestone tasks were planned, then tracked on a weekly basis using the basic Kanban board.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/kanban-board.png)
