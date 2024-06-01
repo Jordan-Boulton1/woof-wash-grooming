@@ -193,6 +193,20 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-contact-us.png)
 
+#### About Page
+
+- **About Our Salon**: The section emphasizes the commitment to providing a welcoming and professional environment, detailing the state-of-the-art facilities and personalized care approach. This enhances the site's credibility and assures users of a high-quality grooming experience for their pets.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/about-page-business-description.png)
+
+- **Meet Our Team**: The section highlights the expertise and passion of the staff members, detailing their qualifications and dedication to pet care. This adds credibility to the site by showcasing professional qualifications and fosters trust in users by introducing them to the skilled individuals who will care for their pets.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/about-page-staff.png)
+
+- **Community Involvement**: The section highlights active participation in local events and partnerships with animal shelters, showcasing commitment to giving back. This enhances the site's reputation as a socially responsible business and benefits users by aligning with their values of community support and animal welfare.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/about-page-community.png)
+
 ## Tools & Technologies Used
 
 - [![Markdown Builder](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://tim.2bn.dev/markdown-builder) used to generate README and TESTING templates.
@@ -222,47 +236,53 @@ Understanding the relationships between different tables can save time later in 
 
 ```mermaid 
 erDiagram
-Users  ||--o{  Pets  : fk_Users_Pets
-Users  ||--|{  Appointments  : fk_Users_Appointments
-Services  ||--||  Appointments  : fk_Services_Appointments
+User ||--o{ Pet : fk_User_Pet
+User ||--|{ Appointment : fk_User_Appointment
+Service ||--|| Appointment : fk_Service_Appointment
 
-Users {
-int id
-varchar(50) first_name
-varchar(50) last_name
-varchar(255) email
-varchar(50) password
-varchar(30) phone
-varchar(100) address
-int role
-}
 
-Services {
-int service_id
-varchar(50) service_name
-varchar(500) description
-money price
-}
+    User {
+        int id
+        varchar(50) first_name
+        varchar(50) last_name
+        varchar(255) email
+        varchar(100) password
+        varchar(30) phone_number
+        varchar(100) address
+        varchar(100) image
 
-Pets  {
-int pet_id
-varchar(255) name
-varchar(50) breed
-int age
-varchar(255) medical_notes
-int user_id
-}
+    }
 
-Appointments  {
-int id
-int client_id
-int service_id
-int timeslot_id
-int status
-dateTime startdate
-dateTime enddate
-boolean is_booked
-}
+    Service {
+        int id
+        varchar(50) name
+        text description
+        text short_description
+        varchar(100) image
+        decimal vary_price1
+        decimal vary_price2
+    }
+
+    Pet {
+        int id
+        varchar(255) name
+        varchar(50) breed
+        int age
+        text medical_notes
+        int user_id
+        varchar(100) image
+    }
+
+    Appointment {
+        int id
+        int user_id
+        int service_id
+        int pet_id
+        int status
+        dateTime start_date_time
+        text description
+    }
+    
 ```
 
 I have used [mermaidchart](https://www.mermaidchart.com/)  to generate an ERD.
