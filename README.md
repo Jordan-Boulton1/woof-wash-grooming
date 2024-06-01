@@ -176,3 +176,55 @@ Navbars
 - [![Figma](https://img.shields.io/badge/Figma-grey?logo=figma&logoColor=00C4CC)](https://www.canva.com/p/canvawireframes) used for creating wireframes.
 - [![Font Awesome](https://img.shields.io/badge/Font_Awesome-grey?logo=fontawesome&logoColor=528DD7)](https://fontawesome.com) used for the icons.
 - [![ChatGPT](https://img.shields.io/badge/ChatGPT-grey?logo=chromatic&logoColor=75A99C)](https://chat.openai.com) used to help debug, troubleshoot, and explain things.
+
+## Database Design
+
+Entity Relationship Diagrams (ERD) help to visualize database architecture before creating models.
+Understanding the relationships between different tables can save time later in the project.
+
+```mermaid 
+erDiagram
+Users  ||--o{  Pets  : fk_Users_Pets
+Users  ||--|{  Appointments  : fk_Users_Appointments
+Services  ||--||  Appointments  : fk_Services_Appointments
+
+Users {
+int id
+varchar(50) first_name
+varchar(50) last_name
+varchar(255) email
+varchar(50) password
+varchar(30) phone
+varchar(100) address
+int role
+}
+
+Services {
+int service_id
+varchar(50) service_name
+varchar(500) description
+money price
+}
+
+Pets  {
+int pet_id
+varchar(255) name
+varchar(50) breed
+int age
+varchar(255) medical_notes
+int user_id
+}
+
+Appointments  {
+int id
+int client_id
+int service_id
+int timeslot_id
+int status
+dateTime startdate
+dateTime enddate
+boolean is_booked
+}
+```
+
+I have used [mermaidchart](https://www.mermaidchart.com/)  to generate an ERD.
