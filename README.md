@@ -133,3 +133,25 @@ Appointment
   - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/tablet-appointment.png)
 
 </details>
+
+### Desktop Wireframes
+
+<details>
+<summary> Click here to see the Desktop Wireframes </summary>
+
+Home
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/desktop-home.png)
+
+About
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/desktop-about.png)
+
+Services
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/desktop-services.png)
+
+Appointment
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/desktop-appointment.png)
+
+Navbars
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/desktop-navbars.png)
+
+</details>
