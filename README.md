@@ -207,6 +207,20 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/about-page-community.png)
 
+#### Services Page
+
+- **Our Grooming Services**: The section provides a full list of the variety of grooming options available, including relevant images that correspond to each grooming options and approximate prices for each service. This enhances the site's value by clearly communicating the range and quality of services offered, and benefits users by helping them to easily identify and select the best grooming care available for their pet.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/services-page-grooming-list.png)
+
+- **About Our Prices**: The section explains the pricing structure for various grooming services, emphasizing transparency and value. This adds credibility to the site by being upfront about costs and benefits users by allowing them to understand and budget for the grooming services their pets need.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/services-page-price.png)
+
+-**Gallery**: The section features images of pets during grooming, showcasing the quality and impact of the services provided. This enhances the site's value by visually demonstrating their expertise and benefits users by providing a clear, visual representation of the grooming experience they can expect for their pets.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/services-page-gallery.png)
+
 ## Tools & Technologies Used
 
 - [![Markdown Builder](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://tim.2bn.dev/markdown-builder) used to generate README and TESTING templates.
