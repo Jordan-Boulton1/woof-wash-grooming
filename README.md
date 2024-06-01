@@ -289,3 +289,14 @@ To obtain my own Postgres Database from Code Institute, I followed these steps:
 > if you plan to clone/fork this repository.
 > - Code Institute students are allowed a maximum of 8 databases.
 > - Databases are subject to deletion after 18 months.
+
+### Cloudinary API
+
+This project uses the [Cloudinary API](https://cloudinary.com) to store media assets online, due to the fact that Heroku doesn't persist this type of data.
+
+To obtain your own Cloudinary API key, create an account and log in.
+
+- For *Primary interest*, you can choose *Programmable Media for image and video API*.
+- Optional: *edit your assigned cloud name to something more memorable*.
+- On your Cloudinary Dashboard, you can copy your **API Environment Variable**.
+- Be sure to remove the `CLOUDINARY_URL=` as part of the API **value**; this is the **key**.
