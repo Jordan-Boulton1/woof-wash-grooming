@@ -90,3 +90,27 @@ I used [coolors.co](https://coolors.co/87ceeb-0b3d91-000000-f8f9fa-ffffff) to ge
 - As a site administrator, I should be able to **view all pets**, so that I can **keep track of pet information and medical notes**.
 - As a site administrator, I should be able to **view all services**, so that I can **manage the services that the salon offers**.
 - As a site administrator, I should be able to **view all users**, so that I can **manage user accounts and information (with user permission)**.
+
+## Wireframes
+
+To follow best practice, wireframes were developed for mobile, tablet, and desktop sizes.
+I've used [Figma](https://www.figma.com/) to design my site wireframes.
+
+### Mobile Wireframes
+
+<details>
+<summary> Click here to see the Mobile Wireframes </ summary>
+
+Home
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/mobile-home.png)
+
+About
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/mobile-about.png)
+
+Services
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/mobile-services.png)
+
+Appointment
+  - ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/wireframes/mobile-appointment.png)
+
+</details>
