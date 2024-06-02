@@ -309,7 +309,9 @@ There are many features on the website which are easy to follow and navigate, cr
 - [![Figma](https://img.shields.io/badge/Figma-grey?logo=figma&logoColor=F24E1E)](https://www.figma.com/) used for creating wireframes.
 - [![Font Awesome](https://img.shields.io/badge/Font_Awesome-grey?logo=fontawesome&logoColor=528DD7)](https://fontawesome.com) used for the icons.
 - [![ChatGPT](https://img.shields.io/badge/ChatGPT-grey?logo=chromatic&logoColor=75A99C)](https://chat.openai.com) used to help debug, troubleshoot, and explain things.
-- [![Mermaid](https://img.shields.io/badge/mermaid-grey?logo=mermaid&logoColor=FF3670)](https://www.mermaidchart.com/) used for creating ERD diagrams.
+- [![Mermaid](https://img.shields.io/badge/Mermaid-grey?logo=mermaid&logoColor=FF3670)](https://www.mermaidchart.com/) used for creating ERD diagrams.
+- [![Djecrety](https://img.shields.io/badge/Djecrety-grey?logo=djecrety&logoColor=FF3670)](https://djecrety.ir/) tool used for generating django secret keys.
+- [![Djecrety](https://img.shields.io/badge/Logo-grey?logo=logo&logoColor=FF3670)](https://logo.com/) tool used to create the logo for the website.
 
 ## Database Design
 
@@ -367,7 +369,7 @@ Service ||--|| Appointment : fk_Service_Appointment
     
 ```
 
-I have used [mermaidchart](https://www.mermaidchart.com/)  to generate an ERD.
+I have used [mermaidchart](https://www.mermaidchart.com/) to generate an ERD.
 
 ## Agile Development Process
 
@@ -565,6 +567,29 @@ You can fork this repository by using the following steps:
 1. Log in to GitHub and locate the [GitHub Repository](https://github.com/Jordan-Boulton1/woof-wash-grooming)
 2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
 3. Once clicked, you should now have a copy of the original repository in your own GitHub account!
+
+## Credits
+
+### Content
+
+| Source | Location | Notes |
+| --- | --- | --- |
+| [Markdown Builder](https://tim.2bn.dev/markdown-builder) | README and TESTING | tool to help generate the Markdown files |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/) | entire site | responsive HTML/CSS/JS navbar |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/modal/) | profile page | interactive pop-up (modal) |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/carousel/) | services page | interactive carousel |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/card/) | profile page | interactive pet and appointment cards |
+| [Testdriven](https://testdriven.io/blog/django-custom-user-model/) | `models.py` | creating a custom user |
+| [Django Docs](https://docs.djangoproject.com/en/5.0/topics/auth/default/) | `models.py` `views.py` | user creation form |
+| [Django Docs](https://docs.djangoproject.com/en/5.0/ref/forms/widgets/) | `forms.py` | django widgets documentation |
+| [Bootstrapbrain](https://bootstrapbrain.com/component/bootstrap-registration-form-example/) | appointment page | bootstrap registration form example |
+| [W3Schools](https://www.w3schools.com/cssref/sel_element_pluss.php) | style.css | CSS element+element selector |
+| [Shields](https://shields.io/docs/logos) | readme | shield icon documentation |
+| [strftime](https://strftime.org) | CRUD functionality | helpful tool to format date/time from string |
+| [WhiteNoise](http://whitenoise.evans.io) | entire site | hosting static files on Heroku temporarily |
+| [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams) | readme | implementing the ERD diagram |
+| [StackOverflow](https://stackoverflow.com/questions/45656405/browser-prevent-post-data-resubmit-on-refresh-using-only-javascript) | modals | prevent resubmitting data on modal forms |
+
 
 ### Acknowledgements
 
