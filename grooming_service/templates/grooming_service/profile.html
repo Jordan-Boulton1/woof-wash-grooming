@@ -120,9 +120,11 @@
                                                 </div>
                                                 <div class="button-block">
                                                     <!-- Check if appointment can be edited -->
-                                                    {% if appointment.start_date_time >= now|add_hours:48 %}
+                                                    {% if appointment.start_date_time >= now|add_hours:48 and appointment.status != 2 %}
                                                     <button class="btn d-block w-100 d-sm-inline-block editBtn" id="{{ appointment.id }}">Edit</button>
                                                     <button class="btn btn-sm d-block w-100 d-sm-inline-block cancelBtn" id="{{ appointment.id }}">Cancel</button>
+                                                    {% elif appointment.status == 2 %}
+                                                        <p> Appointment is completed! </p>
                                                     {% else %}
                                                     <p>Past appointments or appointments that are within 48 hours cannot be edited</p>
                                                     {% endif %}
@@ -158,6 +160,18 @@
             <div class="modal-body container">
                 <p>Are you sure you want to cancel this appointment?</p>
                 <p><i>This action cannot be reversed</i></p>
+            </div>
+             <div id="cancelAppointmentFormMessageContainer">
+                 {% if messages %}
+                    {% for message in messages %}
+                        {% if 'cancel_appointment_form' in message.tags %}
+                            <div class="mt-2 {{ message.tags }}">
+                                <a class="close" data-dismiss="alert">×</a>
+                                {{ message|safe }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                 {% endif %}
             </div>
             <div class="modal-footer">
                 <form id="cancelAppointmentForm" method="post" action="{% url 'cancel_appointment' cancel_appointment_id=0 %}">

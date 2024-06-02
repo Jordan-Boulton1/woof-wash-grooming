@@ -198,6 +198,14 @@ def __handle_edit_appointment_form(request, appointmentForm):
                 appointment.save()
                 messages.success(request, "Your appointment has been successfully updated. Redirecting you to profile page...",
                                  extra_tags='edit_appointment_form')
+        else:
+            appointment.pet = pet
+            appointment.service = service
+            appointment.description = description
+            appointment.save()
+            messages.success(request,
+                             "Your appointment has been successfully updated. Redirecting you to profile page...",
+                             extra_tags='edit_appointment_form')
     except Appointment.DoesNotExist:
         messages.error(request, "The requested appointment does not exist")
         return redirect('not_found')
@@ -267,7 +275,6 @@ def cancel_appointment(request, cancel_appointment_id):
 
 
 # Delete pet view
-@login_required(login_url='login')
 @login_required(login_url='login')
 def delete_pet(request, delete_pet_id):
     try:
