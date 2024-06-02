@@ -630,3 +630,92 @@ class TestManageProfileView(TestCase):
         messages = list(response.context['messages'])
         self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
         self.assertTrue(any(message.extra_tags == "add_pet_form" for message in messages))
+
+
+class TestCancelAppointmentView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test user for authentication
+        cls.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+        cls.service1 = Service.objects.create(name="Service 1", short_description="Description 1")
+        cls.service2 = Service.objects.create(name="Service 2", short_description="Description 2")
+
+    def setUp(self):
+        # Set up a test client
+        self.client = Client()
+
+
+    def test_cancel_appointment_success(self):
+        current_time = timezone.now() + timezone.timedelta(days=1)
+        current_time_str = current_time.strftime('%Y-%m-%d %H:%M')
+        current_time_str_new_format = datetime.strptime(current_time_str, '%Y-%m-%d %H:%M')
+        pet = self.user.pet_set.create(name='Test Pet', breed='Husky', age=3, user_id=self.user.id)
+
+        # Log in the user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+        # Create a test appointment belonging to the user
+        appointment = Appointment.objects.create(start_date_time=current_time_str_new_format,
+                                                 description='Test appointment', pet_id=pet.id,
+                                                 service_id=self.service1.id,
+                                                 user_id=self.user.id, status=1)
+
+        # Use the test client to make a GET request to the 'cancel_appointment' view
+        response = self.client.get(reverse('cancel_appointment', kwargs={'cancel_appointment_id': appointment.id}))
+
+        # Check that the appointment was cancelled
+        self.assertEqual(Appointment.objects.filter(id=appointment.id).count(), 0)
+
+        appointment_time = appointment.start_date_time.strftime('%Y-%m-%d %H:%M')
+
+        # Check that the success message was added
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn(f"Your appointment on the {appointment_time} has been cancelled. Redirecting you to profile page...", messages)
+
+    def test_cancel_appointment_permission_denied(self):
+        # Create a test appointment belonging to another user
+        other_user = User.objects.create_user(
+            first_name='Johnny',
+            last_name='Bravo',
+            email='johnny.bravo@example.com',
+            password='password123',
+            phone_number='125455567890',
+            address='123 Main St')
+
+        # Create a test appointment belonging to the user
+        current_time = timezone.now() + timezone.timedelta(days=1)
+        current_time_str = current_time.strftime('%Y-%m-%d %H:%M')
+        current_time_str_new_format = datetime.strptime(current_time_str, '%Y-%m-%d %H:%M')
+        pet = self.user.pet_set.create(name='Test Pet', breed='Husky', age=3, user_id=self.user.id)
+        appointment = Appointment.objects.create(start_date_time=current_time_str_new_format,
+                                                 description='Test appointment', pet_id=pet.id,
+                                                 service_id=self.service1.id,
+                                                 user_id=self.user.id, status=1)
+
+        # Log in the user
+        self.client.login(username='johnny.bravo@example.com', password='password123')
+
+        # Use the test client to make a GET request to the 'cancel_appointment' view
+        response = self.client.get(reverse('cancel_appointment', kwargs={'cancel_appointment_id': appointment.id}))
+
+        # Check that the appointment was not cancelled
+        self.assertEqual(Appointment.objects.filter(id=appointment.id).count(), 1)
+
+        self.assertRedirects(response, reverse('profile'))
+
+    def test_cancel_appointment_not_found(self):
+        # Log in the user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+        # Use the test client to make a GET request to the 'cancel_appointment' view with an appointment ID that doesn't exist
+        response = self.client.get(reverse('cancel_appointment', kwargs={'cancel_appointment_id': 999}))
+
+
+        # Check that that 404 was returned
+        self.assertEqual(response.status_code, 404)
