@@ -53,3 +53,17 @@ class TestHomeView(TestCase):
         # Check that the services are ordered by '-id'
         self.assertEqual(home_services[0].name, "Service 2")
         self.assertEqual(home_services[1].name, "Service 1")
+
+
+class TestAboutView(TestCase):
+    def test_about_view_status_code(self):
+        # Use the test client to make a GET request to the 'about' view
+        response = self.client.get(reverse('about'))
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+
+    def test_about_view_template(self):
+        # Use the test client to make a GET request to the 'about' view
+        response = self.client.get(reverse('about'))
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/about.html')
