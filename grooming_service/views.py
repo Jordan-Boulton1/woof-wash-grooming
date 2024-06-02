@@ -253,11 +253,16 @@ def cancel_appointment(request, cancel_appointment_id):
         appointment = get_object_or_404(Appointment, id=cancel_appointment_id)
         if appointment.user == request.user:
             appointment.delete()
-            return redirect("profile")
+            appointment_time = appointment.start_date_time.strftime('%Y-%m-%d %H:%M')
+            messages.success(request,
+                             f"Your appointment on the {appointment_time} has been cancelled. Redirecting you to profile page...",
+                             extra_tags="cancel_appointment_form")
         else:
-            messages.error(request, "You do not have permission to cancel this appointment.")
+            messages.error(request, "You do not have permission to cancel this appointment.",
+                           extra_tags="cancel_appointment_form")
     except Appointment.DoesNotExist:
         messages.error(request, "The requested appointment does not exist.")
+        return redirect('not_found')
     return redirect("profile")
 
 
