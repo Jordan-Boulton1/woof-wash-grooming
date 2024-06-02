@@ -77,6 +77,7 @@ def get_services(request):
     return render(request, "grooming_service/services.html", {'services': services})
 
 
+
 # Book appointment view
 @login_required(login_url='login')
 def book_appointment(request):
@@ -89,7 +90,8 @@ def book_appointment(request):
             service = form.cleaned_data["service"]
             try:
                 check_appointment = Appointment.objects.get(start_date_time=start_date_time, status=1)
-                messages.error(request, "The selected appointment is no longer available")
+                messages.error(request, "The selected appointment is already booked.",
+                               extra_tags="book_appointment_form")
             except Appointment.DoesNotExist:
                 appointment = Appointment(user=request.user,
                                           pet=pet,
@@ -98,9 +100,11 @@ def book_appointment(request):
                                           start_date_time=start_date_time,
                                           description=description)
                 appointment.save()
-                return redirect("profile")
+                messages.success(request,
+                                 "Your appointment has been successfully created! Redirecting you to profile page...",
+                                 extra_tags="book_appointment_form")
         else:
-            messages.error(request, "There was an error booking this appointment.")
+            messages.error(request, "There was an error booking this appointment.", extra_tags="book_appointment_form")
     else:
         form = AppointmentForm(user=request.user)
     return render(request, "grooming_service/appointment.html", {"form": form})
