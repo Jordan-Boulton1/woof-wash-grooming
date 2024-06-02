@@ -401,3 +401,232 @@ class TestEditProfileView(TestCase):
         messages = list(response.context['messages'])
         self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
         self.assertTrue(any(message.extra_tags == "edit_profile_form" for message in messages))
+
+
+class TestManageProfileView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test users
+        cls.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+        cls.user2 = User.objects.create_user(
+            first_name='John',
+            last_name='Travolta',
+            email='john.travolta@example.com',
+            password='password123',
+            phone_number='12345422290',
+            address='123 Main St')
+        cls.service1 = Service.objects.create(name="Service 1", short_description="Description 1")
+        cls.service2 = Service.objects.create(name="Service 2", short_description="Description 2")
+
+    def setUp(self):
+        # Set up a test client
+        self.client = Client()
+        # Log in the user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+    def test_manage_profile_view_get_request(self):
+        # Use the test client to make a GET request to the 'manage_profile' view
+        response = self.client.get(reverse('profile'))
+
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/profile.html')
+        # Check that the appointmentForm, petForm, and editPetForm are included in the context
+        self.assertIsInstance(response.context['appointmentForm'], AppointmentForm)
+        self.assertIsInstance(response.context['petForm'], PetForm)
+        self.assertIsInstance(response.context['editPetForm'], EditPetForm)
+
+    def test_handle_edit_appointment_form_valid_data(self):
+        # Create an existing appointment
+        current_time = timezone.now() + timezone.timedelta(days=1)
+        current_time_str = current_time.strftime('%Y-%m-%d %H:%M')
+        current_time_str_new_format = datetime.strptime(current_time_str, '%Y-%m-%d %H:%M')
+
+        updated_time = timezone.now() + timezone.timedelta(days=2)
+        updated_time_str = updated_time.strftime('%Y-%m-%d %H:%M')
+        updated_time_str_new_format = datetime.strptime(updated_time_str, '%Y-%m-%d %H:%M')
+
+        pet = self.user.pet_set.create(name='Test Pet', breed='Husky', age=3)
+        appointment = Appointment.objects.create(start_date_time=current_time_str_new_format,
+                                                 description='Test appointment', pet_id=pet.id,
+                                                 service_id=self.service1.id,
+                                                 user_id=self.user.id, status=1)
+
+        # Create a test request with valid data
+        response = self.client.post(reverse('profile'), {
+            'appointment_id': appointment.id,
+            'start_date_time': updated_time_str,  # Update the appointment time
+            'description': 'Updated description',
+            'pet': pet.id,
+            'service': self.service2.id,
+            'form_type': 'edit_appointment_form'
+        })
+
+        # Retrieve the updated appointment from the database
+        updated_appointment = Appointment.objects.get(id=appointment.id)
+
+        # Check that the appointment was updated with the new data
+        self.assertEqual(updated_appointment.start_date_time.date(), updated_time_str_new_format.date())
+        self.assertEqual(updated_appointment.description, 'Updated description')
+        self.assertEqual(updated_appointment.pet, pet)
+        self.assertEqual(updated_appointment.service, self.service2)
+
+        # Check that the success message was added
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn("Your appointment has been successfully updated. Redirecting you to profile page...", messages)
+
+    def test_handle_edit_appointment_form_invalid_data(self):
+        # Set time for test in correct format without seconds
+        current_time = timezone.now() + timezone.timedelta(days=1)
+        current_time_str = current_time.strftime('%Y-%m-%d %H:%M')
+        current_time_str_new_format = datetime.strptime(current_time_str, '%Y-%m-%d %H:%M')
+
+        updated_time = timezone.now() + timezone.timedelta(days=2)
+        updated_time_str = updated_time.strftime('%Y-%m-%d %H:%M')
+        updated_time_str_new_format = datetime.strptime(updated_time_str, '%Y-%m-%d %H:%M')
+
+        pet = self.user.pet_set.create(name='Test Pet', breed='Husky', age=3, user_id=self.user.id)
+        pet2 = self.user.pet_set.create(name='Test Pet 2', breed='Husky', age=3, user_id=self.user2.id)
+
+        # Create appointment for another user
+        Appointment.objects.create(start_date_time=updated_time_str_new_format,
+                                   description='Test appointment 2', pet_id=pet2.id,
+                                   service_id=self.service1.id,
+                                   user_id=self.user2.id, status=1)
+
+        # Create existing appointment for current user
+        appointment = Appointment.objects.create(start_date_time=current_time_str_new_format,
+                                                 description='Test appointment', pet_id=pet.id,
+                                                 service_id=self.service1.id,
+                                                 user_id=self.user.id, status=1)
+
+        # Create a test request with invalid data
+        response = self.client.post(reverse('profile'), {
+            'appointment_id': appointment.id,
+            'start_date_time': updated_time_str,  # Update the appointment time to the time of user 2
+            'description': 'Updated description',
+            'pet': pet.id,
+            'service': self.service2.id,
+            'form_type': 'edit_appointment_form'
+        })
+
+        # Retrieve the updated appointment from the database
+        updated_appointment = Appointment.objects.get(id=appointment.id)
+
+        # Check that the appointment was not updated with the new data
+        self.assertNotEqual(updated_appointment.start_date_time.date(), updated_time_str_new_format.date())
+        self.assertNotEqual(updated_appointment.description, 'Updated description')
+        self.assertNotEqual(updated_appointment.service, self.service2)
+
+        # Check that the error messages was added
+        messages = list(response.context['messages'])
+        self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
+        self.assertTrue(any(message.extra_tags == "edit_appointment_form" for message in messages))
+
+    def test_handle_pet_edit_form_valid_data(self):
+
+        # Create a test pet
+        pet = Pet.objects.create(user=self.user, name="Test Pet", breed="Test Breed", age=3,
+                                 image="media/images/tey9seavfcldmybatmmt", medical_notes="Test notes")
+
+        # Create a test request with valid data
+        response = self.client.post(reverse('profile'), {
+            'pet_id': pet.id,
+            'name': 'Updated Pet',
+            'breed': 'Updated Breed',
+            'age': 4,
+            'image': 'media/images/tey9seavfcldmybatmmt', #cloudinary field
+            'medical_notes': 'Updated notes',
+            'form_type': 'edit_pet_form'
+        })
+
+        # Retrieve the updated pet from the database
+        updated_pet = Pet.objects.get(id=pet.id)
+
+        # Check that the pet was updated with the new data
+        self.assertEqual(updated_pet.name, 'Updated Pet')
+        self.assertEqual(updated_pet.breed, 'Updated Breed')
+        self.assertEqual(updated_pet.age, 4)
+        self.assertEqual(updated_pet.image, 'media/images/tey9seavfcldmybatmmt')
+        self.assertEqual(updated_pet.medical_notes, 'Updated notes')
+
+        # Check that the success message was added
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn(f"{updated_pet.name} has been successfully updated. Redirecting you to profile page...", messages)
+
+    def test_handle_pet_edit_form_invalid_data(self):
+        # Create a test pet
+        pet = Pet.objects.create(user=self.user, name="Test Pet", breed="Test Breed", age=3,
+                                 image="media/images/tey9seavfcldmybatmmt", medical_notes="Test notes")
+
+        # Create a test request with invalid data
+        response = self.client.post(reverse('profile'), {
+            'pet_id': pet.id,
+            'name': 'Updated Pet23',
+            'breed': 'Updated Breed23',
+            'age': -4,
+            'image': 'media/images/tey9seavfcldmybatmmt',  # cloudinary field
+            'medical_notes': 'Updated notes',
+            'form_type': 'edit_pet_form'
+        })
+
+        # Retrieve the pet from the database
+        updated_pet = Pet.objects.get(id=pet.id)
+
+        # Check that the pet was not updated with the new data
+        self.assertNotEqual(updated_pet.name, 'Updated Pet23')
+        self.assertNotEqual(updated_pet.breed, 'Updated Breed23')
+        self.assertNotEqual(updated_pet.age, -4)
+        self.assertNotEqual(updated_pet.medical_notes, 'Updated notes')
+
+        # Check that the error messages was added
+        messages = list(response.context['messages'])
+        self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
+        self.assertTrue(any(message.extra_tags == "edit_pet_form" for message in messages))
+
+    def test_handle_pet_add_form_valid_data(self):
+        # Create a test request with valid data
+        response = self.client.post(reverse('profile'), {
+            'name': 'Test Pet',
+            'breed': 'Test Breed',
+            'age': 4,
+            'image': 'media/images/tey9seavfcldmybatmmt',  # cloudinary field
+            'medical_notes': 'Notes',
+            'form_type': 'pet_form'
+        })
+
+        # Retrieve the newly created pet from the database
+        new_pet = Pet.objects.last()
+
+        # Check that the pet was created with the correct data
+        self.assertEqual(new_pet.name, 'Test Pet')
+        self.assertEqual(new_pet.breed, 'Test Breed')
+        self.assertEqual(new_pet.age, 4)
+        self.assertEqual(new_pet.medical_notes, 'Notes')
+
+        # Check that the success message was added
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn(f"{new_pet.name} has been successfully created. Redirecting you to profile page...", messages)
+
+    def test_handle_pet_add_form_invalid_data(self):
+        # Create a test request with invalid data
+        response = self.client.post(reverse('profile'), {
+            'name': 'Test Pet 23',
+            'breed': 'Test Breed 23',
+            'age': -4,
+            'image': 'media/images/tey9seavfcldmybatmmt',  # cloudinary field
+            'medical_notes': 'Notes',
+            'form_type': 'pet_form'
+        })
+
+        # Check that the error messages was added
+        messages = list(response.context['messages'])
+        self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
+        self.assertTrue(any(message.extra_tags == "add_pet_form" for message in messages))
