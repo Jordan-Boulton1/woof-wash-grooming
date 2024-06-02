@@ -531,7 +531,6 @@ class TestManageProfileView(TestCase):
         self.assertTrue(any(message.extra_tags == "edit_appointment_form" for message in messages))
 
     def test_handle_pet_edit_form_valid_data(self):
-
         # Create a test pet
         pet = Pet.objects.create(user=self.user, name="Test Pet", breed="Test Breed", age=3,
                                  image="media/images/tey9seavfcldmybatmmt", medical_notes="Test notes")
@@ -542,7 +541,7 @@ class TestManageProfileView(TestCase):
             'name': 'Updated Pet',
             'breed': 'Updated Breed',
             'age': 4,
-            'image': 'media/images/tey9seavfcldmybatmmt', #cloudinary field
+            'image': 'media/images/tey9seavfcldmybatmmt',  #cloudinary field
             'medical_notes': 'Updated notes',
             'form_type': 'edit_pet_form'
         })
@@ -650,7 +649,6 @@ class TestCancelAppointmentView(TestCase):
         # Set up a test client
         self.client = Client()
 
-
     def test_cancel_appointment_success(self):
         current_time = timezone.now() + timezone.timedelta(days=1)
         current_time_str = current_time.strftime('%Y-%m-%d %H:%M')
@@ -676,7 +674,9 @@ class TestCancelAppointmentView(TestCase):
 
         # Check that the success message was added
         messages = [str(m) for m in response.wsgi_request._messages]
-        self.assertIn(f"Your appointment on the {appointment_time} has been cancelled. Redirecting you to profile page...", messages)
+        self.assertIn(
+            f"Your appointment on the {appointment_time} has been cancelled. Redirecting you to profile page...",
+            messages)
 
     def test_cancel_appointment_permission_denied(self):
         # Create a test appointment belonging to another user
@@ -715,7 +715,6 @@ class TestCancelAppointmentView(TestCase):
 
         # Use the test client to make a GET request to the 'cancel_appointment' view with an appointment ID that doesn't exist
         response = self.client.get(reverse('cancel_appointment', kwargs={'cancel_appointment_id': 999}))
-
 
         # Check that that 404 was returned
         self.assertEqual(response.status_code, 404)
@@ -762,7 +761,8 @@ class DeletePetViewTest(TestCase):
 
     def test_delete_pet_permission_denied(self):
         # Create a pet for another user
-        pet = Pet.objects.create(user=self.user2, name='Test Pet', breed='Test Breed', age=3, medical_notes='Test notes')
+        pet = Pet.objects.create(user=self.user2, name='Test Pet', breed='Test Breed', age=3,
+                                 medical_notes='Test notes')
 
         # Log in the test user
         self.client.login(email='john.doe@example.com', password='password123')
@@ -782,4 +782,64 @@ class DeletePetViewTest(TestCase):
         response = self.client.get(reverse('delete_pet', kwargs={'delete_pet_id': 999}))
 
         # Check that 404 was returned
+        self.assertEqual(response.status_code, 404)
+
+
+class TestDeleteUserView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test users
+        cls.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+        cls.user2 = User.objects.create_user(
+            first_name='John',
+            last_name='Travolta',
+            email='john.travolta@example.com',
+            password='password123',
+            phone_number='12345422290',
+            address='123 Main St')
+
+    def test_delete_user_success(self):
+        # Log in the test user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+        # Make a GET request to delete the user
+        response = self.client.get(reverse('delete_user', kwargs={'delete_user_id': self.user.id}))
+
+        # Check that the user was deleted
+        self.assertFalse(User.objects.filter(id=self.user.id).exists())
+
+        # Check success message and redirection
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn(
+            "Your account has been successfully deleted",
+            messages)
+        self.assertRedirects(response, reverse('home'))
+
+    def test_delete_user_permission_denied(self):
+        # Log in the test user 2
+        self.client.login(email='john.travolta@example.com', password='password123')
+
+        # Make a GET request to delete another user
+        response = self.client.get(reverse('delete_user', kwargs={'delete_user_id': self.user.id}))
+
+        # Check that the other user was not deleted
+        self.assertTrue(User.objects.filter(id=self.user.id).exists())
+
+        # Check redirection
+        self.assertRedirects(response, reverse('home'))
+
+    def test_delete_user_not_found(self):
+        # Log in the test user
+        self.client.login(email='john.travolta@example.com', password='password123')
+
+        # Make a GET request to delete a non-existent user
+        response = self.client.get(reverse('delete_user', kwargs={'delete_user_id': 999}))
+
+        # Check that that 404 was returned
         self.assertEqual(response.status_code, 404)
