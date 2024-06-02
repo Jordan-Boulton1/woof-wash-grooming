@@ -590,6 +590,38 @@ You can fork this repository by using the following steps:
 | [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams) | readme | implementing the ERD diagram |
 | [StackOverflow](https://stackoverflow.com/questions/45656405/browser-prevent-post-data-resubmit-on-refresh-using-only-javascript) | modals | prevent resubmitting data on modal forms |
 
+### Media
+
+| Source | Location | Type | Notes |
+| --- | --- | --- | --- |
+| [Unsplash](https://unsplash.com/photos/dog-running-on-beach-during-daytime-yihlaRCCvd4) | home page | image | hero image background |
+| [Font Awesome](https://fontawesome.com/icons/envelope?f=classic&s=solid) | home page | image | email icon |
+| [Unsplash](https://unsplash.com/photos/long-coated-brown-dog-KZv7w34tluA) | appointment page | image | appointment form |
+| [Font Awesome](https://fontawesome.com/icons/calendar?f=classic&s=solid) | appointment page | image | calendar icon |
+| [Pexels](https://www.pexels.com/photo/groomer-standing-and-washing-dog-19145897/) | about page | image | About our salon |
+| [Pexels](https://www.pexels.com/photo/groomer-trimming-dog-19145886/) | about page | image | head groomer |
+| [Pexels](https://www.pexels.com/photo/female-veterinarian-grooming-a-dog-6816849/) | about page | image | assistant groomer |
+| [Pexels](https://www.pexels.com/photo/dog-groomer-at-work-19145893/) | about page | image | apprentice groomer |
+| [Freepik](https://www.freepik.com/free-photo/man-training-his-pitbull-dogs_19333887.htm) | about page | image | community involvement |
+| [Flaticon](https://www.flaticon.com/free-icon/dog_3636096?term=dog+bath&page=1&position=3&origin=search&related_id=3636096) | services & profile page | image |  bath & brush service icon |
+| [Flaticon](https://www.flaticon.com/free-icon/trimming_3993873?term=nail+trim&page=1&position=1&origin=search&related_id=3993873) | services, profile & home page | image |  nail clipping service icon |
+| [Flaticon](https://www.flaticon.com/free-icon/ear-cleaning_9769458?term=ear+cleaning&page=1&position=29&origin=search&related_id=9769458) | services, profile & home page| image |  ear cleaning service icon |
+| [Flaticon](https://www.flaticon.com/free-icon/pet_1292684?term=dog+grooming&page=1&position=23&origin=search&related_id=1292684) | services, profile & home page | image | full grooming package service icon |
+| [Flaticon](https://www.flaticon.com/free-icon/puppy_1959927?term=puppy&page=1&position=3&origin=search&related_id=1959927) | services, profile & home page | image | puppy grooming package service icon |
+| [Flaticon](https://www.flaticon.com/free-icon/clean_2779423?term=teeth+clean&page=1&position=1&origin=search&related_id=2779423) | services & profile page | image | teeth cleaning service icon |
+| [Flaticon](https://www.flaticon.com/free-icon/deshedding_3636484?term=deshedding&page=1&position=1&origin=search&related_id=3636484) | services & profile page | image | deshedding service icon |
+| [Flaticon](https://www.flaticon.com/free-icon/treatment_6680035?term=flea+treatment&page=1&position=3&origin=search&related_id=6680035) | services & profile page | image | flea & tick treatment service icon |
+| [Posh Dugz](https://www.facebook.com/p/Posh-Dugz-Dog-Grooming-100062609805112/) | services page | image | provided me with the images of my dog while he was being groomed |
+| [Unsplash](https://unsplash.com/photos/dog-biting-brown-wood-on-road-uNNCs5kL70Q) | 404 page | image | 404 error image |
+| [Font Awesome](https://fontawesome.com/icons/tiktok?f=brands&s=solid) | footer | image | TikTok icon |
+| [Font Awesome](https://fontawesome.com/icons/instagram?f=brands&s=solid) | footer | image | Instagram icon |
+| [Font Awesome](https://fontawesome.com/icons/x-twitter?f=brands&s=solid) | footer | image | Twitter icon |
+| [Font Awesome](https://fontawesome.com/icons/facebook?f=brands&s=solid) | footer | image | Facebook icon |
+| [Font Awesome](https://fontawesome.com/icons/phone?f=classic&s=solid) | home & profile page | image | Phone icon |
+| [Font Awesome](https://fontawesome.com/icons/location-dot?f=classic&s=solid) | profile page | image | Location icon |
+| [Pixabay](https://pixabay.com/illustrations/cat-paws-paws-isolated-2674056/) | profile page | image | card background |
+| [Pixabay](https://pixabay.com/vectors/animal-canine-dog-head-pet-2023227/) | profile page | image | default pet image |
+| [GitHub](https://github.com/Code-Institute-Solutions/blog/blob/main/10_create_about_app/static/images/nobody.jpg) | entire site | image | default user image |
 
 ### Acknowledgements
 
