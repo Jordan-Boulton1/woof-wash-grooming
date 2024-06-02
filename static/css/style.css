@@ -345,6 +345,18 @@ button {
     max-width: 500px;
 }
 
+.appointment-form-col .service-appointment-selector {
+    max-height: 34px;
+}
+
+.appointment-form-col .service-appointment-selector p{
+    margin-left: 70px;
+}
+
+.appointment-form-col .service-appointment-selector .service-price-container {
+    margin-top: 2px;
+}
+
 .appointment-form-container {
     max-height: 770px;
 }
@@ -369,8 +381,8 @@ button {
 }
 
 .profile-header .img-thumbnail {
-    width: 150px;
-    height: 200px;
+    min-width: 150px;
+    min-height: 200px;
     z-index: 1;
 }
 
@@ -439,6 +451,7 @@ button {
     transform: rotate(-13deg);
 }
 
+
 .profile-card .pet-profile {
     border-radius: 50%;
     position: absolute;
@@ -469,15 +482,13 @@ button {
 }
 
 .profile-card i {
-    display: inline-block;
-    font-size: 16px;
-    color: #232323;
+    font-size: 12px;
+    line-height: 15px;
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
     text-align: center;
-    border: 1px solid #232323;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
+    border: 1px solid #ffffff;
     margin: 0 5px;
 }
 
@@ -495,14 +506,19 @@ button {
     text-decoration: none;
 }
 
-.profile-card i:hover {
-    background-color: #232323;
-    color: #fff;
-    text-decoration: none;
+.img-account-profile {
+    min-width: 150px;
+    min-height: 200px;
+    max-width: 150px;
+    max-height: 200px;
+    object-fit: cover;
 }
-
 .add-pet-btn {
     width: 200px;
+}
+
+#servicePrice {
+    font-size: 12px;
 }
 
 @media (max-width: 768px) {
@@ -512,5 +528,13 @@ button {
 
     .profile-card .card-content {
         height: 100%;
+    }
+
+    .appointment-form-col .service-appointment-selector p{
+        margin-left: 30px;
+    }
+
+    .appointment-form-col .service-appointment-selector .service-price-container {
+         margin-top: 0;
     }
 }
