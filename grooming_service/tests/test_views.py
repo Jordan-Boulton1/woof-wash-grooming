@@ -328,3 +328,76 @@ class TestBookAppointmentView(TestCase):
         messages = list(response.context['messages'])
         self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
         self.assertTrue(any(message.extra_tags == "book_appointment_form" for message in messages))
+
+
+class TestEditProfileView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test user for authentication
+        cls.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+
+    def setUp(self):
+        # Set up a test client
+        self.client = Client()
+        # Log in the user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+    def test_edit_profile_view_get_request(self):
+        # Use the test client to make a GET request to the 'edit_profile' view
+        response = self.client.get(reverse('edit_profile'))
+
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/edit_profile.html')
+        # Check that the form is included in the context
+        self.assertIsInstance(response.context['form'], EditUserForm)
+
+    def test_edit_profile_view_post_request_valid_data(self):
+        # Use the test client to make a POST request to the 'edit_profile' view with valid data
+        response = self.client.post(reverse('edit_profile'), {
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john.doe54@example.com",
+            "password": "password123",
+            "phone_number": "9876543210",
+            "address": "456 New Street",
+        })
+
+        # Check that the response is a redirect
+        self.assertEqual(response.status_code, 200)
+        # Check that the success message was added
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn(
+            "Your profile has been successfully saved with the new changes. Redirecting you to profile page...",
+            messages)
+
+    def test_edit_profile_view_post_request_invalid_data(self):
+        # Use the test client to make a POST request to the 'edit_profile' view with invalid data
+        response = self.client.post(reverse('edit_profile'), {
+            "first_name": "",
+            "last_name": "",
+            "email": "invalidemail",
+            "password": "",
+            "phone_number": "",
+            "address": "",
+        })
+
+        # Check that the response is 200 OK (form re-rendered with errors)
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/edit_profile.html')
+        # Check that the form is included in the context and is not valid
+        form = response.context['form']
+        self.assertIsInstance(form, EditUserForm)
+        self.assertFalse(form.is_valid())
+        # Check that the error message was added
+        messages = list(response.context['messages'])
+        self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
+        self.assertTrue(any(message.extra_tags == "edit_profile_form" for message in messages))
