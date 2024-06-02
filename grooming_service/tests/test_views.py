@@ -243,3 +243,88 @@ class TestUserLogoutView(TestCase):
         self.assertTrue(any(message.message == "You have been logged out." for message in messages))
         # Check that the user is redirected to the home page
         self.assertRedirects(response, reverse('home'))
+
+
+class TestBookAppointmentView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test user for authentication
+        cls.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+        cls.service = Service.objects.create(name="Service 1", short_description="Description 1")
+
+    def setUp(self):
+        # Set up a test client
+        self.client = Client()
+        # Log in the user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+    def test_book_appointment_view_redirect_if_not_logged_in(self):
+        # Log out the user
+        self.client.logout()
+        # Use the test client to make a GET request to the 'book_appointment' view
+        response = self.client.get(reverse('appointment'))
+        # Check that the response is a redirect to the login page
+        self.assertRedirects(response, f'/login/?next={reverse("appointment")}')
+
+    def test_book_appointment_view_get_request(self):
+        # Use the test client to make a GET request to the 'book_appointment' view
+        response = self.client.get(reverse('appointment'))
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/appointment.html')
+        # Check that the form is included in the context
+        self.assertIn('form', response.context)
+        # Check that the form is an instance of AppointmentForm
+        self.assertIsInstance(response.context['form'], AppointmentForm)
+
+    def test_book_appointment_view_post_request_valid_form(self):
+        # Create a pet for the user
+        pet = self.user.pet_set.create(name='Test Pet', breed='Husky', age=3)
+        # Use the test client to make a POST request to the 'book_appointment' view with valid data
+        response = self.client.post(reverse('appointment'), {
+            'start_date_time': timezone.now() + timezone.timedelta(days=1),
+            'description': 'Test appointment',
+            'pet': pet.id,
+            'service': self.service.id,
+        })
+        # Check that the response is a redirect
+        self.assertEqual(response.status_code, 200)
+        # Check that the appointment was created
+        self.assertTrue(Appointment.objects.filter(user_id=self.user.id).exists())
+        # Check that the success message was added
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn("Your appointment has been successfully created! Redirecting you to profile page...", messages)
+
+    def test_book_appointment_view_post_request_invalid_form_appointment_booked(self):
+        # Create an existing appointment
+        current_time = timezone.now() + timezone.timedelta(days=1)
+        current_time_str = current_time.strftime('%d-%m-%Y %H:%M')
+        current_time_str_new_format = datetime.strptime(current_time_str, '%d-%m-%Y %H:%M')
+        pet = self.user.pet_set.create(name='Test Pet', breed='Husky', age=3)
+        Appointment.objects.create(start_date_time=current_time_str_new_format,
+                                   description='Test appointment', pet_id=pet.id, service_id=self.service.id,
+                                   user_id=self.user.id, status=1)
+
+        # Use the test client to make a POST request to the 'book_appointment' view with start_date_time thats already booked
+        response = self.client.post(reverse('appointment'), {
+            'start_date_time': current_time_str_new_format,
+            'description': 'Test appointment',
+            'pet': pet.id,
+            'service': self.service.id,
+        })
+        # Check that the response is a redirect
+        self.assertEqual(response.status_code, 200)
+        appointments = Appointment.objects.filter(user_id=self.user.id)
+        # Check that the appointment was not created
+        self.assertEqual(len(appointments), 1)
+        # Check that the error message was added
+        messages = list(response.context['messages'])
+        self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
+        self.assertTrue(any(message.extra_tags == "book_appointment_form" for message in messages))
