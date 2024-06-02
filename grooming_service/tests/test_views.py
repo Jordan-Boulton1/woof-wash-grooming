@@ -213,3 +213,33 @@ class TestUserLoginView(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
         self.assertTrue(any(message.extra_tags == "login_form" for message in messages))
+
+
+class TestUserLogoutView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test user for authentication
+        cls.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+
+    def test_user_logout_view(self):
+        # Log in the user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+        # Use the test client to make a GET request to the 'user_logout' view
+        response = self.client.get(reverse('logout'))
+
+        # Check that the response is a redirect
+        self.assertEqual(response.status_code, 302)
+        # Check that the user is logged out
+        self.assertNotIn('_auth_user_id', self.client.session)
+        # Check that the success message was added
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(message.message == "You have been logged out." for message in messages))
+        # Check that the user is redirected to the home page
+        self.assertRedirects(response, reverse('home'))
