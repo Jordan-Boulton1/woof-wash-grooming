@@ -39,9 +39,10 @@ def user_login(request):
             user = authenticate(request, email=email, password=password)
             if user:
                 login(request, user)
-                return redirect("home")
+                messages.success(request, "Login successful. Please wait...",
+                                 extra_tags="login_form")
             else:
-                messages.error(request, "Invalid email or password")
+                messages.error(request, "Invalid email or password", extra_tags="login_form")
     else:
         form = LoginForm()
     return render(request, "grooming_service/login.html", {"form": form})
