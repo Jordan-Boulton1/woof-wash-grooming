@@ -264,6 +264,12 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/profile-page-edit-user.png)
 
+#### Register Page
+
+- **Register An Account**: The register form allows user to create a new account by entering their personal details. This expands the site's user base and provides users with an easy streamlined process to set up a personalized account for tailored grooming services.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/register-page-form.png)
+
 ## Tools & Technologies Used
 
 - [![Markdown Builder](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://tim.2bn.dev/markdown-builder) used to generate README and TESTING templates.
