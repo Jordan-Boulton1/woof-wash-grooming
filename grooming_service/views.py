@@ -285,17 +285,20 @@ def delete_pet(request, delete_pet_id):
     return redirect("profile")
 
 
+#Delete user view
 @login_required(login_url='login')
 def delete_user(request, delete_user_id):
     try:
         user = get_object_or_404(User, id=delete_user_id)
         if user == request.user:
             user.delete()
-            return redirect("home")
+            messages.success(request,
+                             "Your account has been successfully deleted")
         else:
             messages.error(request, "You do not have permission to delete this user.")
     except User.DoesNotExist:
         messages.error(request, "The requested user does not exist.")
+        return redirect('not_found')
     return redirect("home")
 
 
