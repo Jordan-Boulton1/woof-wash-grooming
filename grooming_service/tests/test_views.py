@@ -67,3 +67,36 @@ class TestAboutView(TestCase):
         response = self.client.get(reverse('about'))
         # Check that the correct template was used
         self.assertTemplateUsed(response, 'grooming_service/about.html')
+
+
+class TestGetServicesView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up test data for the whole TestCase
+        Service.objects.create(name="Service 1", short_description="Description 1")
+        Service.objects.create(name="Service 2", short_description="Description 2")
+
+    def test_get_services_view_status_code(self):
+        # Use the test client to make a GET request to the 'get_services' view
+        response = self.client.get(reverse('services'))
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_services_view_template(self):
+        # Use the test client to make a GET request to the 'get_services' view
+        response = self.client.get(reverse('services'))
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/services.html')
+
+    def test_get_services_view_context_data(self):
+        # Use the test client to make a GET request to the 'get_services' view
+        response = self.client.get(reverse('services'))
+        # Check that 'services' is in the context
+        self.assertIn('services', response.context)
+        # Get the services from the context
+        services = response.context['services']
+        # Check that there are 2 services in the context
+        self.assertEqual(services.count(), 2)
+        # Check the names of the services
+        self.assertEqual(services[0].name, "Service 1")
+        self.assertEqual(services[1].name, "Service 2")
