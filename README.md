@@ -162,6 +162,21 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ### Existing Features
 
+#### Navbar, Footer & Sidebar
+
+- **Navbar**: Featured on every single page is the navigation bar, this enhances user experience by providing users with clear access to all pages of the website, increasing the visibility of the highlighted key pages.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/navbar1.png)
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/navbar2.png)
+
+- **Sidebar**: Mobile users, will have access to the *sidebar*, this provides the same benefits as the navigation bar allowing users to easily access all pages of the site on mobile devices.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/sidebar.png)
+
+- **Footer**: Also featured on every single page is the footer, equipped with social media links and copyright information, this enhances user engagement, fosters brand consistency, ensures legal compliance, and improves navigational accessibility.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/footer.png)
+
 #### Home Page
 
  - **Hero Image**: The website features a captivating hero image of a well-groomed, happy dog, effectively showcasing the quality and professionalism of our services, creating an immediate visual appeal and trust for users.
