@@ -403,3 +403,64 @@ class AppointmentFormTest(TestCase):
         })
         self.assertFalse(form.is_valid())
         self.assertIn('Enter a valid date/time.', form.errors['start_date_time'])
+
+
+class PetFormsTest(TestCase):
+    def test_pet_form_valid_data(self):
+        # Test with valid data to ensure that both create and edit forms are valid
+        form_data = {
+            'name': 'Fluffy',
+            'breed': 'Labrador',
+            'age': 5,
+            'medical_notes': 'None',
+            'image': None  # Assuming this is optional or you have a default value
+        }
+        form = PetForm(data=form_data)
+        edit_form = EditPetForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        self.assertTrue(edit_form.is_valid())
+
+    def test_pet_form_invalid_age(self):
+        # Test with an invalid age to ensure the forms are invalid and both forms contain errors for age
+        form_data = {
+            'name': 'Fluffy',
+            'breed': 'Labrador',
+            'age': -5,  # Invalid age
+            'medical_notes': 'None',
+            'image': None
+        }
+        form = PetForm(data=form_data)
+        edit_form = EditPetForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('Age must be a positive number.', form.errors['__all__'])
+        self.assertFalse(edit_form.is_valid())
+        self.assertIn('Age must be a positive number.', edit_form.errors['__all__'])
+
+    def test_pet_form_invalid_name(self):
+        # Test with an invalid name to ensure the forms are invalid and both forms contain errors for name
+        form_data = {
+            'name': 'Fluffy12344',  # Invalid name
+            'breed': 'Labrador',
+            'age': 5,
+            'medical_notes': 'None',
+            'image': None
+        }
+        form = PetForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('Pet can only contain letters and white spaces.', form.errors['__all__'])
+
+    def test_pet_form_invalid_breed(self):
+        # Test with an invalid breed to ensure the forms are invalid and both forms contain errors for breed
+        form_data = {
+            'name': 'Fluffy',
+            'breed': 'Labrador44324223', # Invalid age
+            'age': 5,
+            'medical_notes': 'None',
+            'image': None
+        }
+        form = PetForm(data=form_data)
+        edit_form = EditPetForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('Breed can only contain letters and white spaces.', form.errors['__all__'])
+        self.assertFalse(edit_form.is_valid())
+        self.assertIn('Breed can only contain letters and white spaces.', edit_form.errors['__all__'])
