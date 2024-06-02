@@ -119,9 +119,11 @@ def edit_profile(request):
             user.set_password(form.cleaned_data["password"])
             user.save()
             update_session_auth_hash(request, user)
-            return redirect("/profile")
+            messages.success(request,
+                             "Your profile has been successfully saved with the new changes. Redirecting you to profile page...",
+                             extra_tags="edit_profile_form")
         else:
-            __handle_form_errors(request, form)
+            __handle_form_errors(request, form, extra_tags="edit_profile_form")
 
     else:
         form = EditUserForm(instance=request.user)
