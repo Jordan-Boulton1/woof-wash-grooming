@@ -236,6 +236,14 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/services-page-gallery.png)
 
+#### Appointment Page
+
+- **Book An Appointment**: The section offers an online booking form with a built in date picker for scheduling grooming sessions, streamlining the appointment process. This adds value to the site by enhancing user convenience and operational efficiency, and benefits users by providing a simple, quick way to secure grooming services for their pets.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/appointment-page-form.png)
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/appointment-page-date-picker.png)
+
+
 ## Tools & Technologies Used
 
 - [![Markdown Builder](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://tim.2bn.dev/markdown-builder) used to generate README and TESTING templates.
