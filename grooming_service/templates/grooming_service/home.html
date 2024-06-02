@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<!-- Display form messages when user is deleted or logs out-->    
+ <div id="generalMessages">
+        {% if messages %}
+            {% for message in messages %}
+                  <div class=" mt-2 {{ message.tags }}">
+                        <a class="close" data-dismiss="alert">×</a>
+                        {{ message|safe }}
+                  </div>
+        {% endfor %}
+     {% endif %}
+ </div>    
 <!-- Hero Section -->
 <section class="hero-section p-5 d-flex justify-content-center align-items-center text-center bg-image" id="hero-image">
     <div class="container text-center">
@@ -113,4 +124,8 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+    <script type="module" src="{% static 'js/shared.js' %}"></script>
 {% endblock %}
