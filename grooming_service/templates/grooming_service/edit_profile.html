@@ -3,6 +3,17 @@
 {% block content %}
 <div class="container-xl px-4 mt-4">
     <a href="{% url 'profile' %}"><i class="fa-solid fa-caret-left"></i>Back to Profile</a>
+    <!-- Display form submission messages -->
+    {% if messages %}
+        {% for message in messages %}
+             {% if 'edit_profile_form' in message.tags %}
+            <div class=" mt-2 {{ message.tags }}">
+                <a class="close" data-dismiss="alert">×</a>
+                {{ message|safe }}
+            </div>
+             {% endif %}
+        {% endfor %}
+    {% endif %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
@@ -12,7 +23,7 @@
                     <div class="card-header custom-bg-primary">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2 h-50 w-50" src="{{ user.image.url }}" alt="">
+                        <img class="img-account-profile mb-2 img-account-profile" src="{{ user.image.url }}" alt="">
                         <!-- Profile picture upload button-->
                         <div>
                             {{ form.image }}
@@ -65,12 +76,6 @@
                         <button class="btn custom-btn-alt" type="submit">Save changes</button>
                         <!-- Delete Profile Button -->
                         <button class="btn custom-btn-del" type="button" id="deleteUserBtn">Delete Profile</button>
-                        <!-- Display form submission messages -->
-                        <div class="mt-4">
-                            {% for message in messages %}
-                            <div class="{{ message.tags }} alert alert-danger">{{ message }}</div>
-                            {% endfor %}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -85,6 +90,19 @@
             <div class="modal-header">
                 <h5 class="modal-title">Delete Profile</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Display form submission messages -->
+            <div id="deleteUserFormMessages">
+                {% if messages %}
+                    {% for message in messages %}
+                         {% if 'delete_user_form' in message.tags %}
+                        <div class=" mt-2 {{ message.tags }}">
+                            <a class="close" data-dismiss="alert">×</a>
+                            {{ message|safe }}
+                        </div>
+                         {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
             <div class="modal-body container">
                 <p>Are you sure you want to delete your profile?</p>
@@ -103,5 +121,6 @@
 </div>
 {% endblock %}
 {% block js %}
-<script src="{% static 'js/edit_profile.js' %}"></script>
+    <script type="module" src="{% static 'js/edit_profile.js' %}"></script>
+    <script type="module" src="{% static 'js/shared.js' %}"></script>
 {% endblock %}

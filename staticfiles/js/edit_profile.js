@@ -4,6 +4,9 @@ if (window.history.replaceState) {
   window.history.replaceState(null, null, window.location.href);
 }
 
+// Import the delayBeforeReroute function from the shared.js module
+import {delayBeforeReroute} from "./shared.js";
+
 // Execute the following code when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
   // Get references to the delete button, modal, and confirmation button
@@ -31,4 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
       form.submit();
     });
   });
+
+  delayBeforeReroute("/profile")
 });
