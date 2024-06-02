@@ -157,3 +157,59 @@ class TestRegisterView(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
         self.assertTrue(any(message.extra_tags == "register_form" for message in messages))
+
+
+class TestUserLoginView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test user for authentication
+        User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+
+    def test_user_login_view_get_request(self):
+        # Use the test client to make a GET request to the 'user_login' view
+        response = self.client.get(reverse('login'))
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/login.html')
+        # Check that the form is included in the context
+        self.assertIsInstance(response.context['form'], LoginForm)
+
+    def test_user_login_view_post_request_valid_credentials(self):
+        # Use the test client to make a POST request to the 'user_login' view with valid credentials
+        response = self.client.post(reverse('login'), {
+            'email': 'john.doe@example.com',
+            'password': 'password123'
+        })
+        # Check that the response is a redirect
+        self.assertEqual(response.status_code, 200)
+        # Check that the user is logged in
+        user = User.objects.get(email='john.doe@example.com')
+        self.assertTrue(user.is_authenticated)
+        # Check that the success message was added
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(message.message == "Login successful. Please wait..." for message in messages))
+
+    def test_user_login_view_post_request_invalid_credentials(self):
+        # Use the test client to make a POST request to the 'user_login' view with invalid credentials
+        response = self.client.post(reverse('login'), {
+            'email': 'test@example.com',
+            'password': 'wrongpassword'
+        })
+        # Check that the response is 200 OK (form re-rendered with errors)
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/login.html')
+        # Check that the form is included in the context and is not valid
+        form = response.context['form']
+        self.assertIsInstance(form, LoginForm)
+        # Check that the error message was added
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
+        self.assertTrue(any(message.extra_tags == "login_form" for message in messages))
