@@ -283,6 +283,12 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/404-not-found.png)
 
+### Future Features
+
+- **Forgot Password**: I would have liked to add this feature where the user can click on the forgot password link on the login page. The user would be redirected to a page to ask for email confirmation, upon successful confirmation a reset link would be sent to their email address.
+
+- **Payment System**: Another feature I would have liked to add to this project, in order to streamline the user experience the user would be redirected to a secure payment interface where they could enter their details and pay for their grooming services online.
+
 ## Tools & Technologies Used
 
 - [![Markdown Builder](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://tim.2bn.dev/markdown-builder) used to generate README and TESTING templates.
