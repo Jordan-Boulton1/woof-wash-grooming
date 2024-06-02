@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import sys
 import dj_database_url
+from django.contrib.messages import constants as messages
 
 if os.path.isfile('env.py'):
     import env
@@ -34,6 +35,11 @@ DEBUG = os.environ.get("DEBUG", False)
 ALLOWED_HOSTS = []
 
 CSRF_TRUSTED_ORIGINS = []
+
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'alert alert-success',
+    messages.ERROR: 'alert alert-danger'
+}
 
 host = os.environ.get("HOST")
 if host:
