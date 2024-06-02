@@ -1,9 +1,11 @@
-// Check if the browser supports the replaceState method
+// Check if the browser supports the history.replaceState method
 if (window.history.replaceState) {
-    // Replace the current history state with a new one to prevent form resubmission
+  // Use replaceState to modify the history entry, preventing form resubmission on page reload
   window.history.replaceState(null, null, window.location.href);
 }
 
+// Import the delayBeforeReroute function from the shared.js module
+import {delayBeforeReroute} from './shared.js'
 document.addEventListener("DOMContentLoaded", function () {
   // Selecting elements
   const editButtons = document.querySelectorAll('.editBtn');
@@ -24,105 +26,90 @@ document.addEventListener("DOMContentLoaded", function () {
   const addPetModal = document.getElementById("addPetModal");
   const editPetButtons = document.querySelectorAll('.editPetBtn');
 
-  // Handling tab triggers
-  const triggerTabList = document.querySelectorAll('#v-tabs-tab button');
-
-  // Loop through each tab button
+    // Handling tab triggers
+  const triggerTabList = document.querySelectorAll('#v-tabs-tab button')
   triggerTabList.forEach(triggerEl => {
-    const tabTrigger = new bootstrap.Tab(triggerEl);
-
-    // Add a click event listener to each tab button
+    const tabTrigger = new bootstrap.Tab(triggerEl)
     triggerEl.addEventListener('click', event => {
-      event.preventDefault();
-      tabTrigger.show();
+      event.preventDefault()
+      tabTrigger.show()
     });
   });
 
 
-  // Handle cancel appointment
+  //Handling tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+
+   // Handle cancel appointment
   handleConfirmationModal(
     "confirmCancelAppointmentModal",
     "cancelAppointmentForm",
     cancelButtons,
     confirmCancelButton,
-    cancelAppointmentIdField
-  );
+    cancelAppointmentIdField,
+      'cancelAppointmentFormMessageContainer');
 
   // Handle edit appointment
   handleFormSubmit(
     "saveChangesButton",
     "editAppointmentForm",
-    "editAppointmentFormErrors"
-  );
+    "editAppointmentFormErrors");
 
   // Handle edit appointment modal
   editButtons.forEach(function (btn) {
-    // Get the modal element for editing appointments
     const appointmentModal = document.getElementById("editAppointmentModal");
-    // Add a click event listener to each edit button
     btn.addEventListener('click', function () {
-      // Get the appointment ID from the buttons attribute
       const appointmentId = btn.getAttribute('id');
 
-      // Initialize Flatpickr date-time picker
       renderFlatPickr();
-      // Render the calendar icon for the date field
       renderCalendarIcon(dateFieldIcon, dateField);
-      // Clear the appointment ID field
       appointmentIdField.innerHTML = "";
-      // Fetch appointment data from the API
       fetch(`/api/appointment/${appointmentId}/`)
         .then((response) => response.json())
         .then((data) => {
-          const appointment = data.appointment;
+          const appointment = data.appointment
 
-          // Set default options for the form fields with fetched data
-          setDefaultOption(dateField, appointment.start_date_time);
+          setDefaultOption(dateField, appointment.start_date_time)
           setDefaultOption(description, appointment.description);
           setDefaultSelectOption(petField, appointment.pet.id);
           setDefaultSelectOption(serviceField, appointment.service.id);
-          // Set the appointment ID in the hidden field
           appointmentIdField.value = appointmentId;
-        });
+        })
 
-      // Show the modal for editing appointments
       const modal = new bootstrap.Modal(appointmentModal);
       modal.show();
+
+
     });
   });
 
-  // Show add pet modal
+   // Show add pet modal
   addPetButton.addEventListener('click', function () {
-    // Get the modal element for adding a pet
     const modal = new bootstrap.Modal(addPetModal);
-    // Show the modal for adding a pet
     modal.show();
   });
 
-  // Handle add pet
+   // Handle add pet
   handleFormSubmit(
     "addPetSubmitButton",
     "addPetForm",
-    "petFormErrors"
-  );
+    "petFormErrors");
 
-  // Handle edit pet modal
+   // Handle edit pet modal
   editPetButtons.forEach(function (btn) {
-    // Get the modal element for editing pets
     const editPetModal = document.getElementById("editPetModal");
-    // Add a click event listener to each edit pet button
     btn.addEventListener('click', function () {
-      // Get the pet ID from the button's attribute
       const petId = btn.getAttribute('id');
 
-      // Clear the pet ID field
       petIdField.innerHTML = "";
-      // Fetch pet data from the API
       fetch(`/api/pet/${petId}/`)
         .then((response) => response.json())
         .then((data) => {
           const pet = data.pet
-          // Set default options for the form fields with the fetched pet data
           petIdField.value = petId;
           const petNameField = document.getElementById("edit_pet_name");
           const petBreedField = document.getElementById("edit_pet_breed");
@@ -131,21 +118,19 @@ document.addEventListener("DOMContentLoaded", function () {
           setDefaultOption(petNameField, pet.name)
           setDefaultOption(petBreedField, pet.breed);
           setDefaultOption(petAgeField, pet.age);
-          setDefaultOption(petMedicalNotesField, pet.medical_notes);
+          setDefaultOption(petMedicalNotesField, pet.medical_notes)
         });
 
-      // Show the modal for editing pets
       const modal = new bootstrap.Modal(editPetModal);
       modal.show();
     });
   });
 
-  // Handle edit pet form submission
+  // Handle edit pet
     handleFormSubmit(
     "editPetButton",
     "editPetForm",
-    "editPetFormErrors"
-    );
+    "editPetFormErrors");
 
   // Handle delete pet
   handleConfirmationModal(
@@ -153,49 +138,58 @@ document.addEventListener("DOMContentLoaded", function () {
       "deletePetForm",
       deletePetButtons,
       confirmDeletePetButton,
-      deletePetIdField
-  );
+      deletePetIdField,
+      'deletePetFormMessageContainer');
 });
+
 
 // Render Flatpickr date-time picker
 function renderFlatPickr() {
+  // Initialize Flatpickr on the element with the ID 'start_date'
   flatpickr('#start_date', {
+    // Set the date format to "day-month-year hour:minute"
     "dateFormat": "d-m-Y H:i",
+    // Enable time selection
     "enableTime": true,
+    // Set the minimum date to today, disabling past dates
     "minDate": "today",
+    // Disable weekends (Saturdays and Sundays)
     "disable": [
-        // Disable weekends
         function(date) {
+            // Disable if the day is Sunday (0) or Saturday (6)
             return (date.getDay() === 0 || date.getDay() === 6);
-
         }
     ],
+    // Set the minimum time to 08:00 AM
     "minTime": "08:00",
+    // Set the maximum time to 05:00 PM
     "maxTime": "17:00",
   });
 }
 
+
 /**
- * Render calendar icon to trigger opening of the Flatpickr date-time picker.
+ * Adds a click event listener to a calendar icon to trigger the opening of the Flatpickr date-time picker.
  *
- * @param icon - The calendar icon element.
- * @param dateField - The input field associated with the Flatpickr date-time picker.
+ * @param {HTMLElement} icon - The calendar icon element that will be clickable to open the date-time picker.
+ * @param {HTMLElement} dateField - The input field associated with the Flatpickr date-time picker instance.
  */
 function renderCalendarIcon(icon, dateField) {
   // Add a click event listener to the calendar icon
   icon.addEventListener("click", function (event) {
+    // Prevent the default action of the event (e.g., if the icon is within a link)
     event.preventDefault();
 
-    // Open the Flatpickr date-time picker
-    dateField._flatpickr.open()
+    // Open the Flatpickr date-time picker associated with the dateField
+    dateField._flatpickr.open();
   });
 }
 
 /**
- * Set the default value for a given field.
+ * Sets the default value for a specified form field.
  *
- * @param field - The field element.
- * @param value - The default value to be set.
+ * @param {HTMLElement} field - The form field element to set the value for.
+ * @param {string} value - The default value to be assigned to the form field.
  */
 function setDefaultOption(field, value) {
   // Set the value of the field to the provided value
@@ -205,15 +199,18 @@ function setDefaultOption(field, value) {
 /**
  * Set the default selected option for a given select field based on the provided ID.
  *
- * @param field - The select field element.
- * @param id - The ID of the option to be selected.
+ * @param {HTMLSelectElement} field - The select field element.
+ * @param {string | number} id - The ID of the option to be selected.
  */
 function setDefaultSelectOption(field, id) {
+  // Iterate through all options in the select field
   for (let i = 0; i < field.options.length; i++) {
     let option = field.options[i];
+    // Check if the option's value matches the provided ID
     if (option.value == id) {
+      // Set the option as selected
       option.selected = true;
-      break;
+      break; // Exit the loop once the matching option is found
     }
   }
 }
@@ -221,76 +218,109 @@ function setDefaultSelectOption(field, id) {
 /**
  * Convert the format of a date-time string from "d-m-Y H:i" to "Y-m-d H:i".
  *
- * @param dateTimeStr - The date-time string in "d-m-Y H:i" format.
- * @returns The date-time string converted to "Y-m-d H:i" format.
+ * @param {string} dateTimeStr - The date-time string in "d-m-Y H:i" format.
+ * @returns {string} The date-time string converted to "Y-m-d H:i" format.
  */
 function convertDateTimeFormat(dateTimeStr) {
+  // Split the input string into date and time parts
   const [datePart, timePart] = dateTimeStr.split(' ');
+
+  // Split the date part into day, month, and year
   const [day, month, year] = datePart.split('-');
+
+  // Return the date-time string in the new format "Y-m-d H:i"
   return `${year}-${month}-${day} ${timePart}`;
 }
 
 /**
  * Handle the confirmation modal for various actions triggered by specific buttons.
  *
- * @param modal - The ID of the confirmation modal element.
- * @param confirmationForm - The ID of the form associated with the confirmation action.
- * @param triggerButtons - The NodeList of buttons that trigger the confirmation modal.
- * @param confirmationButton - The confirmation button within the modal.
- * @param idField - The hidden input field storing the ID associated with the action.
+ * @param {string} modal - The ID of the confirmation modal element.
+ * @param {string} confirmationForm - The ID of the form associated with the confirmation action.
+ * @param {NodeList} triggerButtons - The NodeList of buttons that trigger the confirmation modal.
+ * @param {Element} confirmationButton - The confirmation button within the modal.
+ * @param {Element} idField - The hidden input field storing the ID associated with the action.
+ * @param {string} formErrorContainer - The ID of the container for displaying form errors.
  */
-function handleConfirmationModal(modal, confirmationForm, triggerButtons, confirmationButton, idField) {
-  // Iterate over each trigger button
+function handleConfirmationModal(modal, confirmationForm, triggerButtons, confirmationButton, idField, formErrorContainer) {
+  // Iterate over each button that triggers the confirmation modal
   triggerButtons.forEach(function (btn) {
-    // Get the confirmation modal
+    // Get the confirmation modal element
     const confirmationModal = document.getElementById(modal);
-    // Add click event listener to the trigger button
+
+    // Add a click event listener to the trigger button
     btn.addEventListener('click', function (event) {
       event.preventDefault();
+
+      // Get the ID from the button's attribute
       const id = btn.getAttribute('id');
 
       // Show the confirmation modal
       const modal = new bootstrap.Modal(confirmationModal);
       modal.show();
 
-      // Add click event listener to the confirmation button within the modal
+      // Add a click event listener to the confirmation button
       confirmationButton.addEventListener("click", function () {
+        // Set the hidden input field with the ID
         idField.value = id;
+
+        // Get the form element and create a FormData object from it
         let form = document.getElementById(confirmationForm);
-        // Update the form action URL to include the ID
+        const formData = new FormData(form);
+
+        // Update the form action URL with the ID
         form.action = form.action.replace('/0/', '/' + id + '/');
-        form.submit();
+
+        // Send the form data using the fetch API
+        fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        })
+          .then(response => response.text())
+          .then(data => {
+            // Handle the response and render any form errors
+            handleMessageRendering(formErrorContainer, data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
       });
     });
   });
 }
 
+
 /**
  * Handle form submission asynchronously.
  *
- * @param submitButton - The ID of the submit button.
- * @param submitForm - The ID of the form to be submitted.
- * @param formErrorContainer - The ID of the container to display form errors.
+ * @param {string} submitButton - The ID of the submit button.
+ * @param {string} submitForm - The ID of the form to be submitted.
+ * @param {string} formErrorContainer - The ID of the container to display form errors
  */
 function handleFormSubmit(submitButton, submitForm, formErrorContainer) {
   // Add click event listener to the submit button
   document.getElementById(submitButton).addEventListener('click', function (event) {
     event.preventDefault();
+
+    // Get the form element and create a FormData object from it
     const form = document.getElementById(submitForm);
     const formData = new FormData(form);
-    const formType = formData.get("form_type");
 
-    // If the form type is edit_appointment_form, convert the date-time format
+    // Check if the form type is 'edit_appointment_form' to convert the date-time format
+    const formType = formData.get("form_type");
     if (formType === 'edit_appointment_form') {
       const startDateTime = formData.get('start_date_time');
       const convertedDateTime = convertDateTimeFormat(startDateTime);
       formData.set('start_date_time', convertedDateTime);
     }
 
-    // Clear the form error container
+    // Clear any previous form errors
     document.getElementById(formErrorContainer).innerHTML = '';
 
-    // Send a fetch request to the form action URL with form data
+    // Send the form data using the fetch API
     fetch(form.action, {
       method: 'POST',
       body: formData,
@@ -300,21 +330,69 @@ function handleFormSubmit(submitButton, submitForm, formErrorContainer) {
     })
       .then(response => response.text())
       .then(data => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
-        const errorMessages = doc.querySelectorAll(`#${formErrorContainer} .alert`);
-
-        const errorDiv = document.getElementById(formErrorContainer);
-        errorMessages.forEach(error => {
-          errorDiv.appendChild(error);
-        });
-
-        if (errorMessages.length === 0) {
-          window.location.reload();
-        }
+        // Handle the response and render any form errors
+        handleMessageRendering(formErrorContainer, data);
       })
       .catch(error => {
         console.error('Error:', error);
       });
-  })
+  });
+}
+
+/**
+ * Render and handle form messages based on the response data.
+ *
+ * @param {string} formErrorContainer - The ID of the container to display form errors.
+ * @param {string} data - The HTML response data from the server.
+ */
+function handleMessageRendering(formErrorContainer, data) {
+  // Parse the HTML response data
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(data, 'text/html');
+
+  // Select all alert messages from the parsed data
+  const formMessages = doc.querySelectorAll(`#${formErrorContainer} .alert`);
+  // Select success messages specifically
+  const successMessage = doc.querySelectorAll(`#${formErrorContainer} .alert-success`);
+
+  // If there are any form messages, render them
+  if (formMessages.length !== 0) {
+    handleMessageLoading(formErrorContainer, formMessages);
+  }
+
+  // If there are any success messages, delay before redirecting
+  if (successMessage.length !== 0) {
+    delayBeforeReroute('/profile');
+  }
+
+  // Add close event listeners to form messages
+  handleCloseMessagesForm();
+}
+
+/**
+ * Append messages to the message container.
+ *
+ * @param {string} messageContainer - The ID of the container to display messages.
+ * @param {NodeList} messages - The list of message elements to be appended.
+ */
+function handleMessageLoading(messageContainer, messages) {
+  const messageDiv = document.getElementById(messageContainer);
+  // Append each message to the message container
+  messages.forEach(message => {
+    messageDiv.appendChild(message);
+  });
+}
+
+/**
+ * Add event listeners to close buttons in the form messages.
+ */
+function handleCloseMessagesForm() {
+  // Select all elements with the 'close' class
+  const messages = document.querySelectorAll('.close');
+  // Add click event listener to each close button to hide the message
+  messages.forEach(m => {
+    m.addEventListener("click", (e) => {
+      m.parentElement.style.display = 'none';
+    });
+  });
 }
