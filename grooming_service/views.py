@@ -17,11 +17,13 @@ def register(request):
         if form.is_valid():
             user = form.save()
             user.set_password(form.cleaned_data["password"])
+            user.first_name = form.cleaned_data["first_name"].title()
+            user.last_name = form.cleaned_data["last_name"].title()
             user.save()
             login(request, user)
-            return redirect("home")
+            messages.success(request, "Your account has been created! Logging you in...", extra_tags="register_form")
         else:
-            __handle_form_errors(request, form)
+            __handle_form_errors(request, form, extra_tags="register_form")
     else:
         form = RegistrationForm()
     return render(request, "grooming_service/register.html", {"form": form})
@@ -156,10 +158,10 @@ def __handle_form_case(request, appointmentForm, petForm, editPetForm, form_type
                 __handle_form_errors(request, editPetForm)
 
 
-def __handle_form_errors(request, form):
+def __handle_form_errors(request, form, extra_tags):
     if '__all__' in form.errors:
         for error in form.errors['__all__']:
-            messages.error(request, error)
+            messages.error(request, error, extra_tags=extra_tags)
 
 
 
