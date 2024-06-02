@@ -55,6 +55,11 @@ def user_logout(request):
     return redirect('home')
 
 
+# 404 not found view
+def not_found(request):
+    return render(request, "404.html")
+
+
 # Home view
 def home(request):
     home_services = Service.objects.exclude(short_description__exact='').order_by('-id')
