@@ -341,3 +341,65 @@ class TestLoginForm(TestCase):
         })
         self.assertFalse(form.is_valid())
         self.assertIn('This field is required.', form.errors['password'])
+
+
+class AppointmentFormTest(TestCase):
+    def setUp(self):
+        # Create a user
+        self.user = User.objects.create(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St'
+        )
+
+        # Create some sample data for testing
+        self.service = Service.objects.create(name='Grooming', description='Pet grooming service')
+        self.pet = Pet.objects.create(user=self.user, name='Buddy', breed='Labrador', age=5, medical_notes='None')
+
+    def test_appointment_form_valid_data(self):
+        # Test with valid data to ensure the form is valid
+        form = AppointmentForm(data={
+            'service': self.service.id,
+            'pet': self.pet.id,
+            'user': self.user.id,
+            'start_date_time': '2024-06-01 10:00',
+            'description': 'Routine checkup',
+        }, user=self.user)
+        self.assertTrue(form.is_valid())
+
+    def test_appointment_form_empty_fields(self):
+        # Test with empty data to ensure the form is invalid and contains 4 errors
+        form = AppointmentForm(data={}, user=self.user)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 4)
+
+    def test_appointment_form_missing_service(self):
+        # Test with a missing service to ensure the form is invalid and contains error for service
+        form = AppointmentForm(data={
+            'pet': self.pet.id,
+            'start_date_time': '2024-06-01 10:00',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('You must select a valid service.', form.errors["__all__"])
+
+    def test_appointment_form_missing_pet(self):
+        # Test with a missing service to ensure the form is invalid and contains error for pet
+        form = AppointmentForm(data={
+            'service': self.service.id,
+            'start_date_time': '2024-06-01 10:00',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn("You must select a valid pet.", form.errors["__all__"])
+
+    def test_appointment_form_invalid_start_date_time(self):
+        # Test with an invalid start date/time to ensure the form is invalid and contains error for start_date_time
+        form = AppointmentForm(data={
+            'service': self.service.id,
+            'pet': self.pet.id,
+            'start_date_time': 'invalid-date-time',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('Enter a valid date/time.', form.errors['start_date_time'])
