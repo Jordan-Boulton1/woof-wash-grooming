@@ -1,11 +1,24 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% load static %}
+
 <!-- Register Section -->
 <section class="register-section">
     <!-- Container for the register section with padding and margin -->
     <div class="container py-3 my-3 h-75">
         <!-- Row to center the content vertically -->
+        <!-- Display form submission messages -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'register_form' in message.tags %}
+                    <div class=" mt-2 {{ message.tags }}">
+                        <a class="close" data-dismiss="alert">×</a>
+                        {{ message|safe }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         <div class="row d-flex justify-content-center align-items-center h-100">
             <!-- Column for register content with specified widths for different screen sizes -->
             <div class="register-content col-12 col-md-8 col-lg-6 col-xl-5">
@@ -52,11 +65,12 @@
                                 </div>
                                 <!-- Submit button for registering -->
                                 <button data-mdb-button-init data-mdb-ripple-init class="btn custom-btn btn-lg px-4" type="submit">Register</button>
-                                <!-- Display messages if there are any -->
-                                {% for message in messages %}
-                                <div class="mt-3 alert alert-danger">{{ message }}</div>
-                                {% endfor %}
                             </form>
+                             <div>
+                                <!-- Link to login page for existing users -->
+                                <p class="mt-3">Already have an account? <a href="{% url 'login' %}" class="text-black-50 fw-bold">Login</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,4 +78,10 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+
+{% block js %}
+    <script type="module" src="{% static 'js/register.js' %}"></script>
+    <script type="module" src="{% static 'js/shared.js' %}"></script>
 {% endblock %}
