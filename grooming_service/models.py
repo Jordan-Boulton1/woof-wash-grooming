@@ -10,7 +10,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50, validators=[Validators.validate_string_input])  # User's first name with validation
     last_name = models.CharField(max_length=50, validators=[Validators.validate_string_input])   # User's last name with validation
     email = models.EmailField(max_length=255, unique=True, error_messages={"unique": "This email is already in use."})  # Unique email field
-    password = models.CharField(max_length=30)  # User's password
+    password = models.CharField(max_length=100)  # User's password
     phone_number = models.CharField(max_length=30, unique=True, error_messages={"unique": "This phone number is already in use."}, validators=[Validators.validate_phone_number])  # Unique phone number with validation
     address = models.CharField(max_length=100)  # User's address
     image = models.ImageField(upload_to='images/', default='media/images/go9xwcxemxj7sajmn1zf')  # User's profile image with a default value
@@ -65,7 +65,7 @@ class Pet(models.Model):
 
 
 # Define status choices for appointments
-STATUS = ((0, "available"), (1, "booked"), (2, "cancelled"))
+STATUS = ((1, "booked"), (2, "completed"))
 
 
 # Define the Appointment model
@@ -82,4 +82,4 @@ class Appointment(models.Model):
             db_table = 'woof_wash_grooming"."Appointment'  # Point to the posgres schema for the database table for non-test environments
 
     def __str__(self):
-        return f"{self.description}"  # String representation of the appointment
+        return f"{self.pet}"  # String representation of the appointment
