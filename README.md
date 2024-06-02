@@ -243,6 +243,26 @@ There are many features on the website which are easy to follow and navigate, cr
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/appointment-page-form.png)
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/appointment-page-date-picker.png)
 
+#### Profile Page
+
+- **Profile**: The profile page allows users to view and update their personal information, manage their pet profiles, and track grooming appointments. This feature adds value to the site by enhancing user engagement and personalization, and benefits users by providing a convenient way to manage all their grooming-related information in one place.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/profile-page-example.png)
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/profile-page-example-pet.png)
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/profile-page-example-appointment.png)
+
+- **Edit Pet Modal**: This allows users to update their pet's personal information, such as name, breed, and grooming preferences. This adds value to the site because it ensures up to date, accurate pet information for tailored grooming services, and benefits the user by providing an easy way to keep their pet's details current and specific to their grooming needs.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/profile-page-edit-pet.png)
+
+- **Edit Appointment Modal**: This allows users to modify any upcoming grooming appointments, including date, time, and the service selected. This adds value to the site because it increases flexibility and user control over scheduling, and benefits the user by providing a convenient way to adjust appointments to fit their schedule, enhancing overall user experience.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/profile-page-edit-appointment.png)
+
+- **Profile Edit**: The user will be redirected to the profile edit page, where they can change their profile picture 
+  and update account details. This enhances the site's data accuracy and functionality while providing users with a convenient, centralized page for updating personal information.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/profile-page-edit-user.png)
 
 ## Tools & Technologies Used
 
