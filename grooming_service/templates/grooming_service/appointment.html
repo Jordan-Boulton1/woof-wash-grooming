@@ -5,6 +5,17 @@
 <section class="p-3 p-md-4 p-xl-5">
     {% if user.is_authenticated %}
     <div class="container">
+        <!-- Display form submission messages -->
+         {% if messages %}
+            {% for message in messages %}
+                 {% if 'book_appointment_form' in message.tags %}
+                    <div class=" mt-2 {{ message.tags }}">
+                        <a class="close" data-dismiss="alert">×</a>
+                        {{ message|safe }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+         {% endif %}
         <div class="row align-items-center justify-content-center appointment-img-row">
             <!-- Image Column -->
             <div class="col-12 col-md-5 d-none d-md-block appointment-img-col">
@@ -41,12 +52,12 @@
                             </div>
                             <!-- Other form fields -->
                             <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
+                                <div class="row service-appointment-selector">
+                                    <div class="col-4">
                                         <label for="service" class="form-label">Service: <span class="text-danger">*</span></label>
                                     </div>
-                                    <div class="col-6">
-                                        <p id="servicePrice" class="fs-6" hidden></p>
+                                    <div class="col-8 service-price-container">
+                                        <p id="servicePrice" hidden></p>
                                     </div>
                                 </div>
                                 <div class="input-group">
@@ -65,10 +76,6 @@
                                     {{ form.description }}
                                 </div>
                             </div>
-                            <!-- Display form submission messages -->
-                            {% for message in messages %}
-                            <div class="{{ message.tags }} alert alert-danger">{{ message }}</div>
-                            {% endfor %}
                             <div class="col-12">
                                 <!-- Submit button -->
                                 <div class="d-grid">
@@ -85,5 +92,6 @@
 </section>
 {% endblock %}
 {% block js %}
-<script src="{% static 'js/script.js' %}"></script>
+    <script type="module" src="{% static 'js/script.js' %}"></script>
+    <script type="module" src="{% static 'js/shared.js' %}"></script>
 {% endblock %}

@@ -285,7 +285,7 @@ def delete_pet(request, delete_pet_id):
     return redirect("profile")
 
 
-#Delete user view
+# Delete user view
 @login_required(login_url='login')
 def delete_user(request, delete_user_id):
     try:
