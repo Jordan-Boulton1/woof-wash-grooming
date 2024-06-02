@@ -719,3 +719,67 @@ class TestCancelAppointmentView(TestCase):
 
         # Check that that 404 was returned
         self.assertEqual(response.status_code, 404)
+
+
+class DeletePetViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up a test users
+        cls.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
+            email='john.doe@example.com',
+            password='password123',
+            phone_number='1234567890',
+            address='123 Main St')
+        cls.user2 = User.objects.create_user(
+            first_name='John',
+            last_name='Travolta',
+            email='john.travolta@example.com',
+            password='password123',
+            phone_number='12345422290',
+            address='123 Main St')
+
+    def test_delete_pet_success(self):
+        # Create a pet for the test user
+        pet = Pet.objects.create(user=self.user, name='Test Pet', breed='Test Breed', age=3, medical_notes='Test notes')
+
+        # Log in the test user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+        # Make a GET request to delete the pet
+        response = self.client.get(reverse('delete_pet', kwargs={'delete_pet_id': pet.id}))
+
+        # Check that the pet was deleted
+        self.assertEqual(Pet.objects.filter(id=pet.id).count(), 0)
+
+        # Check success message and redirection
+        # Check that the success message was added
+        messages = [str(m) for m in response.wsgi_request._messages]
+        self.assertIn(
+            f"{pet.name} has been successfully deleted. Redirecting you to profile page...",
+            messages)
+
+    def test_delete_pet_permission_denied(self):
+        # Create a pet for another user
+        pet = Pet.objects.create(user=self.user2, name='Test Pet', breed='Test Breed', age=3, medical_notes='Test notes')
+
+        # Log in the test user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+        # Make a GET request to delete the pet
+        response = self.client.get(reverse('delete_pet', kwargs={'delete_pet_id': pet.id}))
+
+        # Check that the pet was not deleted
+        self.assertEqual(Pet.objects.filter(id=pet.id).count(), 1)
+        self.assertRedirects(response, reverse('profile'))
+
+    def test_delete_pet_not_found(self):
+        # Log in the test user
+        self.client.login(email='john.doe@example.com', password='password123')
+
+        # Make a GET request to delete a non-existent pet
+        response = self.client.get(reverse('delete_pet', kwargs={'delete_pet_id': 999}))
+
+        # Check that 404 was returned
+        self.assertEqual(response.status_code, 404)
