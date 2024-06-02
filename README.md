@@ -276,6 +276,12 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/login-page-form.png)
 
+#### 404 Error Page
+
+- The 404 page informs users that the requested page is not found and provides navigation options to return to the home 
+  page or other sections. This enhances site usability by preventing dead ends and guiding users back to functional areas, ensuring a smooth browsing experience.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/404-not-found.png)
 
 ## Tools & Technologies Used
 
