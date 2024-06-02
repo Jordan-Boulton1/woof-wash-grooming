@@ -270,6 +270,13 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/register-page-form.png)
 
+#### Login
+
+- **Login**: The login page allows users to securely access their accounts by entering their email and password. This feature enhances site security and user retention, providing users with a quick and convenient way to manage their profiles and appointments.
+
+![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/login-page-form.png)
+
+
 ## Tools & Technologies Used
 
 - [![Markdown Builder](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://tim.2bn.dev/markdown-builder) used to generate README and TESTING templates.
