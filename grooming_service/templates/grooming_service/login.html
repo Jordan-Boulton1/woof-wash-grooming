@@ -1,9 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
 <!-- Login section -->
 <section class="login-section">
     <!-- Container for the login section with padding and margin -->
     <div class="container py-3 my-3 h-75">
+         <!-- Display form submission messages -->
+        {% if messages %}
+            {% for message in messages %}
+                 {% if 'login_form' in message.tags %}
+                <div class=" mt-2 {{ message.tags }}">
+                    <a class="close" data-dismiss="alert">×</a>
+                    {{ message|safe }}
+                </div>
+                 {% endif %}
+            {% endfor %}
+        {% endif %}
         <!-- Row to center the content vertically -->
         <div class="row d-flex justify-content-center align-items-center h-100">
             <!-- Column for login content with specified widths for different screen sizes -->
@@ -32,16 +45,10 @@
                                     <label class="form-label" for="typePasswordX">Password</label>
                                 </div>
                                 <!-- Forgot password link -->
-                                <p class="small mb-3 pb-lg-1"><a class="text-black-50" href="#">Forgot password?</a></p>
+                                <p class="small mb-3 pb-lg-1"><a class="text-black-50" href="{% url 'not_found' %}">Forgot password?</a></p>
                                 <!-- Submit button for signing in -->
                                 <button data-mdb-button-init data-mdb-ripple-init class="btn custom-btn btn-lg px-4" type="submit">Sign In</button>
                             </form>
-                            <!-- Display messages if there are any -->
-                            {% if messages %}
-                            {% for message in messages %}
-                            <div class="mt-3 alert alert-danger">{{ message }}</div>
-                            {% endfor %}
-                            {% endif %}
                         </div>
                         <div>
                             <!-- Link to register page for new users -->
@@ -54,4 +61,9 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+    <script type="module" src="{% static 'js/login.js' %}"></script>
+    <script type="module" src="{% static 'js/shared.js' %}"></script>
 {% endblock %}
