@@ -629,3 +629,4 @@ You can fork this repository by using the following steps:
 - I would like to thank the [Code Institute](https://codeinstitute.net) tutor team for their assistance with troubleshooting and debugging some project issues.
 - I would like to thank the [Code Institute Slack community](https://code-institute-room.slack.com) for the moral support; it kept me going during periods of self doubt and imposter syndrome.
 - I would like to thank my partner (Stefani), for believing in me, and allowing me to make this transition into software development.
+- I would like to thank the kind folks at [Posh Dugz Dog Grooming](https://www.facebook.com/p/Posh-Dugz-Dog-Grooming-100062609805112/) for providing me with the images of my dog (Storm) to use for my project.
