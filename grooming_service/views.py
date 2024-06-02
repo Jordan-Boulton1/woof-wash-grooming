@@ -266,17 +266,22 @@ def cancel_appointment(request, cancel_appointment_id):
     return redirect("profile")
 
 
+# Delete pet view
+@login_required(login_url='login')
 @login_required(login_url='login')
 def delete_pet(request, delete_pet_id):
     try:
         pet = get_object_or_404(Pet, id=delete_pet_id)
         if pet.user == request.user:
             pet.delete()
-            return redirect("profile")
+            messages.success(request,
+                             f"{pet.name} has been successfully deleted. Redirecting you to profile page...",
+                             extra_tags="delete_pet_form")
         else:
-            messages.error(request, "You do not have permission to delete this pet.")
+            messages.error(request, "You do not have permission to delete this pet.", extra_tags="delete_pet_form")
     except Pet.DoesNotExist:
         messages.error(request, "The requested pet does not exist.")
+        return redirect('not_found')
     return redirect("profile")
 
 
