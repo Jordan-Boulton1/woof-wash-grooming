@@ -100,3 +100,60 @@ class TestGetServicesView(TestCase):
         # Check the names of the services
         self.assertEqual(services[0].name, "Service 1")
         self.assertEqual(services[1].name, "Service 2")
+
+
+class TestRegisterView(TestCase):
+    def test_register_view_get_request(self):
+        # Use the test client to make a GET request to the 'register' view
+        response = self.client.get(reverse('register'))
+        # Check that the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/register.html')
+        # Check that the form is included in the context
+        self.assertIsInstance(response.context['form'], RegistrationForm)
+
+    def test_register_view_post_request_valid_form(self):
+        # Use the test client to make a POST request to the 'register' view with valid data
+        response = self.client.post(reverse('register'), {
+            'first_name': 'Jane',
+            'last_name': 'Smith',
+            'email': 'jane.smith@example.com',
+            'password': 'password123',
+            'phone_number': '0987654321',
+            'address': '456 Elm St'
+        })
+        # Check that the response is a redirect
+        self.assertEqual(response.status_code, 200)
+        # Check that the user was created
+        self.assertTrue(User.objects.filter(email='jane.smith@example.com').exists())
+        # Check that the user is logged in
+        user = User.objects.get(email='jane.smith@example.com')
+        self.assertTrue(user.is_authenticated)
+        # Check that the success message was added
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(
+            any(message.message == "Your account has been created! Logging you in..." for message in messages))
+
+    def test_register_view_post_request_invalid_form(self):
+        # Use the test client to make a POST request to the 'register' view with invalid data
+        response = self.client.post(reverse('register'), {
+            'first_name': '',
+            'last_name': '',
+            'email': 'invalidemail',
+            'password': '',
+            'phone_number': '',
+            'address': ''
+        })
+        # Check that the response is 200 OK (form re-rendered with errors)
+        self.assertEqual(response.status_code, 200)
+        # Check that the correct template was used
+        self.assertTemplateUsed(response, 'grooming_service/register.html')
+        # Check that the form is included in the context and is not valid
+        form = response.context['form']
+        self.assertIsInstance(form, RegistrationForm)
+        self.assertFalse(form.is_valid())
+        # Check that the error messages were added
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(message.level_tag == "alert alert-danger" for message in messages))
+        self.assertTrue(any(message.extra_tags == "register_form" for message in messages))
