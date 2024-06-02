@@ -158,24 +158,23 @@ def __handle_form_case(request, appointmentForm, petForm, editPetForm, form_type
             if appointmentForm.is_valid():
                 __handle_edit_appointment_form(request, appointmentForm)
             else:
-                __handle_form_errors(request, appointmentForm)
+                __handle_form_errors(request, appointmentForm, 'edit_appointment_form')
         case 'pet_form':
             if petForm.is_valid():
                 __handle_pet_add_form(request, petForm)
             else:
-                __handle_form_errors(request, petForm)
+                __handle_form_errors(request, petForm, 'add_pet_form')
         case 'edit_pet_form':
             if editPetForm.is_valid():
                 __handle_pet_edit_form(request, editPetForm)
             else:
-                __handle_form_errors(request, editPetForm)
+                __handle_form_errors(request, editPetForm, 'edit_pet_form')
 
 
 def __handle_form_errors(request, form, extra_tags):
     if '__all__' in form.errors:
         for error in form.errors['__all__']:
             messages.error(request, error, extra_tags=extra_tags)
-
 
 
 def __handle_edit_appointment_form(request, appointmentForm):
@@ -190,17 +189,18 @@ def __handle_edit_appointment_form(request, appointmentForm):
         formatted_date_time = request_date_time_obj.strftime('%Y-%m-%d %H:%M')
         if appointment.start_date_time.strftime('%Y-%m-%d %H:%M') != formatted_date_time:
             if Appointment.objects.filter(start_date_time=formatted_date_time, status=1).exists():
-                messages.error(request, "The selected appointment slot is no longer available")
-                return redirect("profile")
+                messages.error(request, "The selected appointment slot is no longer available", extra_tags='edit_appointment_form')
             else:
                 appointment.start_date_time = request_date_time_obj
-        appointment.pet = pet
-        appointment.service = service
-        appointment.description = description
-        appointment.save()
-        return redirect("profile")
+                appointment.pet = pet
+                appointment.service = service
+                appointment.description = description
+                appointment.save()
+                messages.success(request, "Your appointment has been successfully updated. Redirecting you to profile page...",
+                                 extra_tags='edit_appointment_form')
     except Appointment.DoesNotExist:
         messages.error(request, "The requested appointment does not exist")
+        return redirect('not_found')
 
 
 def __handle_pet_edit_form(request, editPetForm):
@@ -212,16 +212,19 @@ def __handle_pet_edit_form(request, editPetForm):
     medical_notes = editPetForm.cleaned_data["medical_notes"]
     try:
         pet = Pet.objects.get(id=pet_id)
-        pet.name = name
-        pet.breed = breed
+        pet.name = name.title()
+        pet.breed = breed.title()
         pet.age = age
         if image != 'media/images/tey9seavfcldmybatmmt':
             pet.image = image
         pet.medical_notes = medical_notes
         pet.save()
-        return redirect("profile")
+        messages.success(request, f"{pet.name} has been successfully updated. Redirecting you to profile page...",
+                         extra_tags='edit_pet_form')
     except Pet.DoesNotExist:
-        messages.error(request, "The requested pet does not exist")
+        messages.error(request, "The requested pet does not exist",
+                         extra_tags='edit_pet_form')
+        return redirect('not_found')
 
 
 def __handle_pet_add_form(request, petForm):
@@ -231,14 +234,16 @@ def __handle_pet_add_form(request, petForm):
     image = petForm.cleaned_data["image"]
     medical_notes = petForm.cleaned_data["medical_notes"]
     pet = Pet()
-    pet.name = name
-    pet.breed = breed
+    pet.name = name.title()
+    pet.breed = breed.title()
     pet.age = age
     pet.medical_notes = medical_notes
     pet.user = request.user
     pet.image = image
     pet.save()
-    return redirect("profile")
+    messages.success(request, f"{pet.name} has been successfully created. Redirecting you to profile page...",
+                     extra_tags='add_pet_form')
+
 
 
 # Cancel appointment view
