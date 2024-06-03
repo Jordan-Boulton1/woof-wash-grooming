@@ -43,6 +43,8 @@ def user_login(request):
                                  extra_tags="login_form")
             else:
                 messages.error(request, "Invalid email or password", extra_tags="login_form")
+        else:
+            __handle_form_errors(request, form, "login_form")
     else:
         form = LoginForm()
     return render(request, "grooming_service/login.html", {"form": form})

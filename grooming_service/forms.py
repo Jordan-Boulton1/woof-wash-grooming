@@ -202,6 +202,22 @@ class LoginForm(forms.Form):
                                           'required': 'true'})
     )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = []
+
+        email = cleaned_data.get("email")
+        password = cleaned_data.get("password")
+
+        if email is None:
+            errors.append("Email cannot be empty.")
+        if password is None:
+            errors.append("Password cannot be empty.")
+        if errors:
+            raise ValidationError(errors)
+
+        return cleaned_data
+
 
 # Form for scheduling an appointment
 class AppointmentForm(forms.ModelForm):
