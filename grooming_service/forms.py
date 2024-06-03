@@ -11,7 +11,9 @@ class BaseForm(forms.ModelForm):
     # Adds common CSS classes to form fields
     def add_field_classes(self, fields):
         for field in fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control', 'required': 'true'})
+            self.fields[field].widget.attrs.update(
+                {'class': 'form-control', 'required': 'true'}
+            )
 
     # Static method that validates fields based on given criteria
     @staticmethod
@@ -21,9 +23,12 @@ class BaseForm(forms.ModelForm):
             value = cleaned_data.get(field)
             if regex:
                 # Validates field value against regex
-                errors = Validators.append_error_messages_when_field_does_not_match_regex(value, regex, message, errors)
+                errors = Validators.append_error_messages_when_field_does_not_match_regex(  # noqa
+                    value, regex, message, errors)
             # Validates if the field is empty
-            errors = Validators.append_error_messages_when_field_is_empty(value, message, errors)
+            errors = Validators.append_error_messages_when_field_is_empty(
+                value, message, errors
+            )
         return errors
 
 
@@ -31,32 +36,69 @@ class BaseForm(forms.ModelForm):
 class RegistrationForm(BaseForm):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "password", "phone_number", "address"]
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "password",
+            "phone_number",
+            "address"
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.add_field_classes(self.fields.keys())
-        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'required': 'true'})
+        self.fields['password'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control', 'required': 'true'}
+        )
 
     def clean(self):
         cleaned_data = super().clean()
         # Validates fields using the base class method
         errors = self.validate_fields(cleaned_data, [
-            ("first_name", "First name can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("last_name", "Last name can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("email", "Email is not in a valid format.", r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'),
-            ("password", "Password cannot be empty.", None),
-            ("phone_number", "Phone number can only contain digits.", r'^\d+$'),
-            ("address", "Address cannot be empty.", None),
+            (
+                "first_name",
+                "First name can only contain letters and white spaces.",
+                r'^[A-Za-z\s]+$'
+            ),
+            (
+                "last_name",
+                "Last name can only contain letters and white spaces.",
+                r'^[A-Za-z\s]+$'
+            ),
+            (
+                "email",
+                "Email is not in a valid format.",
+                r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
+            ),
+            (
+                "password",
+                "Password cannot be empty.",
+                None
+            ),
+            (
+                "phone_number",
+                "Phone number can only contain digits.",
+                r'^\d+$'
+            ),
+            (
+                "address",
+                "Address cannot be empty.",
+                None
+            ),
         ])
 
         email = cleaned_data.get("email")
         phone_number = cleaned_data.get("phone_number")
 
         # Checks if email and phone number are unique
-        errors = Validators.append_uniqueness_error(email, User, "email", "This email is already in use.", errors)
-        errors = Validators.append_uniqueness_error(phone_number, User, "phone_number",
-                                                    "This phone number is already in use.", errors)
+        errors = Validators.append_uniqueness_error(
+            email, User, "email", "This email is already in use.", errors
+        )
+        errors = Validators.append_uniqueness_error(
+            phone_number, User, "phone_number",
+            "This phone number is already in use.", errors
+        )
 
         if errors:
             raise ValidationError(errors)
@@ -68,39 +110,79 @@ class RegistrationForm(BaseForm):
 class EditUserForm(BaseForm):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "password", "phone_number", "address", "image"]
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "password",
+            "phone_number",
+            "address",
+            "image"
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Adds common CSS classes to form fields except the image as it should not be a required field
-        keys_excluding_image = [key for key in self.fields.keys() if key != 'image']
+        # Adds common CSS classes to form fields except the image as it should not be a required field # noqa
+        keys_excluding_image = [
+            key for key in self.fields.keys() if key != 'image'
+        ]
         self.add_field_classes(keys_excluding_image)
-        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
+        self.fields['password'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control'}
+        )
         self.fields['image'].widget.attrs.update({'class': 'form-control'})
 
     def clean(self):
         cleaned_data = super().clean()
         # Validates fields using the base class method
         errors = self.validate_fields(cleaned_data, [
-            ("first_name", "First name can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("last_name", "Last name can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("email", "Email is not in a valid format.", r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'),
-            ("password", "Password cannot be empty.", None),
-            ("phone_number", "Phone number can only contain digits.", r'^\d+$'),
-            ("address", "Address cannot be empty.", None),
+            (
+                "first_name",
+                "First name can only contain letters and white spaces.",
+                r'^[A-Za-z\s]+$'
+            ),
+            (
+                "last_name",
+                "Last name can only contain letters and white spaces.",
+                r'^[A-Za-z\s]+$'
+            ),
+            (
+                "email",
+                "Email is not in a valid format.",
+                r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
+            ),
+            (
+                "password",
+                "Password cannot be empty.",
+                None
+            ),
+            (
+                "phone_number",
+                "Phone number can only contain digits.",
+                r'^\d+$'
+            ),
+            (
+                "address",
+                "Address cannot be empty.",
+                None
+            ),
         ])
 
         email = cleaned_data.get("email")
         phone_number = cleaned_data.get("phone_number")
 
-        # Checks if email and phone number are unique only if email and phone number are not the same as currently
+        # Checks if email and phone number are unique only if email and phone number are not the same as currently # noqa
         # stored ones
         if email and email != self.instance.email:
-            errors = Validators.append_uniqueness_error(email, User, "email", "This email is already in use.", errors)
+            errors = Validators.append_uniqueness_error(
+                email, User, "email", "This email is already in use.", errors
+            )
 
         if phone_number and phone_number != self.instance.phone_number:
-            errors = Validators.append_uniqueness_error(phone_number, User, "phone_number",
-                                                        "This phone number is already in use.", errors)
+            errors = Validators.append_uniqueness_error(
+                phone_number, User, "phone_number",
+                "This phone number is already in use.", errors
+            )
 
         if errors:
             raise ValidationError(errors)
@@ -110,8 +192,12 @@ class EditUserForm(BaseForm):
 
 # Form for user login
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
 
 
 # Form for scheduling an appointment
@@ -124,14 +210,16 @@ class AppointmentForm(forms.ModelForm):
         user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
-        # Customizes the date and time picker input widget using Django Flatpickr
+        # Customizes the date and time picker input widget using Flatpickr
         self.fields["start_date_time"].widget = DateTimePickerInput(
             options=FlatpickrOptions(
                 altFormat="d-m-Y H:i",
             )
         )
 
-        self.fields["start_date_time"].widget.attrs.update({'class': 'form-control', 'required': 'true'})
+        self.fields["start_date_time"].widget.attrs.update(
+            {'class': 'form-control', 'required': 'true'}
+        )
 
         # Choices for the service and pet fields
         self.fields["service"] = forms.ModelChoiceField(
@@ -183,8 +271,10 @@ class PetForm(BaseForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Adds common CSS classes to form fields except the medical_notes as it should not be a required field
-        keys_excluding_medical_notes = [key for key in self.fields.keys() if key != 'medical_notes']
+        # Adds common CSS classes to form fields except the medical_notes as it should not be a required field # noqa
+        keys_excluding_medical_notes = [
+            key for key in self.fields.keys() if key != 'medical_notes'
+        ]
         self.add_field_classes(keys_excluding_medical_notes)
         self.fields["medical_notes"] = forms.CharField(
             required=False,
@@ -196,11 +286,24 @@ class PetForm(BaseForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        errors = self.validate_fields(cleaned_data, [
-            ("name", "Pet can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("breed", "Breed can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("age", "Age cannot be empty", None)
-        ])
+        errors = self.validate_fields(
+            cleaned_data, [
+                (
+                    "name",
+                    "Pet can only contain letters and white spaces.",
+                    r'^[A-Za-z\s]+$'
+                ),
+                (
+                    "breed",
+                    "Breed can only contain letters and white spaces.",
+                    r'^[A-Za-z\s]+$'
+                ),
+                (
+                    "age",
+                    "Age cannot be empty",
+                    None
+                )
+            ])
         age = cleaned_data.get("age")
         if age and age <= 0:
             errors.append("Age must be a positive number.")
@@ -221,17 +324,23 @@ class EditPetForm(BaseForm):
 
         self.fields["name"] = forms.CharField(
             required=True,
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'edit_pet_name'})
+            widget=forms.TextInput(
+                attrs={'class': 'form-control', 'id': 'edit_pet_name'}
+            )
         )
 
         self.fields["breed"] = forms.CharField(
             required=True,
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'edit_pet_breed'}),
+            widget=forms.TextInput(
+                attrs={'class': 'form-control', 'id': 'edit_pet_breed'}
+            ),
         )
 
         self.fields["age"] = forms.IntegerField(
             required=True,
-            widget=forms.NumberInput(attrs={'class': 'form-control', 'id': 'edit_pet_age'})
+            widget=forms.NumberInput(
+                attrs={'class': 'form-control', 'id': 'edit_pet_age'}
+            )
         )
 
         self.fields["medical_notes"] = forms.CharField(
@@ -243,14 +352,28 @@ class EditPetForm(BaseForm):
             })
         )
 
-        self.fields['image'].widget.attrs.update({'class': 'form-control', 'id': 'edit_pet_image'})
+        self.fields['image'].widget.attrs.update(
+            {'class': 'form-control', 'id': 'edit_pet_image'}
+        )
 
     def clean(self):
         cleaned_data = super().clean()
         errors = self.validate_fields(cleaned_data, [
-            ("name", "Pet can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("breed", "Breed can only contain letters and white spaces.", r'^[A-Za-z\s]+$'),
-            ("age", "Age cannot be empty", None)
+            (
+                "name",
+                "Pet can only contain letters and white spaces.",
+                r'^[A-Za-z\s]+$'
+            ),
+            (
+                "breed",
+                "Breed can only contain letters and white spaces.",
+                r'^[A-Za-z\s]+$'
+            ),
+            (
+                "age",
+                "Age cannot be empty",
+                None
+            )
         ])
         age = cleaned_data.get("age")
         if age and age <= 0:

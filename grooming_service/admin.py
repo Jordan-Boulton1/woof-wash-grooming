@@ -14,7 +14,7 @@ class ServiceAdmin(SummernoteModelAdmin):
 # Define an admin class for Appointment model
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = ['user', 'service', 'pet', 'status', 'start_date_time']
-    # Excluding as admins should not be editing or putting description on requested appointments
+    # Excluding as admins should not be editing or putting description on requested appointments # noqa
     exclude = ['description']
 
 

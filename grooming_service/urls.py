@@ -12,10 +12,14 @@ urlpatterns = [
     path("profile/", views.manage_profile, name="profile"),
     path("profile/edit/", views.edit_profile, name="edit_profile"),
     path("api/appointment/<int:appointment_id>/", views.get_appointment_by_id),
-    path('cancel_appointment/<int:cancel_appointment_id>/', views.cancel_appointment, name='cancel_appointment'),
-    path('delete_pet/<int:delete_pet_id>/', views.delete_pet, name='delete_pet'),
+    path('cancel_appointment/<int:cancel_appointment_id>/',
+         views.cancel_appointment, name='cancel_appointment'),
+    path('delete_pet/<int:delete_pet_id>/',
+         views.delete_pet, name='delete_pet'),
     path("api/pet/<int:pet_id>/", views.get_pet_by_id),
-    path("api/user/<int:delete_user_id>/", views.delete_user, name='delete_user'),
-    path("api/service/price/<int:service_id>/", views.get_service_price, name='service_price'),
+    path("api/user/<int:delete_user_id>/",
+         views.delete_user, name='delete_user'),
+    path("api/service/price/<int:service_id>/",
+         views.get_service_price, name='service_price'),
     path('not_found/', views.not_found, name='not_found')
 ]
