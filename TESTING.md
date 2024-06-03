@@ -84,11 +84,13 @@ I've tested my deployed project on multiple devices to check for responsiveness 
 
 I've tested my deployed project using the Lighthouse Audit tool to check for any major issues.
 
-| Page | Mobile                                                                         | Desktop                                                                         | Notes |
-| --- |--------------------------------------------------------------------------------|---------------------------------------------------------------------------------| --- |
-| Home | ![screenshot](documentation/testing/lighthouse/lighthouse-home-mobile.png)     | ![screenshot](documentation/testing/lighthouse/lighthouse-home-desktop.png)     | Slow response time due to large images and minor warnings due to third-party cookies (Cloudinary) |
-| About | ![screenshot](documentation/testing/lighthouse/lighthouse-about-mobile.png)    | ![screenshot](documentation/testing/lighthouse/lighthouse-about-desktop.png)    | Slow response time due to large image and some minor warnings |
+| Page | Mobile | Desktop | Notes |
+| --- | --- | --- | --- |
+| Home | ![screenshot](documentation/testing/lighthouse/lighthouse-home-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-home-desktop.png) | Slow response time due to large images and some warnings due to 3rd party plugins |
+| About | ![screenshot](documentation/testing/lighthouse/lighthouse-about-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-about-desktop.png) | Slow response time due to large image and some warnings due to 3rd party plugins |
 | Services| ![screenshot](documentation/testing/lighthouse/lighthouse-services-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-services-desktop.png) | HTTP/2 Errors appearing in the lighthouse validation due to heroku not supporting that version of the protocol. [See link](https://help.heroku.com/JAOCNZ25/does-heroku-have-plans-to-support-http-2) |
+| Appointment| ![screenshot](documentation/testing/lighthouse/lighthouse-appointment-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-appointment-desktop.png) | Some warnings due to 3rd party plugins and also some warnings due to names and labels that are being generated through django |
 | Register| ![screenshot](documentation/testing/lighthouse/lighthouse-register-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-register-desktop.png) | Some warnings due to 3rd party plugins |
-| Login| ![screenshot](documentation/testing/lighthouse/lighthouse-login-mobile.png)    | ![screenshot](documentation/testing/lighthouse/lighthouse-login-desktop.png)    | Some minor warnings |
-| Profile| ![screenshot](documentation/testing/lighthouse/lighthouse-profile-mobile.png)  | ![screenshot](documentation/testing/lighthouse/lighthouse-profile-desktop.png)  | Some warnings due to 3rd party plugins |
+| Login| ![screenshot](documentation/testing/lighthouse/lighthouse-login-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-login-desktop.png) | Some minor warnings |
+| Profile| ![screenshot](documentation/testing/lighthouse/lighthouse-profile-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-profile-desktop.png) | Some warnings due to 3rd party plugins |
+| Edit Profile| ![screenshot](documentation/testing/lighthouse/lighthouse-edit-profile-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-edit-profile-desktop.png) | Some warnings due to 3rd party plugins |
