@@ -521,6 +521,10 @@ button {
     font-size: 12px;
 }
 
+.close {
+    text-decoration: none;
+}
+
 @media (max-width: 768px) {
     .profile-card .profile {
         bottom: 70%;
