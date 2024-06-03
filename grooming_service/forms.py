@@ -23,7 +23,8 @@ class BaseForm(forms.ModelForm):
             value = cleaned_data.get(field)
             if regex:
                 # Validates field value against regex
-                errors = Validators.append_error_messages_when_field_does_not_match_regex(  # noqa
+                errors = Validators.append_error_messages_when_field_does_not_match_regex(
+                    # noqa
                     value, regex, message, errors)
             # Validates if the field is empty
             errors = Validators.append_error_messages_when_field_is_empty(
@@ -193,10 +194,12 @@ class EditUserForm(BaseForm):
 # Form for user login
 class LoginForm(forms.Form):
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'class': 'form-control'})
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'required':
+            'true'})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'required':
+            'true'})
     )
 
 
