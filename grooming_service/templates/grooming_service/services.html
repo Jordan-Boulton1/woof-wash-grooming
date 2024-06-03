@@ -19,7 +19,7 @@
                         <!-- Service Description -->
                         <p class="card-text">{{ service.description|safe }}</p>
                         <!-- Service Pricing -->
-                        <p class="card-text card-pricing"><strong>Price: £{{ service.vary_price1 }} - £{{ service.vary_price2 }}</strong></p>
+                        <p class="card-text card-pricing"><strong>Approximate Price: £{{ service.vary_price1 }} - £{{ service.vary_price2 }}</strong></p>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
             we evaluate the price of each service at the front desk.
             This ensures that you only pay for the services your pet needs and that they receive the best care possible.
             If you have any questions or would like to receive a free quote,
-            please <strong><a href="{% url 'home' %}#contact-section">contact us</a></strong>.
+            please <strong><a class="pricing-contact-us" href="{% url 'home' %}#contact-section">contact us</a></strong>.
         </p>
     </div>
 </section>

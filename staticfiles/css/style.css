@@ -232,11 +232,6 @@ button {
     margin-bottom: 10px;
 }
 
-.services-card .card-pricing {
-    font-size: 1rem;
-    color: #007bff;
-}
-
 .services-card-img {
     height: 65px;
     width: 65px;
@@ -253,8 +248,7 @@ button {
 }
 
 .pricing-section a {
-    color: #007bff;
-    text-decoration: none;
+    color: #000;
 }
 
 .pricing-section a:hover {
@@ -519,6 +513,10 @@ button {
 
 #servicePrice {
     font-size: 12px;
+}
+
+.close {
+    text-decoration: none;
 }
 
 @media (max-width: 768px) {
