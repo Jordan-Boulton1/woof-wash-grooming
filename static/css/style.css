@@ -518,6 +518,11 @@ button {
 .close {
     text-decoration: none;
 }
+/* Back to profile button */
+.back-to-profile {
+    color: #000;
+}
+
 
 @media (max-width: 768px) {
     .profile-card .profile {
