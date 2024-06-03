@@ -396,3 +396,6 @@ function handleCloseMessagesForm() {
     });
   });
 }
+
+// Export the functions to make them testable
+export { setDefaultOption, setDefaultSelectOption, convertDateTimeFormat, handleFormSubmit, handleMessageRendering };

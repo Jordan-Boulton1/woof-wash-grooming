@@ -1,5 +1,3 @@
-/*jshint esversion: 11*/
-
 // Check if the browser supports the replaceState method
 if (window.history.replaceState) {
   // Replace the current history state with a new one to prevent form resubmission
@@ -9,14 +7,13 @@ if (window.history.replaceState) {
 // Import the delayBeforeReroute function from the shared.js module
 import {delayBeforeReroute} from "./shared.js";
 
-/**
- * @type {bootstrap}
- */
-const bootstrap = window.bootstrap;
-
 // Execute the following code when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
   // Get references to the delete button, modal, and confirmation button
+  editProfile();
+});
+
+function editProfile() {
   const deleteUserBtn = document.getElementById('deleteUserBtn');
   const deleteUserModal = document.getElementById('confirmDeleteProfileModal');
   const confirmDeleteUser = document.getElementById('confirmDeleteUserButton');
@@ -42,5 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  delayBeforeReroute("/profile");
-});
+  delayBeforeReroute("/profile")
+}
+
+// Export the functions to make them testable
+export { editProfile };
