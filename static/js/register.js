@@ -12,4 +12,3 @@ document.addEventListener("DOMContentLoaded", function() {
      // Call delayBeforeReroute function with the root URL (home) as the target location
     delayBeforeReroute("/")
 });
-
