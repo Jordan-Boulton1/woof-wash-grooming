@@ -28,3 +28,15 @@ I have used the recommended [CSS Jigsaw Validator](https://jigsaw.w3.org/css-val
 | Directory | File | Screenshot | Notes                                                                                                                                                                                          |
 | --- | --- | --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | static | style.css | ![screenshot](documentation/testing/validation/css/css-validation.png) | I am aware of the error that occurs when running through the validator however, due to the error coming from the external flatpickr.css and not my own, I am unable to do anything about this. |
+
+### JavaScript
+
+I have used the recommended [JShint Validator](https://jshint.com) to validate all of my JS files.
+
+| Directory | File | Screenshot                                                                  | Notes |
+| --- | --- |-----------------------------------------------------------------------------| --- |
+| static | edit_profile.js | ![screenshot](documentation/testing/validation/js/edit-profile-js-validation.png) | Pass: No Errors |
+| static | login.js | ![screenshot](documentation/testing/validation/js/login-js-validation.png)  | <br/><br/>Pass: <br/><br/>No <br/>Errors |
+| static | profile.js | ![screenshot](documentation/testing/validation/js/profile-js-validation.png) | <br/><br/><br/><br/><br/><br/>Unused <br/>variables from external files |
+| static | register.js | ![screenshot](documentation/testing/validation/js/register-js-validation.png) | <br/><br/><br/><br/><br/><br/>Pass: <br/>No Errors |
+| static | script.js | ![screenshot](documentation/testing/validation/js/script-js-validation.png) | <br/><br/><br/>Pass: <br/><br/><br/><br/>No Errors |
