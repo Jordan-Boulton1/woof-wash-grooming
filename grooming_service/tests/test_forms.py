@@ -322,7 +322,7 @@ class TestLoginForm(TestCase):
         # Test with empty data to ensure the form is invalid and contains 2 errors
         form = LoginForm(data={})
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 2)
+        self.assertEqual(len(form.errors), 3)
 
     def test_login_form_invalid_email(self):
         # Test with an invalid email format to ensure the form is invalid and contains error for email
