@@ -94,3 +94,4 @@ I've tested my deployed project using the Lighthouse Audit tool to check for any
 | Login| ![screenshot](documentation/testing/lighthouse/lighthouse-login-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-login-desktop.png) | Some minor warnings |
 | Profile| ![screenshot](documentation/testing/lighthouse/lighthouse-profile-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-profile-desktop.png) | Some warnings due to 3rd party plugins |
 | Edit Profile| ![screenshot](documentation/testing/lighthouse/lighthouse-edit-profile-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-edit-profile-desktop.png) | Some warnings due to 3rd party plugins |
+| 404 Page | ![screenshot](documentation/testing/lighthouse/lighthouse-404-mobile.png) | ![screenshot](documentation/testing/lighthouse/lighthouse-404-desktop.png) | Some warnings due to 3rd party plugins |
