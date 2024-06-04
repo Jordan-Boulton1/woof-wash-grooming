@@ -131,7 +131,8 @@ class EditUserForm(BaseForm):
         self.fields['password'].widget = forms.PasswordInput(
             attrs={'class': 'form-control'}
         )
-        self.fields['image'].widget.attrs.update({'class': 'form-control'})
+        self.fields['image'].widget.attrs.update({'class': 'form-control'},
+                                                 render_value=True)
 
     def clean(self):
         cleaned_data = super().clean()
