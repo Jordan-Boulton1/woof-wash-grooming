@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
+from django.contrib.auth.hashers import make_password
 from .models import *
 
 
@@ -34,6 +35,15 @@ admin.site.register(Pet, PetAdmin)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'email', 'phone_number',
                     'address']
+
+    # Prevent passwords to be saves as
+    # raw text when updated through admin
+    # panel
+    def save_model(self, request, obj, form, change):
+        if 'password' in form.cleaned_data:
+            # Hash the password before saving
+            obj.password = make_password(form.cleaned_data['password'])
+        super().save_model(request, obj, form, change)
 
 
 # Register the User model with the admin interface
