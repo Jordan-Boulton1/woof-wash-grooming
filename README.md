@@ -311,7 +311,9 @@ There are many features on the website which are easy to follow and navigate, cr
 - [![ChatGPT](https://img.shields.io/badge/ChatGPT-grey?logo=chromatic&logoColor=75A99C)](https://chat.openai.com) used to help debug, troubleshoot, and explain things.
 - [![Mermaid](https://img.shields.io/badge/Mermaid-grey?logo=mermaid&logoColor=FF3670)](https://www.mermaidchart.com/) used for creating ERD diagrams.
 - [![Djecrety](https://img.shields.io/badge/Djecrety-grey?logo=djecrety&logoColor=FF3670)](https://djecrety.ir/) tool used for generating django secret keys.
-- [![Djecrety](https://img.shields.io/badge/Logo-grey?logo=logo&logoColor=FF3670)](https://logo.com/) tool used to create the logo for the website.
+- [![Logo](https://img.shields.io/badge/Logo-grey?logo=logo&logoColor=FF3670)](https://logo.com/) tool used to create the logo for the website.
+- [![Image Resizer](https://img.shields.io/badge/Image_Resizer-grey?image_resizer=logo&logoColor=FF3670)](https://logo.com/) tool used compress and resize images.
+
 
 ## Database Design
 
@@ -572,23 +574,24 @@ You can fork this repository by using the following steps:
 
 ### Content
 
-| Source | Location | Notes |
-| --- | --- | --- |
-| [Markdown Builder](https://tim.2bn.dev/markdown-builder) | README and TESTING | tool to help generate the Markdown files |
-| [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/) | entire site | responsive HTML/CSS/JS navbar |
-| [Bootstrap](https://getbootstrap.com/docs/5.3/components/modal/) | profile page | interactive pop-up (modal) |
-| [Bootstrap](https://getbootstrap.com/docs/5.3/components/carousel/) | services page | interactive carousel |
-| [Bootstrap](https://getbootstrap.com/docs/5.3/components/card/) | profile page | interactive pet and appointment cards |
-| [Testdriven](https://testdriven.io/blog/django-custom-user-model/) | `models.py` | creating a custom user |
-| [Django Docs](https://docs.djangoproject.com/en/5.0/topics/auth/default/) | `models.py` `views.py` | user creation form |
-| [Django Docs](https://docs.djangoproject.com/en/5.0/ref/forms/widgets/) | `forms.py` | django widgets documentation |
-| [Bootstrapbrain](https://bootstrapbrain.com/component/bootstrap-registration-form-example/) | appointment page | bootstrap registration form example |
-| [W3Schools](https://www.w3schools.com/cssref/sel_element_pluss.php) | style.css | CSS element+element selector |
-| [Shields](https://shields.io/docs/logos) | readme | shield icon documentation |
-| [strftime](https://strftime.org) | CRUD functionality | helpful tool to format date/time from string |
-| [WhiteNoise](http://whitenoise.evans.io) | entire site | hosting static files on Heroku temporarily |
-| [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams) | readme | implementing the ERD diagram |
-| [StackOverflow](https://stackoverflow.com/questions/45656405/browser-prevent-post-data-resubmit-on-refresh-using-only-javascript) | modals | prevent resubmitting data on modal forms |
+| Source                                                                                                                            | Location    | Notes                                   |
+|-----------------------------------------------------------------------------------------------------------------------------------|-------------|-----------------------------------------|
+| [Markdown Builder](https://tim.2bn.dev/markdown-builder)                                                                          | README and TESTING | tool to help generate the Markdown files |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/)                                                                 | entire site | responsive HTML/CSS/JS navbar           |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/modal/)                                                                  | profile page | interactive pop-up (modal)              |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/carousel/)                                                               | services page | interactive carousel                    |
+| [Bootstrap](https://getbootstrap.com/docs/5.3/components/card/)                                                                   | profile page | interactive pet and appointment cards   |
+| [Testdriven](https://testdriven.io/blog/django-custom-user-model/)                                                                | `models.py` | creating a custom user                  |
+| [Django Docs](https://docs.djangoproject.com/en/5.0/topics/auth/default/)                                                         | `models.py` `views.py` | user creation form                      |
+| [Django Docs](https://docs.djangoproject.com/en/5.0/ref/forms/widgets/)                                                           | `forms.py`  | django widgets documentation            |
+| [Bootstrapbrain](https://bootstrapbrain.com/component/bootstrap-registration-form-example/)                                       | appointment page | bootstrap registration form example     |
+| [W3Schools](https://www.w3schools.com/cssref/sel_element_pluss.php)                                                               | style.css   | CSS element+element selector            |
+| [Shields](https://shields.io/docs/logos)                                                                                          | readme      | shield icon documentation               |
+| [strftime](https://strftime.org)                                                                                                  | CRUD functionality | helpful tool to format date/time from string |
+| [WhiteNoise](http://whitenoise.evans.io)                                                                                          | entire site | hosting static files on Heroku temporarily |
+| [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams)        | readme      | implementing the ERD diagram            |
+| [StackOverflow](https://stackoverflow.com/questions/45656405/browser-prevent-post-data-resubmit-on-refresh-using-only-javascript) | modals      | prevent resubmitting data on modal forms |
+| [Image Resizer](https://imageresizer.com/) | entire site | tool used to compress and resize images |
 
 ### Media
 
