@@ -157,11 +157,7 @@
                 <h5 class="modal-title">Cancel Appointment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body container">
-                <p>Are you sure you want to cancel this appointment?</p>
-                <p><i>This action cannot be reversed</i></p>
-            </div>
-             <div id="cancelAppointmentFormMessageContainer">
+            <div id="cancelAppointmentFormMessageContainer">
                  {% if messages %}
                     {% for message in messages %}
                         {% if 'cancel_appointment_form' in message.tags %}
@@ -172,6 +168,10 @@
                         {% endif %}
                     {% endfor %}
                  {% endif %}
+            </div>
+            <div class="modal-body container">
+                <p>Are you sure you want to cancel this appointment?</p>
+                <p><i>This action cannot be reversed</i></p>
             </div>
             <div class="modal-footer">
                 <form id="cancelAppointmentForm" method="post" action="{% url 'cancel_appointment' cancel_appointment_id=0 %}">

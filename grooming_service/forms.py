@@ -164,8 +164,8 @@ class EditUserForm(BaseForm):
             ),
             (
                 "address",
-                "Address cannot be empty.",
-                None
+                "Address cannot be empty or contain special characters.",
+                r'^[A-Za-z0-9, ]+$'
             ),
         ])
 
@@ -309,7 +309,7 @@ class PetForm(BaseForm):
             cleaned_data, [
                 (
                     "name",
-                    "Pet can only contain letters and white spaces.",
+                    "Name can only contain letters and white spaces.",
                     r'^[A-Za-z\s]+$'
                 ),
                 (
