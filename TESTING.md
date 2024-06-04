@@ -382,4 +382,4 @@ class Meta:
 - I noticed that one of the times when I was deleting a pet from the user profile, the success messages would appear twice. I was unable to re-produce the bug again but I am aware that it is a potential issues users might experience.
 
 > [!NOTE]  
-> There are no remaining bugs that I am aware of.
+> There are no other remaining bugs that I am aware of.
