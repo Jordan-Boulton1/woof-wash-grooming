@@ -316,17 +316,20 @@ To solve the problem, I had to customize my settings and models to not take into
 [Settings](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/woof_wash_grooming/settings.py#L106-L135)
 ```python
 class DisableMigrations(object):  
-        """  
-     This class is used to disable migrations when running tests. When Django checks for migrations, it will think all apps have no migrations. """  def __contains__(self, item):  
-            # This method returns True for any item, indicating that it contains all items.  
-      return True  
+    """
+    This class is used to disable migrations when running tests. When Django checks for migrations, it will think all apps have no migrations.
+    """
       
-     def __getitem__(self, item):  
-            # This method returns None for any item, indicating that there are no migration modules.  
+    def __contains__(self, item):  
+        # This method returns True for any item, indicating that it contains all items.  
+      return True
+      
+    def __getitem__(self, item):  
+        # This method returns None for any item, indicating that there are no migration modules.  
       return None  
       
       
-    # Check if the script is being run with the 'test' argument (e.g., `python manage.py test`).  
+    # Check if the script is being run with the 'test' argument (e.g., `python manage.py test`).
     if 'test' in sys.argv:  
         # If testing, use the DisableMigrations class to disable migrations.  
       MIGRATION_MODULES = DisableMigrations()  
@@ -346,7 +349,7 @@ class DisableMigrations(object):
 [Models](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/grooming_service/models.py)
 Example of the exclusion on the schema if env is "test"
 ```python
-    class Meta:
+class Meta:
         # Point to the posgres schema for the database table for
         # non-test environments
         if 'test' not in sys.argv:
