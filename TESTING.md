@@ -351,3 +351,23 @@ Example of the exclusion on the schema if env is "test"
         # non-test environments
         if 'test' not in sys.argv:
             db_table = 'woof_wash_grooming"."User'
+```
+
+## Bugs
+
+- ***DateTime*** picker in the form of the ***Appointment*** page was having inconsistent behavior where when a user clicks the calendar icon, the date time picker would render with the expected constraints: weekends and past dates disabled and the time having minimum of 8:00AM and maximum of 17:00PM. However, if the user clicked on the input itself, the ***DateTime*** picker would be rendered without the expected constraints.
+    - Example clicking on the input:
+    ![screenshot](documentation/testing/bugs/date-picker-bug1.png)
+    - Example clicking on the calendar icon:
+    ![screenshot](documentation/testing/bugs/date-picker-bug2.png)
+
+    - To fix this, I had to move the block of code that was adding the constraints on what the user can select from the datetime picker outside of the calendar icon *"click"* event listener and have it globally in the JS file so that both the input and the click icon have the correct constraints.
+
+- On most of the pages that I have forms, I encountered a bug that would allow the user to re-submit the form and potentially add duplicate data.
+    ![screenshot](documentation/testing/bugs/add-pet-bug1.png)
+    ![screenshot](documentation/testing/bugs/add-pet-bug2.png)
+    ![screenshot](documentation/testing/bugs/add-pet-bug3.png)
+    ![screenshot](documentation/testing/bugs/add-pet-bug4.png)
+    - To fix this, I added a check to the top of most of the pages that contain forms that validates if the browser supports the *"history.replaceState"* method and if it does I used the *"replaceState"* to modify the history entry, preventing form resubmission on page reload.
+    
+    ![screenshot](documentation/testing/bugs/add-pet-bug-fix.png)
