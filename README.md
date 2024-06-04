@@ -232,7 +232,7 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/services-page-price.png)
 
--**Gallery**: The section features images of pets during grooming, showcasing the quality and impact of the services provided. This enhances the site's value by visually demonstrating their expertise and benefits users by providing a clear, visual representation of the grooming experience they can expect for their pets.
+- **Gallery**: The section features images of pets during grooming, showcasing the quality and impact of the services provided. This enhances the site's value by visually demonstrating their expertise and benefits users by providing a clear, visual representation of the grooming experience they can expect for their pets.
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/services-page-gallery.png)
 
