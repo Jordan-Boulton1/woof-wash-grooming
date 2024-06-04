@@ -306,3 +306,48 @@ Below are the results from the various apps on my application that I've tested:
  | grooming_service | test_models.py | 92% | ![screenshot](documentation/testing/tests/py-test-woof-wash-grooming-models.png)             |
   | grooming_service | test_urls.py | 100% | ![screenshot](documentation/testing/tests/py-test-woof-wash-grooming-urls.png) | 
   | grooming_service | test_views.py | 90% | ![screenshot](documentation/testing/tests/py-test-woof-wash-grooming-views.png)  |
+
+#### Unit Test Issues
+
+When setting up the unit tests I ran into an issue where the sqlite3 engine was failing to generate the database using the Models due to the fact that I used a PostgreSQL *"Schema"*  [PostgreSQL](https://www.postgresql.org/docs/current/ddl-schemas.html)
+The issue was that sqlite3 does not support or understand schemas the way PostgreSQL does and error was present in the compiler stating that *"Database woof and wash grooming could not be found"*.
+To solve the problem, I had to customize my settings and models to not take into consideration the schema and disable all migrations if the environment is "test" .
+
+[Settings](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/woof_wash_grooming/settings.py#L106-L135)
+```python
+class DisableMigrations(object):  
+        """  
+     This class is used to disable migrations when running tests. When Django checks for migrations, it will think all apps have no migrations. """  def __contains__(self, item):  
+            # This method returns True for any item, indicating that it contains all items.  
+      return True  
+      
+     def __getitem__(self, item):  
+            # This method returns None for any item, indicating that there are no migration modules.  
+      return None  
+      
+      
+    # Check if the script is being run with the 'test' argument (e.g., `python manage.py test`).  
+    if 'test' in sys.argv:  
+        # If testing, use the DisableMigrations class to disable migrations.  
+      MIGRATION_MODULES = DisableMigrations()  
+        # Set the database configuration to use SQLite for testing.  
+      DATABASES = {  
+            'default': {  
+                'ENGINE': 'django.db.backends.sqlite3',  
+                'NAME': BASE_DIR / 'db.sqlite3',  
+            }  
+        }  
+    else:  
+        # If not testing, configure the database using the DATABASE_URL environment variable.  
+      DATABASES = {  
+            'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))  
+        }
+```
+[Models](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/grooming_service/models.py)
+Example of the exclusion on the schema if env is "test"
+```python
+    class Meta:
+        # Point to the posgres schema for the database table for
+        # non-test environments
+        if 'test' not in sys.argv:
+            db_table = 'woof_wash_grooming"."User'
