@@ -277,3 +277,32 @@ Below are the results from the tests that I've written for this application:
 | Test Suites | Tests | Screenshot                                                      |
 | --- | --- |-----------------------------------------------------------------|
 | 6 passed | 16 passed | ![screenshot](documentation/testing/tests/js-test-coverage.png) |
+
+### Python (Unit Testing)
+
+I have used Django's built-in unit testing framework to test the application functionality.
+
+In order to run the tests, I ran the following command in the terminal each time:
+
+`python3 manage.py test name-of-app `
+
+To create the coverage report, I would then run the following commands:
+
+`coverage run --source=name-of-app manage.py test`
+
+`coverage report`
+
+To see the HTML version of the reports, and find out whether some pieces of code were missing, I ran the following commands:
+
+`coverage html`
+
+`python3 -m http.server`
+
+Below are the results from the various apps on my application that I've tested:
+
+| App | File | Coverage | Screenshot                                                                                   | 
+| --- | --- | --- |----------------------------------------------------------------------------------------------| 
+| grooming_service | test_forms.py | 100% | ![screenshot](documentation/testing/tests/py-test-woof-wash-grooming-forms.png)              |
+ | grooming_service | test_models.py | 92% | ![screenshot](documentation/testing/tests/py-test-woof-wash-grooming-models.png)             |
+  | grooming_service | test_urls.py | 100% | ![screenshot](documentation/testing/tests/py-test-woof-wash-grooming-urls.png) | 
+  | grooming_service | test_views.py | 90% | ![screenshot](documentation/testing/tests/py-test-woof-wash-grooming-views.png)  |
