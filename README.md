@@ -312,7 +312,7 @@ There are many features on the website which are easy to follow and navigate, cr
 - [![Mermaid](https://img.shields.io/badge/Mermaid-grey?logo=mermaid&logoColor=FF3670)](https://www.mermaidchart.com/) used for creating ERD diagrams.
 - [![Djecrety](https://img.shields.io/badge/Djecrety-grey?logo=djecrety&logoColor=FF3670)](https://djecrety.ir/) tool used for generating django secret keys.
 - [![Logo](https://img.shields.io/badge/Logo-grey?logo=logo&logoColor=FF3670)](https://logo.com/) tool used to create the logo for the website.
-- [![Image Resizer](https://img.shields.io/badge/Image_Resizer-grey?image_resizer=logo&logoColor=FF3670)](https://logo.com/) tool used compress and resize images.
+- [![Image Resizer](https://img.shields.io/badge/Image_Resizer-grey?image_resizer=logo&logoColor=FF3670)](https://imageresizer.com/) tool used compress and resize images.
 
 
 ## Database Design
