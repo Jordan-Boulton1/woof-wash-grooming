@@ -18,6 +18,25 @@ class AppointmentAdmin(admin.ModelAdmin):
     # Excluding as admins should not be editing or putting description on requested appointments # noqa
     exclude = ['description']
 
+    # Ensures appointments shows only the user's pets
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields[
+            'pet'].queryset = Pet.objects.none()  # Default to no pets
+
+        if obj and obj.user:
+            form.base_fields['pet'].queryset = Pet.objects.filter(
+                user=obj.user)
+        elif 'user' in request.GET:
+            try:
+                user_id = int(request.GET.get('user'))
+                form.base_fields['pet'].queryset = Pet.objects.filter(
+                    user_id=user_id)
+            except (ValueError, TypeError):
+                pass
+
+        return form
+
 
 # Register the Appointment model with the custom AppointmentAdmin class
 admin.site.register(Appointment, AppointmentAdmin)
