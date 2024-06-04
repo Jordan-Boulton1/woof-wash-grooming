@@ -23,9 +23,9 @@ class BaseForm(forms.ModelForm):
             value = cleaned_data.get(field)
             if regex:
                 # Validates field value against regex
-                errors = Validators.append_error_messages_when_field_does_not_match_regex(
-                    # noqa
-                    value, regex, message, errors)
+                errors = (
+                    Validators.append_error_messages_when_field_does_not_match_regex(  # noqa
+                    value, regex, message, errors))
             # Validates if the field is empty
             errors = Validators.append_error_messages_when_field_is_empty(
                 value, message, errors

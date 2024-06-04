@@ -106,18 +106,22 @@ WSGI_APPLICATION = 'woof_wash_grooming.wsgi.application'
 class DisableMigrations(object):
     """
     This class is used to disable migrations when running tests.
-    When Django checks for migrations, it will think all apps have no migrations.
+    When Django checks for migrations, it will think all apps have
+    no migrations.
     """
     def __contains__(self, item):
-        # This method returns True for any item, indicating that it contains all items.
+        # This method returns True for any item,
+        # indicating that it contains all items.
         return True
 
     def __getitem__(self, item):
-        # This method returns None for any item, indicating that there are no migration modules.
+        # This method returns None for any item,
+        # indicating that there are no migration modules.
         return None
 
 
-# Check if the script is being run with the 'test' argument (e.g., `python manage.py test`).
+# Check if the script is being run with the 'test' argument
+# (e.g., `python manage.py test`).
 if 'test' in sys.argv:
     # If testing, use the DisableMigrations class to disable migrations.
     MIGRATION_MODULES = DisableMigrations()
@@ -129,7 +133,8 @@ if 'test' in sys.argv:
         }
     }
 else:
-    # If not testing, configure the database using the DATABASE_URL environment variable.
+    # If not testing, configure the database using the
+    # DATABASE_URL environment variable.
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
@@ -150,16 +155,16 @@ AUTH_USER_MODEL = "grooming_service.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa
     },
 ]
 
