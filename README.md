@@ -74,7 +74,7 @@ I used [coolors.co](https://coolors.co/87ceeb-0b3d91-000000-f8f9fa-ffffff) to ge
 ### Registered Site Users
 
 - As a registered site user, I would like to **log in to my account**, so that I can **access my bookings and personalized information**.
-- As a registered site user, I would like to **create an appointment**, so that I can ** schedule a grooming appointment for my dog**.
+- As a registered site user, I would like to **create an appointment**, so that I can **schedule a grooming appointment for my dog**.
 - As a registered site user, I would like to **edit my appointment**, so that I can **change the date, time or services**.
 - As a registered site user, I would like to **cancel my appointment**, so that I can **free up my appointment if my plans change and allow other users to book that time slot**.
 - As a registered site user, I would like to **view my past appointments**, so that I can **keep track of my  dogs grooming history**.
@@ -82,7 +82,7 @@ I used [coolors.co](https://coolors.co/87ceeb-0b3d91-000000-f8f9fa-ffffff) to ge
 - As a registered site user, I would like to **delete my profile**, so that I can **remove my account and personal data from the system**.
 - As a registered site user, I would like to **log out of the website**, so that I can **ensure my session is securely closed and prevent unauthorized access to my account**.
 - As a registered site user, I would like to **view my appointments via my profile**, so that I can **keep track of my upcoming appointments**.
-- As a registered site user, I would like to **to have access to my profile**, so that I can **keep my personal data up to date**.
+- As a registered site user, I would like to **have access to my profile**, so that I can **keep my personal data up to date**.
 
 ### Site Admin
 
@@ -200,7 +200,7 @@ There are many features on the website which are easy to follow and navigate, cr
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-about-us.png)
 
-- **Testimonials**: The testimonials section showcases positive customer reviews, providing social proof that enhances the site's credibility and trustworthiness. For users, this section offers real life experiences and endorsements, aiding in their decision making and building confidence in the quality of the grooming services provided.
+- **Testimonials**: The testimonials section showcases positive customer reviews, providing social proof that enhances the site's credibility and trustworthiness. For users, this section offers real life experiences and endorsements, aiding in their decision-making and building confidence in the quality of the grooming services provided.
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/home-page-testimonials.png)
 
@@ -238,7 +238,7 @@ There are many features on the website which are easy to follow and navigate, cr
 
 #### Appointment Page
 
-- **Book An Appointment**: The section offers an online booking form with a built in date picker for scheduling grooming sessions, streamlining the appointment process. This adds value to the site by enhancing user convenience and operational efficiency, and benefits users by providing a simple, quick way to secure grooming services for their pets.
+- **Book An Appointment**: The section offers an online booking form with a built-in date picker for scheduling grooming sessions, streamlining the appointment process. This adds value to the site by enhancing user convenience and operational efficiency, and benefits users by providing a simple, quick way to secure grooming services for their pets.
 
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/appointment-page-form.png)
 ![screenshot](https://github.com/Jordan-Boulton1/woof-wash-grooming/blob/main/documentation/readme/features/appointment-page-date-picker.png)
@@ -384,7 +384,7 @@ Through it, user stories, issues, and milestone tasks were planned, then tracked
 
 ### GitHub Issues
 
-[GitHub Issues](https://github.com/Jordan-Boulton1/woof-wash-grooming/issues) served as an another Agile tool.
+[GitHub Issues](https://github.com/Jordan-Boulton1/woof-wash-grooming/issues) served as another Agile tool.
 There, I used my own **User Story Template** to manage user stories.
 
 It also helped with milestone iterations on a weekly basis.
@@ -422,11 +422,11 @@ This project uses a [Code Institute PostgreSQL Database](https://dbs.ci-dbs.net)
 
 To obtain my own Postgres Database from Code Institute, I followed these steps:
 
-- Signed-in to the CI LMS using my email address.
+- Signed in to the CI LMS using my email address.
 - An email was sent to me with my new Postgres Database.
 
 > [!CAUTION]  
-> - PostgreSQL databases by Code Institute are only available to CI Students.
+> - PostgreSQL database's by Code Institute are only available to CI Students.
 > - You must acquire your own PostgreSQL database through some other method
 > if you plan to clone/fork this repository.
 > - Code Institute students are allowed a maximum of 8 databases.
@@ -627,6 +627,6 @@ You can fork this repository by using the following steps:
 
 - I would like to thank my Code Institute mentor, [Tim Nelson](https://github.com/TravelTimN) for their support throughout the development of this project.
 - I would like to thank the [Code Institute](https://codeinstitute.net) tutor team for their assistance with troubleshooting and debugging some project issues.
-- I would like to thank the [Code Institute Slack community](https://code-institute-room.slack.com) for the moral support; it kept me going during periods of self doubt and imposter syndrome.
+- I would like to thank the [Code Institute Slack community](https://code-institute-room.slack.com) for the moral support; it kept me going during periods of self-doubt and imposter syndrome.
 - I would like to thank my partner (Stefani), for believing in me, and allowing me to make this transition into software development.
 - I would like to thank the kind folks at [Posh Dugz Dog Grooming](https://www.facebook.com/p/Posh-Dugz-Dog-Grooming-100062609805112/) for providing me with the images of my dog (Storm) to use for my project.

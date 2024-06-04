@@ -31,5 +31,10 @@ class PetAdmin(admin.ModelAdmin):
 admin.site.register(Pet, PetAdmin)
 
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name', 'email', 'phone_number',
+                    'address']
+
+
 # Register the User model with the admin interface
-admin.site.register(User)
+admin.site.register(User, UserAdmin)
