@@ -371,3 +371,10 @@ Example of the exclusion on the schema if env is "test"
     - To fix this, I added a check to the top of most of the pages that contain forms that validates if the browser supports the *"history.replaceState"* method and if it does I used the *"replaceState"* to modify the history entry, preventing form resubmission on page reload.
     
     ![screenshot](documentation/testing/bugs/add-pet-bug-fix.png)
+
+## Unfixed Bugs
+
+- I noticed that one of the times when I was deleting a pet from the user profile, the success messages would appear twice. I was unable to re-produce the bug again but I am aware that it is a potential issues users might experience.
+
+> [!NOTE]  
+> There are no remaining bugs that I am aware of.
